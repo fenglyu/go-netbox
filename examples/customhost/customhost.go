@@ -19,11 +19,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/netbox-community/go-netbox/netbox/client"
+	"github.com/fenglyu/go-netbox/netbox/client"
 )
 
 func main() {
-	t := client.DefaultTransportConfig().WithHost("your.netbox.host")
+	t := client.DefaultTransportConfig().WithHost("localhost:8000")
 	c := client.NewHTTPClientWithConfig(nil, t)
 
 	rs, err := c.Dcim.DcimRacksList(nil, nil)

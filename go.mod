@@ -1,4 +1,4 @@
-module github.com/netbox-community/go-netbox
+module github.com/fenglyu/go-netbox
 
 go 1.13
 
@@ -8,4 +8,5 @@ require (
 	github.com/go-openapi/strfmt v0.19.5
 	github.com/go-openapi/swag v0.19.8
 	github.com/go-openapi/validate v0.19.7
+	github.com/netbox-community/go-netbox v0.0.0-20200527232624-eea85738db88
 )
