@@ -23,7 +23,10 @@ import (
 )
 
 func main() {
-	t := client.DefaultTransportConfig().WithHost("localhost:8000")
+	//	t := client.DefaultTransportConfig().WithHost("127.0.0.1")
+	host := "127.0.0.1"
+	apiToken := "b8618b2e54ee31c4b9bca309a7e355f3d29d0873"
+	t := client.DefaultTransportConfig().NewNetboxWithAPIKey(host, apiToken)
 	c := client.NewHTTPClientWithConfig(nil, t)
 
 	rs, err := c.Dcim.DcimRacksList(nil, nil)

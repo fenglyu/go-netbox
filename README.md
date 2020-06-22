@@ -103,4 +103,10 @@ make generate
 ```
 git clone --depth=1  https://github.com/go-swagger/go-swagger
 go build -o swagger cmd/swagger/swagger.go
+
+## replace import path globally
+find . -name "*.go" -exec sed -e  "s#github.com/netbox-community/go-netbox#github.com/fenglyu/go-netbox#g" '{}' -i \;
+
 ```
+
+
