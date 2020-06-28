@@ -96,6 +96,9 @@ type WritablePrefix struct {
 
 	// VRF
 	Vrf *int64 `json:"vrf,omitempty"`
+
+	// Prefix length
+	PrefixLength *int64 `json:"prefix_length,omitempty"`
 }
 
 // Validate validates this writable prefix
