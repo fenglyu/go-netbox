@@ -22663,9 +22663,7 @@
                         "description": "",
                         "schema": {
                             "type": "object",
-                            "items": {
-                                "$ref": "#/definitions/WritablePrefix"
-                            }
+                            "$ref": "#/definitions/Prefix"
                         }
                     }
                 },
@@ -39165,10 +39163,16 @@
                 },
                 "tags": {
                     "type": "array",
+                    "x-omitempty": true,
                     "items": {
                         "type": "string",
                         "minLength": 1
                     }
+                },
+                "prefix_length": {
+                    "title": "PrefixLengthSerializer",
+                    "description": "Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size",
+                    "type": "integer"
                 },
                 "custom_fields": {
                     "title": "Custom fields",
