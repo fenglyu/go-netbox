@@ -86,7 +86,7 @@ type WritablePrefix struct {
 	Status string `json:"status,omitempty"`
 
 	// tags
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 
 	// Tenant
 	Tenant *int64 `json:"tenant,omitempty"`
@@ -98,7 +98,7 @@ type WritablePrefix struct {
 	Vrf *int64 `json:"vrf,omitempty"`
 
 	// Prefix length
-	PrefixLength *int64 `json:"prefix_length,omitempty"`
+	PrefixLength int `json:"prefix_length,omitempty"`
 }
 
 // Validate validates this writable prefix

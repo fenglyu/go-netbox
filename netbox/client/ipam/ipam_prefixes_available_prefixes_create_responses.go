@@ -60,14 +60,15 @@ func NewIpamPrefixesAvailablePrefixesCreateCreated() *IpamPrefixesAvailablePrefi
 IpamPrefixesAvailablePrefixesCreateCreated ipam prefixes available prefixes create created
 */
 type IpamPrefixesAvailablePrefixesCreateCreated struct {
-	Payload []*models.AvailablePrefix
+	//Payload []*models.AvailablePrefix
+	Payload []*models.WritablePrefix
 }
 
 func (o *IpamPrefixesAvailablePrefixesCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /ipam/prefixes/{id}/available-prefixes/][%d] ipamPrefixesAvailablePrefixesCreateCreated  %+v", 201, o.Payload)
 }
 
-func (o *IpamPrefixesAvailablePrefixesCreateCreated) GetPayload() []*models.AvailablePrefix {
+func (o *IpamPrefixesAvailablePrefixesCreateCreated) GetPayload() []*models.WritablePrefix {
 	return o.Payload
 }
 

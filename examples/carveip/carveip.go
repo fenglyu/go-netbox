@@ -128,27 +128,31 @@ func main() {
 	fmt.Println(string(jsonIpaprpr))
 
 	rootCidr := "10.0.0.0/8"
-	var prefixlength int64 = 24
+	//var prefixlength int64 = 24
+	var prefixlength int = 27
+
 	dpcData := models.WritablePrefix{
+		ID: 2,
+		//	PrefixLength: &prefixlength,
 		Prefix:       &rootCidr,
-		PrefixLength: &prefixlength,
-		Status:       "container",
-		IsPool:       false,
+		PrefixLength: prefixlength,
+		Status:       "active",
+		//Status:       "container",
+		IsPool: false,
 	}
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
 		ID:   2,
 		Data: &dpcData,
 	}
-
 	dpc.WithContext(context.Background())
 
 	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil)
 	if err != nil {
-		fmt.Println("IpamPrefixesAvailablePrefixesCreate", err)
+		fmt.Println("IpamPrefixesAvailablePrefixesCreate	", err)
 	}
 	jsonIpapc, _ := json.Marshal(ipapc)
-	fmt.Println(string(jsonIpapc))
+	fmt.Println("IpamPrefixesAvailablePrefixesCreate	", string(jsonIpapc))
 }
 
 /*
