@@ -150,6 +150,8 @@ func main() {
 	if err != nil {
 		fmt.Println("IpamPrefixesAvailablePrefixesCreate	", err)
 	}
+
+	fmt.Println("New created", ipapc)
 	jsonIpapc, _ := json.Marshal(ipapc)
 	fmt.Println("IpamPrefixesAvailablePrefixesCreate	", string(jsonIpapc))
 }
