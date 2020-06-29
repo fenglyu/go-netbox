@@ -60,7 +60,6 @@ func NewIpamPrefixesAvailablePrefixesCreateCreated() *IpamPrefixesAvailablePrefi
 IpamPrefixesAvailablePrefixesCreateCreated ipam prefixes available prefixes create created
 */
 type IpamPrefixesAvailablePrefixesCreateCreated struct {
-	//Payload []*models.AvailablePrefix
 	Payload []*models.WritablePrefix
 }
 

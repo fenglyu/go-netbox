@@ -128,8 +128,7 @@ func main() {
 	fmt.Println(string(jsonIpaprpr))
 
 	rootCidr := "10.0.0.0/8"
-	//var prefixlength int64 = 24
-	var prefixlength int = 27
+	var prefixlength int64 = 24
 
 	dpcData := models.WritablePrefix{
 		ID: 2,

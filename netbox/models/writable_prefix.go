@@ -71,6 +71,11 @@ type WritablePrefix struct {
 	// Required: true
 	Prefix *string `json:"prefix"`
 
+	// PrefixLengthSerializer
+	//
+	// Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size
+	PrefixLength int64 `json:"prefix_length,omitempty"`
+
 	// Role
 	//
 	// The primary function of this prefix
@@ -96,9 +101,6 @@ type WritablePrefix struct {
 
 	// VRF
 	Vrf *int64 `json:"vrf,omitempty"`
-
-	// Prefix length
-	PrefixLength int `json:"prefix_length,omitempty"`
 }
 
 // Validate validates this writable prefix
