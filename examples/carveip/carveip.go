@@ -127,17 +127,20 @@ func main() {
 	jsonIpaprpr, _ := json.Marshal(ipaprpr)
 	fmt.Println(string(jsonIpaprpr))
 
-	rootCidr := "10.0.0.0/8"
+	//rootCidr := "10.0.0.0/8"
 	var prefixlength int64 = 24
+	var role, site int64 = 0, 0
 
 	dpcData := models.WritablePrefix{
-		ID: 2,
-		//	PrefixLength: &prefixlength,
-		Prefix:       &rootCidr,
+		//ID: 2,
+		//PrefixLength: &prefixlength,
+		//Prefix:       &rootCidr,
 		PrefixLength: prefixlength,
 		Status:       "active",
 		//Status:       "container",
 		IsPool: false,
+		Role:   &role,
+		Site:   &site,
 	}
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
