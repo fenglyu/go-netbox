@@ -42,7 +42,7 @@ type NestedDevice struct {
 
 	// Name
 	// Max Length: 64
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
 
 	// Url
 	// Read Only: true
@@ -74,7 +74,7 @@ func (m *NestedDevice) validateName(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("name", "body", string(*m.Name), 64); err != nil {
+	if err := validate.MaxLength("name", "body", string(m.Name), 64); err != nil {
 		return err
 	}
 

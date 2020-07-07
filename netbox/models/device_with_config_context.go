@@ -21,9 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -39,7 +36,7 @@ type DeviceWithConfigContext struct {
 	//
 	// A unique tag used to identify this device
 	// Max Length: 50
-	AssetTag *string `json:"asset_tag,omitempty"`
+	AssetTag string `json:"asset_tag,omitempty"`
 
 	// cluster
 	Cluster *NestedCluster `json:"cluster,omitempty"`
@@ -49,7 +46,7 @@ type DeviceWithConfigContext struct {
 
 	// Config context
 	// Read Only: true
-	ConfigContext map[string]string `json:"config_context,omitempty"`
+	ConfigContext string `json:"config_context,omitempty"`
 
 	// Created
 	// Read Only: true
@@ -84,14 +81,15 @@ type DeviceWithConfigContext struct {
 	LastUpdated strfmt.DateTime `json:"last_updated,omitempty"`
 
 	// Local context data
-	LocalContextData *string `json:"local_context_data,omitempty"`
+	LocalContextData string `json:"local_context_data,omitempty"`
 
 	// Name
 	// Max Length: 64
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
 
-	// parent device
-	ParentDevice *NestedDevice `json:"parent_device,omitempty"`
+	// Parent device
+	// Read Only: true
+	ParentDevice string `json:"parent_device,omitempty"`
 
 	// platform
 	Platform *NestedPlatform `json:"platform,omitempty"`
@@ -101,16 +99,16 @@ type DeviceWithConfigContext struct {
 	// The lowest-numbered unit occupied by the device
 	// Maximum: 32767
 	// Minimum: 1
-	Position *int64 `json:"position,omitempty"`
+	Position int64 `json:"position,omitempty"`
 
 	// primary ip
-	PrimaryIP *NestedIPAddress `json:"primary_ip,omitempty"`
+	PrimaryIP *DeviceIPAddress `json:"primary_ip,omitempty"`
 
 	// primary ip4
-	PrimaryIp4 *NestedIPAddress `json:"primary_ip4,omitempty"`
+	PrimaryIp4 *DeviceIPAddress `json:"primary_ip4,omitempty"`
 
 	// primary ip6
-	PrimaryIp6 *NestedIPAddress `json:"primary_ip6,omitempty"`
+	PrimaryIp6 *DeviceIPAddress `json:"primary_ip6,omitempty"`
 
 	// rack
 	Rack *NestedRack `json:"rack,omitempty"`
@@ -126,8 +124,8 @@ type DeviceWithConfigContext struct {
 	// status
 	Status *DeviceWithConfigContextStatus `json:"status,omitempty"`
 
-	// tags
-	Tags []string `json:"tags"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
@@ -143,7 +141,7 @@ type DeviceWithConfigContext struct {
 	VcPriority *int64 `json:"vc_priority,omitempty"`
 
 	// virtual chassis
-	VirtualChassis *NestedVirtualChassis `json:"virtual_chassis,omitempty"`
+	VirtualChassis *DeviceVirtualChassis `json:"virtual_chassis,omitempty"`
 }
 
 // Validate validates this device with config context
@@ -179,10 +177,6 @@ func (m *DeviceWithConfigContext) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateName(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateParentDevice(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -222,10 +216,6 @@ func (m *DeviceWithConfigContext) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateTenant(formats); err != nil {
 		res = append(res, err)
 	}
@@ -254,7 +244,7 @@ func (m *DeviceWithConfigContext) validateAssetTag(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if err := validate.MaxLength("asset_tag", "body", string(*m.AssetTag), 50); err != nil {
+	if err := validate.MaxLength("asset_tag", "body", string(m.AssetTag), 50); err != nil {
 		return err
 	}
 
@@ -365,26 +355,8 @@ func (m *DeviceWithConfigContext) validateName(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("name", "body", string(*m.Name), 64); err != nil {
+	if err := validate.MaxLength("name", "body", string(m.Name), 64); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *DeviceWithConfigContext) validateParentDevice(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ParentDevice) { // not required
-		return nil
-	}
-
-	if m.ParentDevice != nil {
-		if err := m.ParentDevice.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("parent_device")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -414,11 +386,11 @@ func (m *DeviceWithConfigContext) validatePosition(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if err := validate.MinimumInt("position", "body", int64(*m.Position), 1, false); err != nil {
+	if err := validate.MinimumInt("position", "body", int64(m.Position), 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("position", "body", int64(*m.Position), 32767, false); err != nil {
+	if err := validate.MaximumInt("position", "body", int64(m.Position), 32767, false); err != nil {
 		return err
 	}
 
@@ -546,23 +518,6 @@ func (m *DeviceWithConfigContext) validateStatus(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *DeviceWithConfigContext) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
-	}
-
-	return nil
-}
-
 func (m *DeviceWithConfigContext) validateTenant(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Tenant) { // not required
@@ -658,13 +613,11 @@ type DeviceWithConfigContextFace struct {
 
 	// label
 	// Required: true
-	// Enum: [Front Rear]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	// Enum: [front rear]
-	Value *string `json:"value"`
+	Value *int64 `json:"value"`
 }
 
 // Validate validates this device with config context face
@@ -685,86 +638,18 @@ func (m *DeviceWithConfigContextFace) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var deviceWithConfigContextFaceTypeLabelPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["Front","Rear"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		deviceWithConfigContextFaceTypeLabelPropEnum = append(deviceWithConfigContextFaceTypeLabelPropEnum, v)
-	}
-}
-
-const (
-
-	// DeviceWithConfigContextFaceLabelFront captures enum value "Front"
-	DeviceWithConfigContextFaceLabelFront string = "Front"
-
-	// DeviceWithConfigContextFaceLabelRear captures enum value "Rear"
-	DeviceWithConfigContextFaceLabelRear string = "Rear"
-)
-
-// prop value enum
-func (m *DeviceWithConfigContextFace) validateLabelEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, deviceWithConfigContextFaceTypeLabelPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *DeviceWithConfigContextFace) validateLabel(formats strfmt.Registry) error {
 
 	if err := validate.Required("face"+"."+"label", "body", m.Label); err != nil {
 		return err
 	}
 
-	// value enum
-	if err := m.validateLabelEnum("face"+"."+"label", "body", *m.Label); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var deviceWithConfigContextFaceTypeValuePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["front","rear"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		deviceWithConfigContextFaceTypeValuePropEnum = append(deviceWithConfigContextFaceTypeValuePropEnum, v)
-	}
-}
-
-const (
-
-	// DeviceWithConfigContextFaceValueFront captures enum value "front"
-	DeviceWithConfigContextFaceValueFront string = "front"
-
-	// DeviceWithConfigContextFaceValueRear captures enum value "rear"
-	DeviceWithConfigContextFaceValueRear string = "rear"
-)
-
-// prop value enum
-func (m *DeviceWithConfigContextFace) validateValueEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, deviceWithConfigContextFaceTypeValuePropEnum, true); err != nil {
-		return err
-	}
 	return nil
 }
 
 func (m *DeviceWithConfigContextFace) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("face"+"."+"value", "body", m.Value); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateValueEnum("face"+"."+"value", "body", *m.Value); err != nil {
 		return err
 	}
 
@@ -796,13 +681,11 @@ type DeviceWithConfigContextStatus struct {
 
 	// label
 	// Required: true
-	// Enum: [Offline Active Planned Staged Failed Inventory Decommissioning]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	// Enum: [offline active planned staged failed inventory decommissioning]
-	Value *string `json:"value"`
+	Value *int64 `json:"value"`
 }
 
 // Validate validates this device with config context status
@@ -823,116 +706,18 @@ func (m *DeviceWithConfigContextStatus) Validate(formats strfmt.Registry) error 
 	return nil
 }
 
-var deviceWithConfigContextStatusTypeLabelPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["Offline","Active","Planned","Staged","Failed","Inventory","Decommissioning"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		deviceWithConfigContextStatusTypeLabelPropEnum = append(deviceWithConfigContextStatusTypeLabelPropEnum, v)
-	}
-}
-
-const (
-
-	// DeviceWithConfigContextStatusLabelOffline captures enum value "Offline"
-	DeviceWithConfigContextStatusLabelOffline string = "Offline"
-
-	// DeviceWithConfigContextStatusLabelActive captures enum value "Active"
-	DeviceWithConfigContextStatusLabelActive string = "Active"
-
-	// DeviceWithConfigContextStatusLabelPlanned captures enum value "Planned"
-	DeviceWithConfigContextStatusLabelPlanned string = "Planned"
-
-	// DeviceWithConfigContextStatusLabelStaged captures enum value "Staged"
-	DeviceWithConfigContextStatusLabelStaged string = "Staged"
-
-	// DeviceWithConfigContextStatusLabelFailed captures enum value "Failed"
-	DeviceWithConfigContextStatusLabelFailed string = "Failed"
-
-	// DeviceWithConfigContextStatusLabelInventory captures enum value "Inventory"
-	DeviceWithConfigContextStatusLabelInventory string = "Inventory"
-
-	// DeviceWithConfigContextStatusLabelDecommissioning captures enum value "Decommissioning"
-	DeviceWithConfigContextStatusLabelDecommissioning string = "Decommissioning"
-)
-
-// prop value enum
-func (m *DeviceWithConfigContextStatus) validateLabelEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, deviceWithConfigContextStatusTypeLabelPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *DeviceWithConfigContextStatus) validateLabel(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"label", "body", m.Label); err != nil {
 		return err
 	}
 
-	// value enum
-	if err := m.validateLabelEnum("status"+"."+"label", "body", *m.Label); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var deviceWithConfigContextStatusTypeValuePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["offline","active","planned","staged","failed","inventory","decommissioning"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		deviceWithConfigContextStatusTypeValuePropEnum = append(deviceWithConfigContextStatusTypeValuePropEnum, v)
-	}
-}
-
-const (
-
-	// DeviceWithConfigContextStatusValueOffline captures enum value "offline"
-	DeviceWithConfigContextStatusValueOffline string = "offline"
-
-	// DeviceWithConfigContextStatusValueActive captures enum value "active"
-	DeviceWithConfigContextStatusValueActive string = "active"
-
-	// DeviceWithConfigContextStatusValuePlanned captures enum value "planned"
-	DeviceWithConfigContextStatusValuePlanned string = "planned"
-
-	// DeviceWithConfigContextStatusValueStaged captures enum value "staged"
-	DeviceWithConfigContextStatusValueStaged string = "staged"
-
-	// DeviceWithConfigContextStatusValueFailed captures enum value "failed"
-	DeviceWithConfigContextStatusValueFailed string = "failed"
-
-	// DeviceWithConfigContextStatusValueInventory captures enum value "inventory"
-	DeviceWithConfigContextStatusValueInventory string = "inventory"
-
-	// DeviceWithConfigContextStatusValueDecommissioning captures enum value "decommissioning"
-	DeviceWithConfigContextStatusValueDecommissioning string = "decommissioning"
-)
-
-// prop value enum
-func (m *DeviceWithConfigContextStatus) validateValueEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, deviceWithConfigContextStatusTypeValuePropEnum, true); err != nil {
-		return err
-	}
 	return nil
 }
 
 func (m *DeviceWithConfigContextStatus) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"value", "body", m.Value); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateValueEnum("status"+"."+"value", "body", *m.Value); err != nil {
 		return err
 	}
 

@@ -78,7 +78,7 @@ for the dcim regions create operation typically these are written to a http.Requ
 type DcimRegionsCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableRegion
+	Data *models.Region
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimRegionsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim regions create params
-func (o *DcimRegionsCreateParams) WithData(data *models.WritableRegion) *DcimRegionsCreateParams {
+func (o *DcimRegionsCreateParams) WithData(data *models.Region) *DcimRegionsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim regions create params
-func (o *DcimRegionsCreateParams) SetData(data *models.WritableRegion) {
+func (o *DcimRegionsCreateParams) SetData(data *models.Region) {
 	o.Data = data
 }
 

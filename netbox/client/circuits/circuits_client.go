@@ -42,6 +42,10 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	CircuitsChoicesList(params *CircuitsChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsChoicesListOK, error)
+
+	CircuitsChoicesRead(params *CircuitsChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsChoicesReadOK, error)
+
 	CircuitsCircuitTerminationsCreate(params *CircuitsCircuitTerminationsCreateParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTerminationsCreateCreated, error)
 
 	CircuitsCircuitTerminationsDelete(params *CircuitsCircuitTerminationsDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTerminationsDeleteNoContent, error)
@@ -93,6 +97,76 @@ type ClientService interface {
 	CircuitsProvidersUpdate(params *CircuitsProvidersUpdateParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsProvidersUpdateOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  CircuitsChoicesList circuits choices list API
+*/
+func (a *Client) CircuitsChoicesList(params *CircuitsChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsChoicesListOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCircuitsChoicesListParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "circuits__choices_list",
+		Method:             "GET",
+		PathPattern:        "/circuits/_choices/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &CircuitsChoicesListReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CircuitsChoicesListOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for circuits__choices_list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  CircuitsChoicesRead circuits choices read API
+*/
+func (a *Client) CircuitsChoicesRead(params *CircuitsChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsChoicesReadOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCircuitsChoicesReadParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "circuits__choices_read",
+		Method:             "GET",
+		PathPattern:        "/circuits/_choices/{id}/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &CircuitsChoicesReadReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CircuitsChoicesReadOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for circuits__choices_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -166,7 +240,7 @@ func (a *Client) CircuitsCircuitTerminationsDelete(params *CircuitsCircuitTermin
 }
 
 /*
-  CircuitsCircuitTerminationsList Call to super to allow for caching
+  CircuitsCircuitTerminationsList circuits circuit terminations list API
 */
 func (a *Client) CircuitsCircuitTerminationsList(params *CircuitsCircuitTerminationsListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTerminationsListOK, error) {
 	// TODO: Validate the params before sending
@@ -236,7 +310,7 @@ func (a *Client) CircuitsCircuitTerminationsPartialUpdate(params *CircuitsCircui
 }
 
 /*
-  CircuitsCircuitTerminationsRead Call to super to allow for caching
+  CircuitsCircuitTerminationsRead circuits circuit terminations read API
 */
 func (a *Client) CircuitsCircuitTerminationsRead(params *CircuitsCircuitTerminationsReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTerminationsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -376,7 +450,7 @@ func (a *Client) CircuitsCircuitTypesDelete(params *CircuitsCircuitTypesDeletePa
 }
 
 /*
-  CircuitsCircuitTypesList Call to super to allow for caching
+  CircuitsCircuitTypesList circuits circuit types list API
 */
 func (a *Client) CircuitsCircuitTypesList(params *CircuitsCircuitTypesListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTypesListOK, error) {
 	// TODO: Validate the params before sending
@@ -446,7 +520,7 @@ func (a *Client) CircuitsCircuitTypesPartialUpdate(params *CircuitsCircuitTypesP
 }
 
 /*
-  CircuitsCircuitTypesRead Call to super to allow for caching
+  CircuitsCircuitTypesRead circuits circuit types read API
 */
 func (a *Client) CircuitsCircuitTypesRead(params *CircuitsCircuitTypesReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitTypesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -586,7 +660,7 @@ func (a *Client) CircuitsCircuitsDelete(params *CircuitsCircuitsDeleteParams, au
 }
 
 /*
-  CircuitsCircuitsList Call to super to allow for caching
+  CircuitsCircuitsList circuits circuits list API
 */
 func (a *Client) CircuitsCircuitsList(params *CircuitsCircuitsListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitsListOK, error) {
 	// TODO: Validate the params before sending
@@ -656,7 +730,7 @@ func (a *Client) CircuitsCircuitsPartialUpdate(params *CircuitsCircuitsPartialUp
 }
 
 /*
-  CircuitsCircuitsRead Call to super to allow for caching
+  CircuitsCircuitsRead circuits circuits read API
 */
 func (a *Client) CircuitsCircuitsRead(params *CircuitsCircuitsReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsCircuitsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -831,7 +905,7 @@ func (a *Client) CircuitsProvidersGraphs(params *CircuitsProvidersGraphsParams, 
 }
 
 /*
-  CircuitsProvidersList Call to super to allow for caching
+  CircuitsProvidersList circuits providers list API
 */
 func (a *Client) CircuitsProvidersList(params *CircuitsProvidersListParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsProvidersListOK, error) {
 	// TODO: Validate the params before sending
@@ -901,7 +975,7 @@ func (a *Client) CircuitsProvidersPartialUpdate(params *CircuitsProvidersPartial
 }
 
 /*
-  CircuitsProvidersRead Call to super to allow for caching
+  CircuitsProvidersRead circuits providers read API
 */
 func (a *Client) CircuitsProvidersRead(params *CircuitsProvidersReadParams, authInfo runtime.ClientAuthInfoWriter) (*CircuitsProvidersReadOK, error) {
 	// TODO: Validate the params before sending

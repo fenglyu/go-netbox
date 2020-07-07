@@ -78,7 +78,7 @@ for the dcim device bays create operation typically these are written to a http.
 type DcimDeviceBaysCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableDeviceBay
+	Data *models.DeviceBay
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimDeviceBaysCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim device bays create params
-func (o *DcimDeviceBaysCreateParams) WithData(data *models.WritableDeviceBay) *DcimDeviceBaysCreateParams {
+func (o *DcimDeviceBaysCreateParams) WithData(data *models.DeviceBay) *DcimDeviceBaysCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device bays create params
-func (o *DcimDeviceBaysCreateParams) SetData(data *models.WritableDeviceBay) {
+func (o *DcimDeviceBaysCreateParams) SetData(data *models.DeviceBay) {
 	o.Data = data
 }
 

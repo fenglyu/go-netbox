@@ -78,7 +78,7 @@ for the dcim inventory items create operation typically these are written to a h
 type DcimInventoryItemsCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableInventoryItem
+	Data *models.InventoryItem
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimInventoryItemsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim inventory items create params
-func (o *DcimInventoryItemsCreateParams) WithData(data *models.WritableInventoryItem) *DcimInventoryItemsCreateParams {
+func (o *DcimInventoryItemsCreateParams) WithData(data *models.InventoryItem) *DcimInventoryItemsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim inventory items create params
-func (o *DcimInventoryItemsCreateParams) SetData(data *models.WritableInventoryItem) {
+func (o *DcimInventoryItemsCreateParams) SetData(data *models.InventoryItem) {
 	o.Data = data
 }
 

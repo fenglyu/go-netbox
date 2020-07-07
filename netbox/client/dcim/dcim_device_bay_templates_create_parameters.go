@@ -78,7 +78,7 @@ for the dcim device bay templates create operation typically these are written t
 type DcimDeviceBayTemplatesCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableDeviceBayTemplate
+	Data *models.DeviceBayTemplate
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimDeviceBayTemplatesCreateParams) SetHTTPClient(client *http.Client) 
 }
 
 // WithData adds the data to the dcim device bay templates create params
-func (o *DcimDeviceBayTemplatesCreateParams) WithData(data *models.WritableDeviceBayTemplate) *DcimDeviceBayTemplatesCreateParams {
+func (o *DcimDeviceBayTemplatesCreateParams) WithData(data *models.DeviceBayTemplate) *DcimDeviceBayTemplatesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device bay templates create params
-func (o *DcimDeviceBayTemplatesCreateParams) SetData(data *models.WritableDeviceBayTemplate) {
+func (o *DcimDeviceBayTemplatesCreateParams) SetData(data *models.DeviceBayTemplate) {
 	o.Data = data
 }
 

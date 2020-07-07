@@ -79,7 +79,7 @@ for the extras config contexts partial update operation typically these are writ
 type ExtrasConfigContextsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableConfigContext
+	Data *models.ConfigContext
 	/*ID
 	  A unique integer value identifying this config context.
 
@@ -125,13 +125,13 @@ func (o *ExtrasConfigContextsPartialUpdateParams) SetHTTPClient(client *http.Cli
 }
 
 // WithData adds the data to the extras config contexts partial update params
-func (o *ExtrasConfigContextsPartialUpdateParams) WithData(data *models.WritableConfigContext) *ExtrasConfigContextsPartialUpdateParams {
+func (o *ExtrasConfigContextsPartialUpdateParams) WithData(data *models.ConfigContext) *ExtrasConfigContextsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the extras config contexts partial update params
-func (o *ExtrasConfigContextsPartialUpdateParams) SetData(data *models.WritableConfigContext) {
+func (o *ExtrasConfigContextsPartialUpdateParams) SetData(data *models.ConfigContext) {
 	o.Data = data
 }
 

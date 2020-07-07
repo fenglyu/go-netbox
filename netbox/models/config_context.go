@@ -21,8 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,20 +32,12 @@ import (
 // swagger:model ConfigContext
 type ConfigContext struct {
 
-	// cluster groups
-	// Unique: true
-	ClusterGroups []*NestedClusterGroup `json:"cluster_groups"`
-
-	// clusters
-	// Unique: true
-	Clusters []*NestedCluster `json:"clusters"`
-
 	// Data
 	// Required: true
 	Data *string `json:"data"`
 
 	// Description
-	// Max Length: 200
+	// Max Length: 100
 	Description string `json:"description,omitempty"`
 
 	// ID
@@ -65,31 +55,27 @@ type ConfigContext struct {
 
 	// platforms
 	// Unique: true
-	Platforms []*NestedPlatform `json:"platforms"`
+	Platforms []int64 `json:"platforms"`
 
 	// regions
 	// Unique: true
-	Regions []*NestedRegion `json:"regions"`
+	Regions []int64 `json:"regions"`
 
 	// roles
 	// Unique: true
-	Roles []*NestedDeviceRole `json:"roles"`
+	Roles []int64 `json:"roles"`
 
 	// sites
 	// Unique: true
-	Sites []*NestedSite `json:"sites"`
-
-	// tags
-	// Unique: true
-	Tags []string `json:"tags"`
+	Sites []int64 `json:"sites"`
 
 	// tenant groups
 	// Unique: true
-	TenantGroups []*NestedTenantGroup `json:"tenant_groups"`
+	TenantGroups []int64 `json:"tenant_groups"`
 
 	// tenants
 	// Unique: true
-	Tenants []*NestedTenant `json:"tenants"`
+	Tenants []int64 `json:"tenants"`
 
 	// Weight
 	// Maximum: 32767
@@ -100,14 +86,6 @@ type ConfigContext struct {
 // Validate validates this config context
 func (m *ConfigContext) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateClusterGroups(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateClusters(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateData(formats); err != nil {
 		res = append(res, err)
@@ -137,10 +115,6 @@ func (m *ConfigContext) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateTenantGroups(formats); err != nil {
 		res = append(res, err)
 	}
@@ -159,64 +133,6 @@ func (m *ConfigContext) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ConfigContext) validateClusterGroups(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ClusterGroups) { // not required
-		return nil
-	}
-
-	if err := validate.UniqueItems("cluster_groups", "body", m.ClusterGroups); err != nil {
-		return err
-	}
-
-	for i := 0; i < len(m.ClusterGroups); i++ {
-		if swag.IsZero(m.ClusterGroups[i]) { // not required
-			continue
-		}
-
-		if m.ClusterGroups[i] != nil {
-			if err := m.ClusterGroups[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("cluster_groups" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *ConfigContext) validateClusters(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Clusters) { // not required
-		return nil
-	}
-
-	if err := validate.UniqueItems("clusters", "body", m.Clusters); err != nil {
-		return err
-	}
-
-	for i := 0; i < len(m.Clusters); i++ {
-		if swag.IsZero(m.Clusters[i]) { // not required
-			continue
-		}
-
-		if m.Clusters[i] != nil {
-			if err := m.Clusters[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("clusters" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *ConfigContext) validateData(formats strfmt.Registry) error {
 
 	if err := validate.Required("data", "body", m.Data); err != nil {
@@ -232,7 +148,7 @@ func (m *ConfigContext) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
 		return err
 	}
 
@@ -266,22 +182,6 @@ func (m *ConfigContext) validatePlatforms(formats strfmt.Registry) error {
 		return err
 	}
 
-	for i := 0; i < len(m.Platforms); i++ {
-		if swag.IsZero(m.Platforms[i]) { // not required
-			continue
-		}
-
-		if m.Platforms[i] != nil {
-			if err := m.Platforms[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("platforms" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -293,22 +193,6 @@ func (m *ConfigContext) validateRegions(formats strfmt.Registry) error {
 
 	if err := validate.UniqueItems("regions", "body", m.Regions); err != nil {
 		return err
-	}
-
-	for i := 0; i < len(m.Regions); i++ {
-		if swag.IsZero(m.Regions[i]) { // not required
-			continue
-		}
-
-		if m.Regions[i] != nil {
-			if err := m.Regions[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("regions" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -324,22 +208,6 @@ func (m *ConfigContext) validateRoles(formats strfmt.Registry) error {
 		return err
 	}
 
-	for i := 0; i < len(m.Roles); i++ {
-		if swag.IsZero(m.Roles[i]) { // not required
-			continue
-		}
-
-		if m.Roles[i] != nil {
-			if err := m.Roles[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("roles" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -351,43 +219,6 @@ func (m *ConfigContext) validateSites(formats strfmt.Registry) error {
 
 	if err := validate.UniqueItems("sites", "body", m.Sites); err != nil {
 		return err
-	}
-
-	for i := 0; i < len(m.Sites); i++ {
-		if swag.IsZero(m.Sites[i]) { // not required
-			continue
-		}
-
-		if m.Sites[i] != nil {
-			if err := m.Sites[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("sites" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *ConfigContext) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	if err := validate.UniqueItems("tags", "body", m.Tags); err != nil {
-		return err
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.Pattern("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), `^[-a-zA-Z0-9_]+$`); err != nil {
-			return err
-		}
-
 	}
 
 	return nil
@@ -403,22 +234,6 @@ func (m *ConfigContext) validateTenantGroups(formats strfmt.Registry) error {
 		return err
 	}
 
-	for i := 0; i < len(m.TenantGroups); i++ {
-		if swag.IsZero(m.TenantGroups[i]) { // not required
-			continue
-		}
-
-		if m.TenantGroups[i] != nil {
-			if err := m.TenantGroups[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tenant_groups" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -430,22 +245,6 @@ func (m *ConfigContext) validateTenants(formats strfmt.Registry) error {
 
 	if err := validate.UniqueItems("tenants", "body", m.Tenants); err != nil {
 		return err
-	}
-
-	for i := 0; i < len(m.Tenants); i++ {
-		if swag.IsZero(m.Tenants[i]) { // not required
-			continue
-		}
-
-		if m.Tenants[i] != nil {
-			if err := m.Tenants[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tenants" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

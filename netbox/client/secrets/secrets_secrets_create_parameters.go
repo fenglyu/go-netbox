@@ -78,7 +78,7 @@ for the secrets secrets create operation typically these are written to a http.R
 type SecretsSecretsCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableSecret
+	Data *models.Secret
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *SecretsSecretsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the secrets secrets create params
-func (o *SecretsSecretsCreateParams) WithData(data *models.WritableSecret) *SecretsSecretsCreateParams {
+func (o *SecretsSecretsCreateParams) WithData(data *models.Secret) *SecretsSecretsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the secrets secrets create params
-func (o *SecretsSecretsCreateParams) SetData(data *models.WritableSecret) {
+func (o *SecretsSecretsCreateParams) SetData(data *models.Secret) {
 	o.Data = data
 }
 

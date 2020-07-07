@@ -42,15 +42,11 @@ type NestedVRF struct {
 	// Min Length: 1
 	Name *string `json:"name"`
 
-	// Prefix count
-	// Read Only: true
-	PrefixCount int64 `json:"prefix_count,omitempty"`
-
 	// Route distinguisher
-	//
-	// Unique route distinguisher (as defined in RFC 4364)
+	// Required: true
 	// Max Length: 21
-	Rd *string `json:"rd,omitempty"`
+	// Min Length: 1
+	Rd *string `json:"rd"`
 
 	// Url
 	// Read Only: true
@@ -99,8 +95,12 @@ func (m *NestedVRF) validateName(formats strfmt.Registry) error {
 
 func (m *NestedVRF) validateRd(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Rd) { // not required
-		return nil
+	if err := validate.Required("rd", "body", m.Rd); err != nil {
+		return err
+	}
+
+	if err := validate.MinLength("rd", "body", string(*m.Rd), 1); err != nil {
+		return err
 	}
 
 	if err := validate.MaxLength("rd", "body", string(*m.Rd), 21); err != nil {

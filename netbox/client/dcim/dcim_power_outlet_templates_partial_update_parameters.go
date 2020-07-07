@@ -79,7 +79,7 @@ for the dcim power outlet templates partial update operation typically these are
 type DcimPowerOutletTemplatesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritablePowerOutletTemplate
+	Data *models.PowerOutletTemplate
 	/*ID
 	  A unique integer value identifying this power outlet template.
 
@@ -125,13 +125,13 @@ func (o *DcimPowerOutletTemplatesPartialUpdateParams) SetHTTPClient(client *http
 }
 
 // WithData adds the data to the dcim power outlet templates partial update params
-func (o *DcimPowerOutletTemplatesPartialUpdateParams) WithData(data *models.WritablePowerOutletTemplate) *DcimPowerOutletTemplatesPartialUpdateParams {
+func (o *DcimPowerOutletTemplatesPartialUpdateParams) WithData(data *models.PowerOutletTemplate) *DcimPowerOutletTemplatesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power outlet templates partial update params
-func (o *DcimPowerOutletTemplatesPartialUpdateParams) SetData(data *models.WritablePowerOutletTemplate) {
+func (o *DcimPowerOutletTemplatesPartialUpdateParams) SetData(data *models.PowerOutletTemplate) {
 	o.Data = data
 }
 

@@ -77,7 +77,7 @@ for the extras tags read operation typically these are written to a http.Request
 type ExtrasTagsReadParams struct {
 
 	/*ID
-	  A unique integer value identifying this tag.
+	  A unique integer value identifying this Tag.
 
 	*/
 	ID int64

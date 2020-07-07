@@ -79,7 +79,7 @@ for the ipam vlan groups update operation typically these are written to a http.
 type IpamVlanGroupsUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableVLANGroup
+	Data *models.VLANGroup
 	/*ID
 	  A unique integer value identifying this VLAN group.
 
@@ -125,13 +125,13 @@ func (o *IpamVlanGroupsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam vlan groups update params
-func (o *IpamVlanGroupsUpdateParams) WithData(data *models.WritableVLANGroup) *IpamVlanGroupsUpdateParams {
+func (o *IpamVlanGroupsUpdateParams) WithData(data *models.VLANGroup) *IpamVlanGroupsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam vlan groups update params
-func (o *IpamVlanGroupsUpdateParams) SetData(data *models.WritableVLANGroup) {
+func (o *IpamVlanGroupsUpdateParams) SetData(data *models.VLANGroup) {
 	o.Data = data
 }
 

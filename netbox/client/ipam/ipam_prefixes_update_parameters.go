@@ -79,7 +79,7 @@ for the ipam prefixes update operation typically these are written to a http.Req
 type IpamPrefixesUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritablePrefix
+	Data *models.Prefix
 	/*ID
 	  A unique integer value identifying this prefix.
 
@@ -125,13 +125,13 @@ func (o *IpamPrefixesUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam prefixes update params
-func (o *IpamPrefixesUpdateParams) WithData(data *models.WritablePrefix) *IpamPrefixesUpdateParams {
+func (o *IpamPrefixesUpdateParams) WithData(data *models.Prefix) *IpamPrefixesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam prefixes update params
-func (o *IpamPrefixesUpdateParams) SetData(data *models.WritablePrefix) {
+func (o *IpamPrefixesUpdateParams) SetData(data *models.Prefix) {
 	o.Data = data
 }
 

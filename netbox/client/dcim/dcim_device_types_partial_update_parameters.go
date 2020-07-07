@@ -79,7 +79,7 @@ for the dcim device types partial update operation typically these are written t
 type DcimDeviceTypesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableDeviceType
+	Data *models.DeviceType
 	/*ID
 	  A unique integer value identifying this device type.
 
@@ -125,13 +125,13 @@ func (o *DcimDeviceTypesPartialUpdateParams) SetHTTPClient(client *http.Client) 
 }
 
 // WithData adds the data to the dcim device types partial update params
-func (o *DcimDeviceTypesPartialUpdateParams) WithData(data *models.WritableDeviceType) *DcimDeviceTypesPartialUpdateParams {
+func (o *DcimDeviceTypesPartialUpdateParams) WithData(data *models.DeviceType) *DcimDeviceTypesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device types partial update params
-func (o *DcimDeviceTypesPartialUpdateParams) SetData(data *models.WritableDeviceType) {
+func (o *DcimDeviceTypesPartialUpdateParams) SetData(data *models.DeviceType) {
 	o.Data = data
 }
 

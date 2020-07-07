@@ -78,7 +78,7 @@ for the extras config contexts create operation typically these are written to a
 type ExtrasConfigContextsCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableConfigContext
+	Data *models.ConfigContext
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *ExtrasConfigContextsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the extras config contexts create params
-func (o *ExtrasConfigContextsCreateParams) WithData(data *models.WritableConfigContext) *ExtrasConfigContextsCreateParams {
+func (o *ExtrasConfigContextsCreateParams) WithData(data *models.ConfigContext) *ExtrasConfigContextsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the extras config contexts create params
-func (o *ExtrasConfigContextsCreateParams) SetData(data *models.WritableConfigContext) {
+func (o *ExtrasConfigContextsCreateParams) SetData(data *models.ConfigContext) {
 	o.Data = data
 }
 

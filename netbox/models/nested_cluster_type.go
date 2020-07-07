@@ -32,10 +32,6 @@ import (
 // swagger:model NestedClusterType
 type NestedClusterType struct {
 
-	// Cluster count
-	// Read Only: true
-	ClusterCount int64 `json:"cluster_count,omitempty"`
-
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`

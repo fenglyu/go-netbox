@@ -42,6 +42,10 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	IpamChoicesList(params *IpamChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamChoicesListOK, error)
+
+	IpamChoicesRead(params *IpamChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamChoicesReadOK, error)
+
 	IpamAggregatesCreate(params *IpamAggregatesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamAggregatesCreateCreated, error)
 
 	IpamAggregatesDelete(params *IpamAggregatesDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*IpamAggregatesDeleteNoContent, error)
@@ -162,6 +166,76 @@ type ClientService interface {
 }
 
 /*
+  IpamChoicesList ipam choices list API
+*/
+func (a *Client) IpamChoicesList(params *IpamChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamChoicesListOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewIpamChoicesListParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ipam__choices_list",
+		Method:             "GET",
+		PathPattern:        "/ipam/_choices/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &IpamChoicesListReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*IpamChoicesListOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for ipam__choices_list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  IpamChoicesRead ipam choices read API
+*/
+func (a *Client) IpamChoicesRead(params *IpamChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamChoicesReadOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewIpamChoicesReadParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ipam__choices_read",
+		Method:             "GET",
+		PathPattern:        "/ipam/_choices/{id}/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &IpamChoicesReadReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*IpamChoicesReadOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for ipam__choices_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
   IpamAggregatesCreate ipam aggregates create API
 */
 func (a *Client) IpamAggregatesCreate(params *IpamAggregatesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamAggregatesCreateCreated, error) {
@@ -232,7 +306,7 @@ func (a *Client) IpamAggregatesDelete(params *IpamAggregatesDeleteParams, authIn
 }
 
 /*
-  IpamAggregatesList Call to super to allow for caching
+  IpamAggregatesList ipam aggregates list API
 */
 func (a *Client) IpamAggregatesList(params *IpamAggregatesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamAggregatesListOK, error) {
 	// TODO: Validate the params before sending
@@ -302,7 +376,7 @@ func (a *Client) IpamAggregatesPartialUpdate(params *IpamAggregatesPartialUpdate
 }
 
 /*
-  IpamAggregatesRead Call to super to allow for caching
+  IpamAggregatesRead ipam aggregates read API
 */
 func (a *Client) IpamAggregatesRead(params *IpamAggregatesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamAggregatesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -442,7 +516,7 @@ func (a *Client) IpamIPAddressesDelete(params *IpamIPAddressesDeleteParams, auth
 }
 
 /*
-  IpamIPAddressesList Call to super to allow for caching
+  IpamIPAddressesList ipam ip addresses list API
 */
 func (a *Client) IpamIPAddressesList(params *IpamIPAddressesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamIPAddressesListOK, error) {
 	// TODO: Validate the params before sending
@@ -512,7 +586,7 @@ func (a *Client) IpamIPAddressesPartialUpdate(params *IpamIPAddressesPartialUpda
 }
 
 /*
-  IpamIPAddressesRead Call to super to allow for caching
+  IpamIPAddressesRead ipam ip addresses read API
 */
 func (a *Client) IpamIPAddressesRead(params *IpamIPAddressesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamIPAddressesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -585,9 +659,6 @@ func (a *Client) IpamIPAddressesUpdate(params *IpamIPAddressesUpdateParams, auth
   IpamPrefixesAvailableIpsCreate A convenience method for returning available IP addresses within a prefix. By default, the number of IPs
 returned will be equivalent to PAGINATE_COUNT. An arbitrary limit (up to MAX_PAGE_SIZE, if set) may be passed,
 however results will not be paginated.
-
-The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
-invoked in parallel, which results in a race condition where multiple insertions can occur.
 */
 func (a *Client) IpamPrefixesAvailableIpsCreate(params *IpamPrefixesAvailableIpsCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailableIpsCreateCreated, error) {
 	// TODO: Validate the params before sending
@@ -625,9 +696,6 @@ func (a *Client) IpamPrefixesAvailableIpsCreate(params *IpamPrefixesAvailableIps
   IpamPrefixesAvailableIpsRead A convenience method for returning available IP addresses within a prefix. By default, the number of IPs
 returned will be equivalent to PAGINATE_COUNT. An arbitrary limit (up to MAX_PAGE_SIZE, if set) may be passed,
 however results will not be paginated.
-
-The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
-invoked in parallel, which results in a race condition where multiple insertions can occur.
 */
 func (a *Client) IpamPrefixesAvailableIpsRead(params *IpamPrefixesAvailableIpsReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailableIpsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -662,10 +730,7 @@ func (a *Client) IpamPrefixesAvailableIpsRead(params *IpamPrefixesAvailableIpsRe
 }
 
 /*
-  IpamPrefixesAvailablePrefixesCreate as convenience method for returning available child prefixes within a parent
-
-  The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
-invoked in parallel, which results in a race condition where multiple insertions can occur.
+  IpamPrefixesAvailablePrefixesCreate A convenience method for returning available child prefixes within a parent.
 */
 func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailablePrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesCreateCreated, error) {
 	// TODO: Validate the params before sending
@@ -700,10 +765,7 @@ func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailab
 }
 
 /*
-  IpamPrefixesAvailablePrefixesRead as convenience method for returning available child prefixes within a parent
-
-  The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
-invoked in parallel, which results in a race condition where multiple insertions can occur.
+  IpamPrefixesAvailablePrefixesRead A convenience method for returning available child prefixes within a parent.
 */
 func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -808,7 +870,7 @@ func (a *Client) IpamPrefixesDelete(params *IpamPrefixesDeleteParams, authInfo r
 }
 
 /*
-  IpamPrefixesList Call to super to allow for caching
+  IpamPrefixesList ipam prefixes list API
 */
 func (a *Client) IpamPrefixesList(params *IpamPrefixesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesListOK, error) {
 	// TODO: Validate the params before sending
@@ -878,7 +940,7 @@ func (a *Client) IpamPrefixesPartialUpdate(params *IpamPrefixesPartialUpdatePara
 }
 
 /*
-  IpamPrefixesRead Call to super to allow for caching
+  IpamPrefixesRead ipam prefixes read API
 */
 func (a *Client) IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1018,7 +1080,7 @@ func (a *Client) IpamRirsDelete(params *IpamRirsDeleteParams, authInfo runtime.C
 }
 
 /*
-  IpamRirsList Call to super to allow for caching
+  IpamRirsList ipam rirs list API
 */
 func (a *Client) IpamRirsList(params *IpamRirsListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamRirsListOK, error) {
 	// TODO: Validate the params before sending
@@ -1088,7 +1150,7 @@ func (a *Client) IpamRirsPartialUpdate(params *IpamRirsPartialUpdateParams, auth
 }
 
 /*
-  IpamRirsRead Call to super to allow for caching
+  IpamRirsRead ipam rirs read API
 */
 func (a *Client) IpamRirsRead(params *IpamRirsReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamRirsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1228,7 +1290,7 @@ func (a *Client) IpamRolesDelete(params *IpamRolesDeleteParams, authInfo runtime
 }
 
 /*
-  IpamRolesList Call to super to allow for caching
+  IpamRolesList ipam roles list API
 */
 func (a *Client) IpamRolesList(params *IpamRolesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamRolesListOK, error) {
 	// TODO: Validate the params before sending
@@ -1298,7 +1360,7 @@ func (a *Client) IpamRolesPartialUpdate(params *IpamRolesPartialUpdateParams, au
 }
 
 /*
-  IpamRolesRead Call to super to allow for caching
+  IpamRolesRead ipam roles read API
 */
 func (a *Client) IpamRolesRead(params *IpamRolesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamRolesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1438,7 +1500,7 @@ func (a *Client) IpamServicesDelete(params *IpamServicesDeleteParams, authInfo r
 }
 
 /*
-  IpamServicesList Call to super to allow for caching
+  IpamServicesList ipam services list API
 */
 func (a *Client) IpamServicesList(params *IpamServicesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamServicesListOK, error) {
 	// TODO: Validate the params before sending
@@ -1508,7 +1570,7 @@ func (a *Client) IpamServicesPartialUpdate(params *IpamServicesPartialUpdatePara
 }
 
 /*
-  IpamServicesRead Call to super to allow for caching
+  IpamServicesRead ipam services read API
 */
 func (a *Client) IpamServicesRead(params *IpamServicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamServicesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1648,7 +1710,7 @@ func (a *Client) IpamVlanGroupsDelete(params *IpamVlanGroupsDeleteParams, authIn
 }
 
 /*
-  IpamVlanGroupsList Call to super to allow for caching
+  IpamVlanGroupsList ipam vlan groups list API
 */
 func (a *Client) IpamVlanGroupsList(params *IpamVlanGroupsListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVlanGroupsListOK, error) {
 	// TODO: Validate the params before sending
@@ -1718,7 +1780,7 @@ func (a *Client) IpamVlanGroupsPartialUpdate(params *IpamVlanGroupsPartialUpdate
 }
 
 /*
-  IpamVlanGroupsRead Call to super to allow for caching
+  IpamVlanGroupsRead ipam vlan groups read API
 */
 func (a *Client) IpamVlanGroupsRead(params *IpamVlanGroupsReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVlanGroupsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1858,7 +1920,7 @@ func (a *Client) IpamVlansDelete(params *IpamVlansDeleteParams, authInfo runtime
 }
 
 /*
-  IpamVlansList Call to super to allow for caching
+  IpamVlansList ipam vlans list API
 */
 func (a *Client) IpamVlansList(params *IpamVlansListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVlansListOK, error) {
 	// TODO: Validate the params before sending
@@ -1928,7 +1990,7 @@ func (a *Client) IpamVlansPartialUpdate(params *IpamVlansPartialUpdateParams, au
 }
 
 /*
-  IpamVlansRead Call to super to allow for caching
+  IpamVlansRead ipam vlans read API
 */
 func (a *Client) IpamVlansRead(params *IpamVlansReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVlansReadOK, error) {
 	// TODO: Validate the params before sending
@@ -2068,7 +2130,7 @@ func (a *Client) IpamVrfsDelete(params *IpamVrfsDeleteParams, authInfo runtime.C
 }
 
 /*
-  IpamVrfsList Call to super to allow for caching
+  IpamVrfsList ipam vrfs list API
 */
 func (a *Client) IpamVrfsList(params *IpamVrfsListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVrfsListOK, error) {
 	// TODO: Validate the params before sending
@@ -2138,7 +2200,7 @@ func (a *Client) IpamVrfsPartialUpdate(params *IpamVrfsPartialUpdateParams, auth
 }
 
 /*
-  IpamVrfsRead Call to super to allow for caching
+  IpamVrfsRead ipam vrfs read API
 */
 func (a *Client) IpamVrfsRead(params *IpamVrfsReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamVrfsReadOK, error) {
 	// TODO: Validate the params before sending

@@ -60,20 +60,20 @@ func NewDcimInterfacesCreateCreated() *DcimInterfacesCreateCreated {
 DcimInterfacesCreateCreated dcim interfaces create created
 */
 type DcimInterfacesCreateCreated struct {
-	Payload *models.DeviceInterface
+	Payload *models.Interface
 }
 
 func (o *DcimInterfacesCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /dcim/interfaces/][%d] dcimInterfacesCreateCreated  %+v", 201, o.Payload)
 }
 
-func (o *DcimInterfacesCreateCreated) GetPayload() *models.DeviceInterface {
+func (o *DcimInterfacesCreateCreated) GetPayload() *models.Interface {
 	return o.Payload
 }
 
 func (o *DcimInterfacesCreateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.DeviceInterface)
+	o.Payload = new(models.Interface)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

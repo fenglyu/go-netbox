@@ -66,10 +66,17 @@ func main() {
 	cidr := "10.247.5.0/24"
 	//cidr := "10.247.0.0/16"
 
-	data := models.WritablePrefix{
+	statusLabel := "active"
+	var statusValue int64 = 1
+
+	prefixStatus := models.PrefixStatus{
+		Label: &statusLabel,
+		Value: &statusValue,
+	}
+	data := models.Prefix{
 		Prefix: &cidr,
-		Status: "active",
-		Tags:   []string{"kubernetes", "gke", "k8s"},
+		Status: &prefixStatus,
+		Tags:   `["testing", "k8s", "gke"]`,
 	}
 
 	param := ipam.IpamPrefixesCreateParams{
@@ -129,18 +136,20 @@ func main() {
 
 	//rootCidr := "10.0.0.0/8"
 	var prefixlength int64 = 24
-	var role, site int64 = 0, 0
 
-	dpcData := models.WritablePrefix{
+	role := models.NestedRole{ID: 0}
+	site := models.NestedSite{ID: 0}
+	dpcData := models.Prefix{
 		//ID: 2,
 		//PrefixLength: &prefixlength,
 		//Prefix:       &rootCidr,
 		PrefixLength: prefixlength,
-		Status:       "active",
+		Status:       &prefixStatus,
 		//Status:       "container",
 		IsPool: false,
 		Role:   &role,
 		Site:   &site,
+		Tags:   `["demos", "k8s", "gke"]`,
 	}
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{

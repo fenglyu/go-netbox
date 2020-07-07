@@ -79,7 +79,7 @@ for the dcim power port templates update operation typically these are written t
 type DcimPowerPortTemplatesUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritablePowerPortTemplate
+	Data *models.PowerPortTemplate
 	/*ID
 	  A unique integer value identifying this power port template.
 
@@ -125,13 +125,13 @@ func (o *DcimPowerPortTemplatesUpdateParams) SetHTTPClient(client *http.Client) 
 }
 
 // WithData adds the data to the dcim power port templates update params
-func (o *DcimPowerPortTemplatesUpdateParams) WithData(data *models.WritablePowerPortTemplate) *DcimPowerPortTemplatesUpdateParams {
+func (o *DcimPowerPortTemplatesUpdateParams) WithData(data *models.PowerPortTemplate) *DcimPowerPortTemplatesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power port templates update params
-func (o *DcimPowerPortTemplatesUpdateParams) SetData(data *models.WritablePowerPortTemplate) {
+func (o *DcimPowerPortTemplatesUpdateParams) SetData(data *models.PowerPortTemplate) {
 	o.Data = data
 }
 

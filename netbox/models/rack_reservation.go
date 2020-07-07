@@ -41,7 +41,7 @@ type RackReservation struct {
 
 	// Description
 	// Required: true
-	// Max Length: 200
+	// Max Length: 100
 	// Min Length: 1
 	Description *string `json:"description"`
 
@@ -122,7 +122,7 @@ func (m *RackReservation) validateDescription(formats strfmt.Registry) error {
 		return err
 	}
 
-	if err := validate.MaxLength("description", "body", string(*m.Description), 200); err != nil {
+	if err := validate.MaxLength("description", "body", string(*m.Description), 100); err != nil {
 		return err
 	}
 

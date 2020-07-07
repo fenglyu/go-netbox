@@ -21,8 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -33,10 +31,6 @@ import (
 //
 // swagger:model DeviceBay
 type DeviceBay struct {
-
-	// Description
-	// Max Length: 200
-	Description string `json:"description,omitempty"`
 
 	// device
 	// Required: true
@@ -55,17 +49,13 @@ type DeviceBay struct {
 	// Min Length: 1
 	Name *string `json:"name"`
 
-	// tags
-	Tags []string `json:"tags"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 }
 
 // Validate validates this device bay
 func (m *DeviceBay) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateDescription(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateDevice(formats); err != nil {
 		res = append(res, err)
@@ -79,26 +69,9 @@ func (m *DeviceBay) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *DeviceBay) validateDescription(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Description) { // not required
-		return nil
-	}
-
-	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -150,23 +123,6 @@ func (m *DeviceBay) validateName(formats strfmt.Registry) error {
 
 	if err := validate.MaxLength("name", "body", string(*m.Name), 50); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *DeviceBay) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
 	}
 
 	return nil
