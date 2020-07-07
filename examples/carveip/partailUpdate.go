@@ -18,7 +18,7 @@ var authHeaderFormat = "Token %v"
 
 func main() {
 	host := "127.0.0.1"
-	apiToken := "c4a3c627b64fa514e8e0840a94c06b04eb8674d9"
+	apiToken := "434476c51e79b0badfad4afcd9a64b4dede1adb9"
 
 	//t := runtimeclient.New(client.DefaultHost, client.DefaultBasePath, client.DefaultSchemes)
 	t := runtimeclient.New(host, client.DefaultBasePath, client.DefaultSchemes)
