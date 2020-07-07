@@ -78,7 +78,7 @@ for the dcim rack groups create operation typically these are written to a http.
 type DcimRackGroupsCreateParams struct {
 
 	/*Data*/
-	Data *models.WritableRackGroup
+	Data *models.RackGroup
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimRackGroupsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim rack groups create params
-func (o *DcimRackGroupsCreateParams) WithData(data *models.WritableRackGroup) *DcimRackGroupsCreateParams {
+func (o *DcimRackGroupsCreateParams) WithData(data *models.RackGroup) *DcimRackGroupsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim rack groups create params
-func (o *DcimRackGroupsCreateParams) SetData(data *models.WritableRackGroup) {
+func (o *DcimRackGroupsCreateParams) SetData(data *models.RackGroup) {
 	o.Data = data
 }
 

@@ -42,6 +42,10 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	VirtualizationChoicesList(params *VirtualizationChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationChoicesListOK, error)
+
+	VirtualizationChoicesRead(params *VirtualizationChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationChoicesReadOK, error)
+
 	VirtualizationClusterGroupsCreate(params *VirtualizationClusterGroupsCreateParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterGroupsCreateCreated, error)
 
 	VirtualizationClusterGroupsDelete(params *VirtualizationClusterGroupsDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterGroupsDeleteNoContent, error)
@@ -103,6 +107,76 @@ type ClientService interface {
 	VirtualizationVirtualMachinesUpdate(params *VirtualizationVirtualMachinesUpdateParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationVirtualMachinesUpdateOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  VirtualizationChoicesList virtualization choices list API
+*/
+func (a *Client) VirtualizationChoicesList(params *VirtualizationChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationChoicesListOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVirtualizationChoicesListParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "virtualization__choices_list",
+		Method:             "GET",
+		PathPattern:        "/virtualization/_choices/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VirtualizationChoicesListReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VirtualizationChoicesListOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for virtualization__choices_list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VirtualizationChoicesRead virtualization choices read API
+*/
+func (a *Client) VirtualizationChoicesRead(params *VirtualizationChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationChoicesReadOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVirtualizationChoicesReadParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "virtualization__choices_read",
+		Method:             "GET",
+		PathPattern:        "/virtualization/_choices/{id}/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VirtualizationChoicesReadReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VirtualizationChoicesReadOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for virtualization__choices_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -176,7 +250,7 @@ func (a *Client) VirtualizationClusterGroupsDelete(params *VirtualizationCluster
 }
 
 /*
-  VirtualizationClusterGroupsList Call to super to allow for caching
+  VirtualizationClusterGroupsList virtualization cluster groups list API
 */
 func (a *Client) VirtualizationClusterGroupsList(params *VirtualizationClusterGroupsListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterGroupsListOK, error) {
 	// TODO: Validate the params before sending
@@ -246,7 +320,7 @@ func (a *Client) VirtualizationClusterGroupsPartialUpdate(params *Virtualization
 }
 
 /*
-  VirtualizationClusterGroupsRead Call to super to allow for caching
+  VirtualizationClusterGroupsRead virtualization cluster groups read API
 */
 func (a *Client) VirtualizationClusterGroupsRead(params *VirtualizationClusterGroupsReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterGroupsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -386,7 +460,7 @@ func (a *Client) VirtualizationClusterTypesDelete(params *VirtualizationClusterT
 }
 
 /*
-  VirtualizationClusterTypesList Call to super to allow for caching
+  VirtualizationClusterTypesList virtualization cluster types list API
 */
 func (a *Client) VirtualizationClusterTypesList(params *VirtualizationClusterTypesListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterTypesListOK, error) {
 	// TODO: Validate the params before sending
@@ -456,7 +530,7 @@ func (a *Client) VirtualizationClusterTypesPartialUpdate(params *VirtualizationC
 }
 
 /*
-  VirtualizationClusterTypesRead Call to super to allow for caching
+  VirtualizationClusterTypesRead virtualization cluster types read API
 */
 func (a *Client) VirtualizationClusterTypesRead(params *VirtualizationClusterTypesReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClusterTypesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -596,7 +670,7 @@ func (a *Client) VirtualizationClustersDelete(params *VirtualizationClustersDele
 }
 
 /*
-  VirtualizationClustersList Call to super to allow for caching
+  VirtualizationClustersList virtualization clusters list API
 */
 func (a *Client) VirtualizationClustersList(params *VirtualizationClustersListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClustersListOK, error) {
 	// TODO: Validate the params before sending
@@ -666,7 +740,7 @@ func (a *Client) VirtualizationClustersPartialUpdate(params *VirtualizationClust
 }
 
 /*
-  VirtualizationClustersRead Call to super to allow for caching
+  VirtualizationClustersRead virtualization clusters read API
 */
 func (a *Client) VirtualizationClustersRead(params *VirtualizationClustersReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationClustersReadOK, error) {
 	// TODO: Validate the params before sending
@@ -806,7 +880,7 @@ func (a *Client) VirtualizationInterfacesDelete(params *VirtualizationInterfaces
 }
 
 /*
-  VirtualizationInterfacesList Call to super to allow for caching
+  VirtualizationInterfacesList virtualization interfaces list API
 */
 func (a *Client) VirtualizationInterfacesList(params *VirtualizationInterfacesListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationInterfacesListOK, error) {
 	// TODO: Validate the params before sending
@@ -876,7 +950,7 @@ func (a *Client) VirtualizationInterfacesPartialUpdate(params *VirtualizationInt
 }
 
 /*
-  VirtualizationInterfacesRead Call to super to allow for caching
+  VirtualizationInterfacesRead virtualization interfaces read API
 */
 func (a *Client) VirtualizationInterfacesRead(params *VirtualizationInterfacesReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationInterfacesReadOK, error) {
 	// TODO: Validate the params before sending
@@ -1016,7 +1090,7 @@ func (a *Client) VirtualizationVirtualMachinesDelete(params *VirtualizationVirtu
 }
 
 /*
-  VirtualizationVirtualMachinesList Call to super to allow for caching
+  VirtualizationVirtualMachinesList virtualization virtual machines list API
 */
 func (a *Client) VirtualizationVirtualMachinesList(params *VirtualizationVirtualMachinesListParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationVirtualMachinesListOK, error) {
 	// TODO: Validate the params before sending
@@ -1086,7 +1160,7 @@ func (a *Client) VirtualizationVirtualMachinesPartialUpdate(params *Virtualizati
 }
 
 /*
-  VirtualizationVirtualMachinesRead Call to super to allow for caching
+  VirtualizationVirtualMachinesRead virtualization virtual machines read API
 */
 func (a *Client) VirtualizationVirtualMachinesRead(params *VirtualizationVirtualMachinesReadParams, authInfo runtime.ClientAuthInfoWriter) (*VirtualizationVirtualMachinesReadOK, error) {
 	// TODO: Validate the params before sending

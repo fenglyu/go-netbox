@@ -32,10 +32,6 @@ import (
 // swagger:model NestedDeviceRole
 type NestedDeviceRole struct {
 
-	// Device count
-	// Read Only: true
-	DeviceCount int64 `json:"device_count,omitempty"`
-
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
@@ -57,10 +53,6 @@ type NestedDeviceRole struct {
 	// Read Only: true
 	// Format: uri
 	URL strfmt.URI `json:"url,omitempty"`
-
-	// Virtualmachine count
-	// Read Only: true
-	VirtualmachineCount int64 `json:"virtualmachine_count,omitempty"`
 }
 
 // Validate validates this nested device role

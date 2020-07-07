@@ -21,8 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -42,15 +40,9 @@ type Provider struct {
 	AdminContact string `json:"admin_contact,omitempty"`
 
 	// ASN
-	//
-	// 32-bit autonomous system number
 	// Maximum: 4.294967295e+09
 	// Minimum: 1
-	Asn *int64 `json:"asn,omitempty"`
-
-	// Circuit count
-	// Read Only: true
-	CircuitCount int64 `json:"circuit_count,omitempty"`
+	Asn int64 `json:"asn,omitempty"`
 
 	// Comments
 	Comments string `json:"comments,omitempty"`
@@ -81,7 +73,7 @@ type Provider struct {
 	// NOC contact
 	NocContact string `json:"noc_contact,omitempty"`
 
-	// Portal URL
+	// Portal
 	// Max Length: 200
 	// Format: uri
 	PortalURL strfmt.URI `json:"portal_url,omitempty"`
@@ -93,8 +85,8 @@ type Provider struct {
 	// Pattern: ^[-a-zA-Z0-9_]+$
 	Slug *string `json:"slug"`
 
-	// tags
-	Tags []string `json:"tags"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 }
 
 // Validate validates this provider
@@ -129,10 +121,6 @@ func (m *Provider) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -158,11 +146,11 @@ func (m *Provider) validateAsn(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MinimumInt("asn", "body", int64(*m.Asn), 1, false); err != nil {
+	if err := validate.MinimumInt("asn", "body", int64(m.Asn), 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("asn", "body", int64(*m.Asn), 4.294967295e+09, false); err != nil {
+	if err := validate.MaximumInt("asn", "body", int64(m.Asn), 4.294967295e+09, false); err != nil {
 		return err
 	}
 
@@ -245,23 +233,6 @@ func (m *Provider) validateSlug(formats strfmt.Registry) error {
 
 	if err := validate.Pattern("slug", "body", string(*m.Slug), `^[-a-zA-Z0-9_]+$`); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *Provider) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
 	}
 
 	return nil

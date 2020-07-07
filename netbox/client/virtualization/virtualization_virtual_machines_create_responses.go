@@ -60,20 +60,20 @@ func NewVirtualizationVirtualMachinesCreateCreated() *VirtualizationVirtualMachi
 VirtualizationVirtualMachinesCreateCreated virtualization virtual machines create created
 */
 type VirtualizationVirtualMachinesCreateCreated struct {
-	Payload *models.VirtualMachineWithConfigContext
+	Payload *models.VirtualMachine
 }
 
 func (o *VirtualizationVirtualMachinesCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /virtualization/virtual-machines/][%d] virtualizationVirtualMachinesCreateCreated  %+v", 201, o.Payload)
 }
 
-func (o *VirtualizationVirtualMachinesCreateCreated) GetPayload() *models.VirtualMachineWithConfigContext {
+func (o *VirtualizationVirtualMachinesCreateCreated) GetPayload() *models.VirtualMachine {
 	return o.Payload
 }
 
 func (o *VirtualizationVirtualMachinesCreateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.VirtualMachineWithConfigContext)
+	o.Payload = new(models.VirtualMachine)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

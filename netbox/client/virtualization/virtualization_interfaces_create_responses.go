@@ -60,20 +60,20 @@ func NewVirtualizationInterfacesCreateCreated() *VirtualizationInterfacesCreateC
 VirtualizationInterfacesCreateCreated virtualization interfaces create created
 */
 type VirtualizationInterfacesCreateCreated struct {
-	Payload *models.VirtualMachineInterface
+	Payload *models.Interface
 }
 
 func (o *VirtualizationInterfacesCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /virtualization/interfaces/][%d] virtualizationInterfacesCreateCreated  %+v", 201, o.Payload)
 }
 
-func (o *VirtualizationInterfacesCreateCreated) GetPayload() *models.VirtualMachineInterface {
+func (o *VirtualizationInterfacesCreateCreated) GetPayload() *models.Interface {
 	return o.Payload
 }
 
 func (o *VirtualizationInterfacesCreateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.VirtualMachineInterface)
+	o.Payload = new(models.Interface)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

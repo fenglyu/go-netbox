@@ -79,7 +79,7 @@ for the dcim device bays update operation typically these are written to a http.
 type DcimDeviceBaysUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableDeviceBay
+	Data *models.DeviceBay
 	/*ID
 	  A unique integer value identifying this device bay.
 
@@ -125,13 +125,13 @@ func (o *DcimDeviceBaysUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim device bays update params
-func (o *DcimDeviceBaysUpdateParams) WithData(data *models.WritableDeviceBay) *DcimDeviceBaysUpdateParams {
+func (o *DcimDeviceBaysUpdateParams) WithData(data *models.DeviceBay) *DcimDeviceBaysUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device bays update params
-func (o *DcimDeviceBaysUpdateParams) SetData(data *models.WritableDeviceBay) {
+func (o *DcimDeviceBaysUpdateParams) SetData(data *models.DeviceBay) {
 	o.Data = data
 }
 

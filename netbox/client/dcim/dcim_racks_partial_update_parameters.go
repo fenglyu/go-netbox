@@ -79,7 +79,7 @@ for the dcim racks partial update operation typically these are written to a htt
 type DcimRacksPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableRack
+	Data *models.Rack
 	/*ID
 	  A unique integer value identifying this rack.
 
@@ -125,13 +125,13 @@ func (o *DcimRacksPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim racks partial update params
-func (o *DcimRacksPartialUpdateParams) WithData(data *models.WritableRack) *DcimRacksPartialUpdateParams {
+func (o *DcimRacksPartialUpdateParams) WithData(data *models.Rack) *DcimRacksPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim racks partial update params
-func (o *DcimRacksPartialUpdateParams) SetData(data *models.WritableRack) {
+func (o *DcimRacksPartialUpdateParams) SetData(data *models.Rack) {
 	o.Data = data
 }
 

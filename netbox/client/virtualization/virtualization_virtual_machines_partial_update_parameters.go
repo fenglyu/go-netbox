@@ -79,7 +79,7 @@ for the virtualization virtual machines partial update operation typically these
 type VirtualizationVirtualMachinesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableVirtualMachineWithConfigContext
+	Data *models.VirtualMachine
 	/*ID
 	  A unique integer value identifying this virtual machine.
 
@@ -125,13 +125,13 @@ func (o *VirtualizationVirtualMachinesPartialUpdateParams) SetHTTPClient(client 
 }
 
 // WithData adds the data to the virtualization virtual machines partial update params
-func (o *VirtualizationVirtualMachinesPartialUpdateParams) WithData(data *models.WritableVirtualMachineWithConfigContext) *VirtualizationVirtualMachinesPartialUpdateParams {
+func (o *VirtualizationVirtualMachinesPartialUpdateParams) WithData(data *models.VirtualMachine) *VirtualizationVirtualMachinesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the virtualization virtual machines partial update params
-func (o *VirtualizationVirtualMachinesPartialUpdateParams) SetData(data *models.WritableVirtualMachineWithConfigContext) {
+func (o *VirtualizationVirtualMachinesPartialUpdateParams) SetData(data *models.VirtualMachine) {
 	o.Data = data
 }
 

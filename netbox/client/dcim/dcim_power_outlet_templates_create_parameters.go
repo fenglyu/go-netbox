@@ -78,7 +78,7 @@ for the dcim power outlet templates create operation typically these are written
 type DcimPowerOutletTemplatesCreateParams struct {
 
 	/*Data*/
-	Data *models.WritablePowerOutletTemplate
+	Data *models.PowerOutletTemplate
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimPowerOutletTemplatesCreateParams) SetHTTPClient(client *http.Client
 }
 
 // WithData adds the data to the dcim power outlet templates create params
-func (o *DcimPowerOutletTemplatesCreateParams) WithData(data *models.WritablePowerOutletTemplate) *DcimPowerOutletTemplatesCreateParams {
+func (o *DcimPowerOutletTemplatesCreateParams) WithData(data *models.PowerOutletTemplate) *DcimPowerOutletTemplatesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power outlet templates create params
-func (o *DcimPowerOutletTemplatesCreateParams) SetData(data *models.WritablePowerOutletTemplate) {
+func (o *DcimPowerOutletTemplatesCreateParams) SetData(data *models.PowerOutletTemplate) {
 	o.Data = data
 }
 

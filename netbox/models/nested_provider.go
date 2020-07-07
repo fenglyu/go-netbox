@@ -32,10 +32,6 @@ import (
 // swagger:model NestedProvider
 type NestedProvider struct {
 
-	// Circuit count
-	// Read Only: true
-	CircuitCount int64 `json:"circuit_count,omitempty"`
-
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`

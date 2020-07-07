@@ -21,8 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -33,14 +31,6 @@ import (
 //
 // swagger:model Tenant
 type Tenant struct {
-
-	// Circuit count
-	// Read Only: true
-	CircuitCount int64 `json:"circuit_count,omitempty"`
-
-	// Cluster count
-	// Read Only: true
-	ClusterCount int64 `json:"cluster_count,omitempty"`
 
 	// Comments
 	Comments string `json:"comments,omitempty"`
@@ -54,12 +44,10 @@ type Tenant struct {
 	CustomFields interface{} `json:"custom_fields,omitempty"`
 
 	// Description
-	// Max Length: 200
+	//
+	// Long-form name (optional)
+	// Max Length: 100
 	Description string `json:"description,omitempty"`
-
-	// Device count
-	// Read Only: true
-	DeviceCount int64 `json:"device_count,omitempty"`
 
 	// group
 	Group *NestedTenantGroup `json:"group,omitempty"`
@@ -67,10 +55,6 @@ type Tenant struct {
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
-
-	// Ipaddress count
-	// Read Only: true
-	IpaddressCount int64 `json:"ipaddress_count,omitempty"`
 
 	// Last updated
 	// Read Only: true
@@ -83,18 +67,6 @@ type Tenant struct {
 	// Min Length: 1
 	Name *string `json:"name"`
 
-	// Prefix count
-	// Read Only: true
-	PrefixCount int64 `json:"prefix_count,omitempty"`
-
-	// Rack count
-	// Read Only: true
-	RackCount int64 `json:"rack_count,omitempty"`
-
-	// Site count
-	// Read Only: true
-	SiteCount int64 `json:"site_count,omitempty"`
-
 	// Slug
 	// Required: true
 	// Max Length: 50
@@ -102,20 +74,8 @@ type Tenant struct {
 	// Pattern: ^[-a-zA-Z0-9_]+$
 	Slug *string `json:"slug"`
 
-	// tags
-	Tags []string `json:"tags"`
-
-	// Virtualmachine count
-	// Read Only: true
-	VirtualmachineCount int64 `json:"virtualmachine_count,omitempty"`
-
-	// Vlan count
-	// Read Only: true
-	VlanCount int64 `json:"vlan_count,omitempty"`
-
-	// Vrf count
-	// Read Only: true
-	VrfCount int64 `json:"vrf_count,omitempty"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 }
 
 // Validate validates this tenant
@@ -146,10 +106,6 @@ func (m *Tenant) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -175,7 +131,7 @@ func (m *Tenant) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
 		return err
 	}
 
@@ -246,23 +202,6 @@ func (m *Tenant) validateSlug(formats strfmt.Registry) error {
 
 	if err := validate.Pattern("slug", "body", string(*m.Slug), `^[-a-zA-Z0-9_]+$`); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *Tenant) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
 	}
 
 	return nil

@@ -79,7 +79,7 @@ for the dcim interface templates partial update operation typically these are wr
 type DcimInterfaceTemplatesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableInterfaceTemplate
+	Data *models.InterfaceTemplate
 	/*ID
 	  A unique integer value identifying this interface template.
 
@@ -125,13 +125,13 @@ func (o *DcimInterfaceTemplatesPartialUpdateParams) SetHTTPClient(client *http.C
 }
 
 // WithData adds the data to the dcim interface templates partial update params
-func (o *DcimInterfaceTemplatesPartialUpdateParams) WithData(data *models.WritableInterfaceTemplate) *DcimInterfaceTemplatesPartialUpdateParams {
+func (o *DcimInterfaceTemplatesPartialUpdateParams) WithData(data *models.InterfaceTemplate) *DcimInterfaceTemplatesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim interface templates partial update params
-func (o *DcimInterfaceTemplatesPartialUpdateParams) SetData(data *models.WritableInterfaceTemplate) {
+func (o *DcimInterfaceTemplatesPartialUpdateParams) SetData(data *models.InterfaceTemplate) {
 	o.Data = data
 }
 

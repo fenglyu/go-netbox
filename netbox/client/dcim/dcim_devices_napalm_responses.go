@@ -60,20 +60,20 @@ func NewDcimDevicesNapalmOK() *DcimDevicesNapalmOK {
 DcimDevicesNapalmOK dcim devices napalm o k
 */
 type DcimDevicesNapalmOK struct {
-	Payload *models.DeviceNAPALM
+	Payload *models.Device
 }
 
 func (o *DcimDevicesNapalmOK) Error() string {
 	return fmt.Sprintf("[GET /dcim/devices/{id}/napalm/][%d] dcimDevicesNapalmOK  %+v", 200, o.Payload)
 }
 
-func (o *DcimDevicesNapalmOK) GetPayload() *models.DeviceNAPALM {
+func (o *DcimDevicesNapalmOK) GetPayload() *models.Device {
 	return o.Payload
 }
 
 func (o *DcimDevicesNapalmOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.DeviceNAPALM)
+	o.Payload = new(models.Device)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

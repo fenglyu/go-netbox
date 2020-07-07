@@ -79,7 +79,7 @@ for the virtualization virtual machines update operation typically these are wri
 type VirtualizationVirtualMachinesUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableVirtualMachineWithConfigContext
+	Data *models.VirtualMachine
 	/*ID
 	  A unique integer value identifying this virtual machine.
 
@@ -125,13 +125,13 @@ func (o *VirtualizationVirtualMachinesUpdateParams) SetHTTPClient(client *http.C
 }
 
 // WithData adds the data to the virtualization virtual machines update params
-func (o *VirtualizationVirtualMachinesUpdateParams) WithData(data *models.WritableVirtualMachineWithConfigContext) *VirtualizationVirtualMachinesUpdateParams {
+func (o *VirtualizationVirtualMachinesUpdateParams) WithData(data *models.VirtualMachine) *VirtualizationVirtualMachinesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the virtualization virtual machines update params
-func (o *VirtualizationVirtualMachinesUpdateParams) SetData(data *models.WritableVirtualMachineWithConfigContext) {
+func (o *VirtualizationVirtualMachinesUpdateParams) SetData(data *models.VirtualMachine) {
 	o.Data = data
 }
 

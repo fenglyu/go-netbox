@@ -79,7 +79,7 @@ for the dcim console port templates partial update operation typically these are
 type DcimConsolePortTemplatesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableConsolePortTemplate
+	Data *models.ConsolePortTemplate
 	/*ID
 	  A unique integer value identifying this console port template.
 
@@ -125,13 +125,13 @@ func (o *DcimConsolePortTemplatesPartialUpdateParams) SetHTTPClient(client *http
 }
 
 // WithData adds the data to the dcim console port templates partial update params
-func (o *DcimConsolePortTemplatesPartialUpdateParams) WithData(data *models.WritableConsolePortTemplate) *DcimConsolePortTemplatesPartialUpdateParams {
+func (o *DcimConsolePortTemplatesPartialUpdateParams) WithData(data *models.ConsolePortTemplate) *DcimConsolePortTemplatesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim console port templates partial update params
-func (o *DcimConsolePortTemplatesPartialUpdateParams) SetData(data *models.WritableConsolePortTemplate) {
+func (o *DcimConsolePortTemplatesPartialUpdateParams) SetData(data *models.ConsolePortTemplate) {
 	o.Data = data
 }
 

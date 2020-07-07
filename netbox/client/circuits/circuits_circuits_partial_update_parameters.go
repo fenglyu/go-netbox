@@ -79,7 +79,7 @@ for the circuits circuits partial update operation typically these are written t
 type CircuitsCircuitsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableCircuit
+	Data *models.Circuit
 	/*ID
 	  A unique integer value identifying this circuit.
 
@@ -125,13 +125,13 @@ func (o *CircuitsCircuitsPartialUpdateParams) SetHTTPClient(client *http.Client)
 }
 
 // WithData adds the data to the circuits circuits partial update params
-func (o *CircuitsCircuitsPartialUpdateParams) WithData(data *models.WritableCircuit) *CircuitsCircuitsPartialUpdateParams {
+func (o *CircuitsCircuitsPartialUpdateParams) WithData(data *models.Circuit) *CircuitsCircuitsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the circuits circuits partial update params
-func (o *CircuitsCircuitsPartialUpdateParams) SetData(data *models.WritableCircuit) {
+func (o *CircuitsCircuitsPartialUpdateParams) SetData(data *models.Circuit) {
 	o.Data = data
 }
 

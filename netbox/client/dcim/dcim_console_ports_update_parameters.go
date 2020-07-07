@@ -79,7 +79,7 @@ for the dcim console ports update operation typically these are written to a htt
 type DcimConsolePortsUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableConsolePort
+	Data *models.ConsolePort
 	/*ID
 	  A unique integer value identifying this console port.
 
@@ -125,13 +125,13 @@ func (o *DcimConsolePortsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim console ports update params
-func (o *DcimConsolePortsUpdateParams) WithData(data *models.WritableConsolePort) *DcimConsolePortsUpdateParams {
+func (o *DcimConsolePortsUpdateParams) WithData(data *models.ConsolePort) *DcimConsolePortsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim console ports update params
-func (o *DcimConsolePortsUpdateParams) SetData(data *models.WritableConsolePort) {
+func (o *DcimConsolePortsUpdateParams) SetData(data *models.ConsolePort) {
 	o.Data = data
 }
 

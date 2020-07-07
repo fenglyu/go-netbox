@@ -79,7 +79,7 @@ for the tenancy tenant groups update operation typically these are written to a 
 type TenancyTenantGroupsUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableTenantGroup
+	Data *models.TenantGroup
 	/*ID
 	  A unique integer value identifying this tenant group.
 
@@ -125,13 +125,13 @@ func (o *TenancyTenantGroupsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the tenancy tenant groups update params
-func (o *TenancyTenantGroupsUpdateParams) WithData(data *models.WritableTenantGroup) *TenancyTenantGroupsUpdateParams {
+func (o *TenancyTenantGroupsUpdateParams) WithData(data *models.TenantGroup) *TenancyTenantGroupsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the tenancy tenant groups update params
-func (o *TenancyTenantGroupsUpdateParams) SetData(data *models.WritableTenantGroup) {
+func (o *TenancyTenantGroupsUpdateParams) SetData(data *models.TenantGroup) {
 	o.Data = data
 }
 

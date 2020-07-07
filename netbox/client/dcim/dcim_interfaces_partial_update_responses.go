@@ -60,20 +60,20 @@ func NewDcimInterfacesPartialUpdateOK() *DcimInterfacesPartialUpdateOK {
 DcimInterfacesPartialUpdateOK dcim interfaces partial update o k
 */
 type DcimInterfacesPartialUpdateOK struct {
-	Payload *models.DeviceInterface
+	Payload *models.Interface
 }
 
 func (o *DcimInterfacesPartialUpdateOK) Error() string {
 	return fmt.Sprintf("[PATCH /dcim/interfaces/{id}/][%d] dcimInterfacesPartialUpdateOK  %+v", 200, o.Payload)
 }
 
-func (o *DcimInterfacesPartialUpdateOK) GetPayload() *models.DeviceInterface {
+func (o *DcimInterfacesPartialUpdateOK) GetPayload() *models.Interface {
 	return o.Payload
 }
 
 func (o *DcimInterfacesPartialUpdateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.DeviceInterface)
+	o.Payload = new(models.Interface)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

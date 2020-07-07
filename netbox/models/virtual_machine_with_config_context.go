@@ -21,9 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -36,15 +33,14 @@ import (
 type VirtualMachineWithConfigContext struct {
 
 	// cluster
-	// Required: true
-	Cluster *NestedCluster `json:"cluster"`
+	Cluster *NestedCluster `json:"cluster,omitempty"`
 
 	// Comments
 	Comments string `json:"comments,omitempty"`
 
 	// Config context
 	// Read Only: true
-	ConfigContext map[string]string `json:"config_context,omitempty"`
+	ConfigContext string `json:"config_context,omitempty"`
 
 	// Created
 	// Read Only: true
@@ -69,7 +65,7 @@ type VirtualMachineWithConfigContext struct {
 	LastUpdated strfmt.DateTime `json:"last_updated,omitempty"`
 
 	// Local context data
-	LocalContextData *string `json:"local_context_data,omitempty"`
+	LocalContextData string `json:"local_context_data,omitempty"`
 
 	// Memory (MB)
 	// Maximum: 2.147483647e+09
@@ -86,25 +82,22 @@ type VirtualMachineWithConfigContext struct {
 	Platform *NestedPlatform `json:"platform,omitempty"`
 
 	// primary ip
-	PrimaryIP *NestedIPAddress `json:"primary_ip,omitempty"`
+	PrimaryIP *VirtualMachineIPAddress `json:"primary_ip,omitempty"`
 
 	// primary ip4
-	PrimaryIp4 *NestedIPAddress `json:"primary_ip4,omitempty"`
+	PrimaryIp4 *VirtualMachineIPAddress `json:"primary_ip4,omitempty"`
 
 	// primary ip6
-	PrimaryIp6 *NestedIPAddress `json:"primary_ip6,omitempty"`
+	PrimaryIp6 *VirtualMachineIPAddress `json:"primary_ip6,omitempty"`
 
 	// role
 	Role *NestedDeviceRole `json:"role,omitempty"`
 
-	// site
-	Site *NestedSite `json:"site,omitempty"`
-
 	// status
 	Status *VirtualMachineWithConfigContextStatus `json:"status,omitempty"`
 
-	// tags
-	Tags []string `json:"tags"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
@@ -163,15 +156,7 @@ func (m *VirtualMachineWithConfigContext) Validate(formats strfmt.Registry) erro
 		res = append(res, err)
 	}
 
-	if err := m.validateSite(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateStatus(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -191,8 +176,8 @@ func (m *VirtualMachineWithConfigContext) Validate(formats strfmt.Registry) erro
 
 func (m *VirtualMachineWithConfigContext) validateCluster(formats strfmt.Registry) error {
 
-	if err := validate.Required("cluster", "body", m.Cluster); err != nil {
-		return err
+	if swag.IsZero(m.Cluster) { // not required
+		return nil
 	}
 
 	if m.Cluster != nil {
@@ -374,24 +359,6 @@ func (m *VirtualMachineWithConfigContext) validateRole(formats strfmt.Registry) 
 	return nil
 }
 
-func (m *VirtualMachineWithConfigContext) validateSite(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Site) { // not required
-		return nil
-	}
-
-	if m.Site != nil {
-		if err := m.Site.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("site")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *VirtualMachineWithConfigContext) validateStatus(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Status) { // not required
@@ -405,23 +372,6 @@ func (m *VirtualMachineWithConfigContext) validateStatus(formats strfmt.Registry
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *VirtualMachineWithConfigContext) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
 	}
 
 	return nil
@@ -487,13 +437,11 @@ type VirtualMachineWithConfigContextStatus struct {
 
 	// label
 	// Required: true
-	// Enum: [Offline Active Planned Staged Failed Decommissioning]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	// Enum: [offline active planned staged failed decommissioning]
-	Value *string `json:"value"`
+	Value *int64 `json:"value"`
 }
 
 // Validate validates this virtual machine with config context status
@@ -514,110 +462,18 @@ func (m *VirtualMachineWithConfigContextStatus) Validate(formats strfmt.Registry
 	return nil
 }
 
-var virtualMachineWithConfigContextStatusTypeLabelPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["Offline","Active","Planned","Staged","Failed","Decommissioning"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		virtualMachineWithConfigContextStatusTypeLabelPropEnum = append(virtualMachineWithConfigContextStatusTypeLabelPropEnum, v)
-	}
-}
-
-const (
-
-	// VirtualMachineWithConfigContextStatusLabelOffline captures enum value "Offline"
-	VirtualMachineWithConfigContextStatusLabelOffline string = "Offline"
-
-	// VirtualMachineWithConfigContextStatusLabelActive captures enum value "Active"
-	VirtualMachineWithConfigContextStatusLabelActive string = "Active"
-
-	// VirtualMachineWithConfigContextStatusLabelPlanned captures enum value "Planned"
-	VirtualMachineWithConfigContextStatusLabelPlanned string = "Planned"
-
-	// VirtualMachineWithConfigContextStatusLabelStaged captures enum value "Staged"
-	VirtualMachineWithConfigContextStatusLabelStaged string = "Staged"
-
-	// VirtualMachineWithConfigContextStatusLabelFailed captures enum value "Failed"
-	VirtualMachineWithConfigContextStatusLabelFailed string = "Failed"
-
-	// VirtualMachineWithConfigContextStatusLabelDecommissioning captures enum value "Decommissioning"
-	VirtualMachineWithConfigContextStatusLabelDecommissioning string = "Decommissioning"
-)
-
-// prop value enum
-func (m *VirtualMachineWithConfigContextStatus) validateLabelEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, virtualMachineWithConfigContextStatusTypeLabelPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *VirtualMachineWithConfigContextStatus) validateLabel(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"label", "body", m.Label); err != nil {
 		return err
 	}
 
-	// value enum
-	if err := m.validateLabelEnum("status"+"."+"label", "body", *m.Label); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var virtualMachineWithConfigContextStatusTypeValuePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["offline","active","planned","staged","failed","decommissioning"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		virtualMachineWithConfigContextStatusTypeValuePropEnum = append(virtualMachineWithConfigContextStatusTypeValuePropEnum, v)
-	}
-}
-
-const (
-
-	// VirtualMachineWithConfigContextStatusValueOffline captures enum value "offline"
-	VirtualMachineWithConfigContextStatusValueOffline string = "offline"
-
-	// VirtualMachineWithConfigContextStatusValueActive captures enum value "active"
-	VirtualMachineWithConfigContextStatusValueActive string = "active"
-
-	// VirtualMachineWithConfigContextStatusValuePlanned captures enum value "planned"
-	VirtualMachineWithConfigContextStatusValuePlanned string = "planned"
-
-	// VirtualMachineWithConfigContextStatusValueStaged captures enum value "staged"
-	VirtualMachineWithConfigContextStatusValueStaged string = "staged"
-
-	// VirtualMachineWithConfigContextStatusValueFailed captures enum value "failed"
-	VirtualMachineWithConfigContextStatusValueFailed string = "failed"
-
-	// VirtualMachineWithConfigContextStatusValueDecommissioning captures enum value "decommissioning"
-	VirtualMachineWithConfigContextStatusValueDecommissioning string = "decommissioning"
-)
-
-// prop value enum
-func (m *VirtualMachineWithConfigContextStatus) validateValueEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, virtualMachineWithConfigContextStatusTypeValuePropEnum, true); err != nil {
-		return err
-	}
 	return nil
 }
 
 func (m *VirtualMachineWithConfigContextStatus) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"value", "body", m.Value); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateValueEnum("status"+"."+"value", "body", *m.Value); err != nil {
 		return err
 	}
 

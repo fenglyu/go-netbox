@@ -42,6 +42,10 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	TenancyChoicesList(params *TenancyChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyChoicesListOK, error)
+
+	TenancyChoicesRead(params *TenancyChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyChoicesReadOK, error)
+
 	TenancyTenantGroupsCreate(params *TenancyTenantGroupsCreateParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantGroupsCreateCreated, error)
 
 	TenancyTenantGroupsDelete(params *TenancyTenantGroupsDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantGroupsDeleteNoContent, error)
@@ -67,6 +71,76 @@ type ClientService interface {
 	TenancyTenantsUpdate(params *TenancyTenantsUpdateParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantsUpdateOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  TenancyChoicesList tenancy choices list API
+*/
+func (a *Client) TenancyChoicesList(params *TenancyChoicesListParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyChoicesListOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTenancyChoicesListParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "tenancy__choices_list",
+		Method:             "GET",
+		PathPattern:        "/tenancy/_choices/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &TenancyChoicesListReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*TenancyChoicesListOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for tenancy__choices_list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  TenancyChoicesRead tenancy choices read API
+*/
+func (a *Client) TenancyChoicesRead(params *TenancyChoicesReadParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyChoicesReadOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTenancyChoicesReadParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "tenancy__choices_read",
+		Method:             "GET",
+		PathPattern:        "/tenancy/_choices/{id}/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &TenancyChoicesReadReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*TenancyChoicesReadOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for tenancy__choices_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -140,7 +214,7 @@ func (a *Client) TenancyTenantGroupsDelete(params *TenancyTenantGroupsDeletePara
 }
 
 /*
-  TenancyTenantGroupsList Call to super to allow for caching
+  TenancyTenantGroupsList tenancy tenant groups list API
 */
 func (a *Client) TenancyTenantGroupsList(params *TenancyTenantGroupsListParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantGroupsListOK, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +284,7 @@ func (a *Client) TenancyTenantGroupsPartialUpdate(params *TenancyTenantGroupsPar
 }
 
 /*
-  TenancyTenantGroupsRead Call to super to allow for caching
+  TenancyTenantGroupsRead tenancy tenant groups read API
 */
 func (a *Client) TenancyTenantGroupsRead(params *TenancyTenantGroupsReadParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantGroupsReadOK, error) {
 	// TODO: Validate the params before sending
@@ -350,7 +424,7 @@ func (a *Client) TenancyTenantsDelete(params *TenancyTenantsDeleteParams, authIn
 }
 
 /*
-  TenancyTenantsList Call to super to allow for caching
+  TenancyTenantsList tenancy tenants list API
 */
 func (a *Client) TenancyTenantsList(params *TenancyTenantsListParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantsListOK, error) {
 	// TODO: Validate the params before sending
@@ -420,7 +494,7 @@ func (a *Client) TenancyTenantsPartialUpdate(params *TenancyTenantsPartialUpdate
 }
 
 /*
-  TenancyTenantsRead Call to super to allow for caching
+  TenancyTenantsRead tenancy tenants read API
 */
 func (a *Client) TenancyTenantsRead(params *TenancyTenantsReadParams, authInfo runtime.ClientAuthInfoWriter) (*TenancyTenantsReadOK, error) {
 	// TODO: Validate the params before sending

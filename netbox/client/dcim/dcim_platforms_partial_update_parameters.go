@@ -79,7 +79,7 @@ for the dcim platforms partial update operation typically these are written to a
 type DcimPlatformsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritablePlatform
+	Data *models.Platform
 	/*ID
 	  A unique integer value identifying this platform.
 
@@ -125,13 +125,13 @@ func (o *DcimPlatformsPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim platforms partial update params
-func (o *DcimPlatformsPartialUpdateParams) WithData(data *models.WritablePlatform) *DcimPlatformsPartialUpdateParams {
+func (o *DcimPlatformsPartialUpdateParams) WithData(data *models.Platform) *DcimPlatformsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim platforms partial update params
-func (o *DcimPlatformsPartialUpdateParams) SetData(data *models.WritablePlatform) {
+func (o *DcimPlatformsPartialUpdateParams) SetData(data *models.Platform) {
 	o.Data = data
 }
 

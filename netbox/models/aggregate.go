@@ -22,7 +22,6 @@ package models
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -45,14 +44,16 @@ type Aggregate struct {
 
 	// Date added
 	// Format: date
-	DateAdded *strfmt.Date `json:"date_added,omitempty"`
+	DateAdded strfmt.Date `json:"date_added,omitempty"`
 
 	// Description
-	// Max Length: 200
+	// Max Length: 100
 	Description string `json:"description,omitempty"`
 
-	// family
-	Family *AggregateFamily `json:"family,omitempty"`
+	// Family
+	// Read Only: true
+	// Enum: [4 6]
+	Family int64 `json:"family,omitempty"`
 
 	// ID
 	// Read Only: true
@@ -71,8 +72,8 @@ type Aggregate struct {
 	// Required: true
 	Rir *NestedRIR `json:"rir"`
 
-	// tags
-	Tags []string `json:"tags"`
+	// Tags
+	Tags string `json:"tags,omitempty"`
 }
 
 // Validate validates this aggregate
@@ -104,10 +105,6 @@ func (m *Aggregate) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRir(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -149,10 +146,30 @@ func (m *Aggregate) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
 		return err
 	}
 
+	return nil
+}
+
+var aggregateTypeFamilyPropEnum []interface{}
+
+func init() {
+	var res []int64
+	if err := json.Unmarshal([]byte(`[4,6]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		aggregateTypeFamilyPropEnum = append(aggregateTypeFamilyPropEnum, v)
+	}
+}
+
+// prop value enum
+func (m *Aggregate) validateFamilyEnum(path, location string, value int64) error {
+	if err := validate.EnumCase(path, location, value, aggregateTypeFamilyPropEnum, true); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -162,13 +179,9 @@ func (m *Aggregate) validateFamily(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.Family != nil {
-		if err := m.Family.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("family")
-			}
-			return err
-		}
+	// value enum
+	if err := m.validateFamilyEnum("family", "body", m.Family); err != nil {
+		return err
 	}
 
 	return nil
@@ -214,23 +227,6 @@ func (m *Aggregate) validateRir(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Aggregate) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
-			return err
-		}
-
-	}
-
-	return nil
-}
-
 // MarshalBinary interface implementation
 func (m *Aggregate) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -242,135 +238,6 @@ func (m *Aggregate) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (m *Aggregate) UnmarshalBinary(b []byte) error {
 	var res Aggregate
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// AggregateFamily Family
-//
-// swagger:model AggregateFamily
-type AggregateFamily struct {
-
-	// label
-	// Required: true
-	// Enum: [IPv4 IPv6]
-	Label *string `json:"label"`
-
-	// value
-	// Required: true
-	// Enum: [4 6]
-	Value *int64 `json:"value"`
-}
-
-// Validate validates this aggregate family
-func (m *AggregateFamily) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateLabel(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateValue(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-var aggregateFamilyTypeLabelPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["IPv4","IPv6"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		aggregateFamilyTypeLabelPropEnum = append(aggregateFamilyTypeLabelPropEnum, v)
-	}
-}
-
-const (
-
-	// AggregateFamilyLabelIPV4 captures enum value "IPv4"
-	AggregateFamilyLabelIPV4 string = "IPv4"
-
-	// AggregateFamilyLabelIPV6 captures enum value "IPv6"
-	AggregateFamilyLabelIPV6 string = "IPv6"
-)
-
-// prop value enum
-func (m *AggregateFamily) validateLabelEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, aggregateFamilyTypeLabelPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *AggregateFamily) validateLabel(formats strfmt.Registry) error {
-
-	if err := validate.Required("family"+"."+"label", "body", m.Label); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateLabelEnum("family"+"."+"label", "body", *m.Label); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var aggregateFamilyTypeValuePropEnum []interface{}
-
-func init() {
-	var res []int64
-	if err := json.Unmarshal([]byte(`[4,6]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		aggregateFamilyTypeValuePropEnum = append(aggregateFamilyTypeValuePropEnum, v)
-	}
-}
-
-// prop value enum
-func (m *AggregateFamily) validateValueEnum(path, location string, value int64) error {
-	if err := validate.EnumCase(path, location, value, aggregateFamilyTypeValuePropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *AggregateFamily) validateValue(formats strfmt.Registry) error {
-
-	if err := validate.Required("family"+"."+"value", "body", m.Value); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateValueEnum("family"+"."+"value", "body", *m.Value); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *AggregateFamily) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *AggregateFamily) UnmarshalBinary(b []byte) error {
-	var res AggregateFamily
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

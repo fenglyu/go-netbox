@@ -27,14 +27,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NestedClusterGroup nested cluster group
+// NestedClusterGroup Group
 //
 // swagger:model NestedClusterGroup
 type NestedClusterGroup struct {
-
-	// Cluster count
-	// Read Only: true
-	ClusterCount int64 `json:"cluster_count,omitempty"`
 
 	// ID
 	// Read Only: true

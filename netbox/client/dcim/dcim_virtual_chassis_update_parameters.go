@@ -79,7 +79,7 @@ for the dcim virtual chassis update operation typically these are written to a h
 type DcimVirtualChassisUpdateParams struct {
 
 	/*Data*/
-	Data *models.WritableVirtualChassis
+	Data *models.VirtualChassis
 	/*ID
 	  A unique integer value identifying this virtual chassis.
 
@@ -125,13 +125,13 @@ func (o *DcimVirtualChassisUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim virtual chassis update params
-func (o *DcimVirtualChassisUpdateParams) WithData(data *models.WritableVirtualChassis) *DcimVirtualChassisUpdateParams {
+func (o *DcimVirtualChassisUpdateParams) WithData(data *models.VirtualChassis) *DcimVirtualChassisUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim virtual chassis update params
-func (o *DcimVirtualChassisUpdateParams) SetData(data *models.WritableVirtualChassis) {
+func (o *DcimVirtualChassisUpdateParams) SetData(data *models.VirtualChassis) {
 	o.Data = data
 }
 

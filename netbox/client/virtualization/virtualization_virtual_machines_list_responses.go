@@ -106,7 +106,7 @@ type VirtualizationVirtualMachinesListOKBody struct {
 
 	// results
 	// Required: true
-	Results []*models.VirtualMachineWithConfigContext `json:"results"`
+	Results []*models.VirtualMachine `json:"results"`
 }
 
 // Validate validates this virtualization virtual machines list o k body

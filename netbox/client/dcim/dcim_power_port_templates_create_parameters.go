@@ -78,7 +78,7 @@ for the dcim power port templates create operation typically these are written t
 type DcimPowerPortTemplatesCreateParams struct {
 
 	/*Data*/
-	Data *models.WritablePowerPortTemplate
+	Data *models.PowerPortTemplate
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimPowerPortTemplatesCreateParams) SetHTTPClient(client *http.Client) 
 }
 
 // WithData adds the data to the dcim power port templates create params
-func (o *DcimPowerPortTemplatesCreateParams) WithData(data *models.WritablePowerPortTemplate) *DcimPowerPortTemplatesCreateParams {
+func (o *DcimPowerPortTemplatesCreateParams) WithData(data *models.PowerPortTemplate) *DcimPowerPortTemplatesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power port templates create params
-func (o *DcimPowerPortTemplatesCreateParams) SetData(data *models.WritablePowerPortTemplate) {
+func (o *DcimPowerPortTemplatesCreateParams) SetData(data *models.PowerPortTemplate) {
 	o.Data = data
 }
 
