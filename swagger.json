@@ -9449,7 +9449,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9493,7 +9493,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9518,7 +9518,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9612,13 +9612,17 @@
         "/ipam/prefixes/{id}/available-prefixes/": {
             "get": {
                 "operationId": "ipam_prefixes_available-prefixes_read",
-                "description": "A convenience method for returning available child prefixes within a parent.",
+                "summary": "A convenience method for returning available child prefixes within a parent.",
+                "description": "The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being\ninvoked in parallel, which results in a race condition where multiple insertions can occur.",
                 "parameters": [],
                 "responses": {
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AvailablePrefix"
+                            }
                         }
                     }
                 },
@@ -9635,7 +9639,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -16403,7 +16407,10 @@
                 },
                 "tags": {
                     "title": "Tags",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",
@@ -16496,6 +16503,142 @@
                 }
             }
         },
+        "WritableAvailableIP": {
+            "type": "object",
+            "properties": {
+                "family": {
+                    "title": "Family",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "address": {
+                    "title": "Address",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                }
+            }
+        },
+        "AvailablePrefix": {
+            "type": "object",
+            "properties": {
+                "family": {
+                    "title": "Family",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "prefix": {
+                    "title": "Prefix",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                },
+                "vrf": {
+                    "$ref": "#/definitions/NestedVRF"
+                }
+            }
+        },
+        "WritablePrefix": {
+            "required": [
+                "prefix"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "family": {
+                    "title": "Family",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "prefix": {
+                    "title": "Prefix",
+                    "description": "IPv4 or IPv6 network with mask",
+                    "type": "string"
+                },
+                "site": {
+                    "title": "Site",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "vrf": {
+                    "title": "VRF",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "tenant": {
+                    "title": "Tenant",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "vlan": {
+                    "title": "VLAN",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "status": {
+                    "title": "Status",
+                    "description": "Operational status of this prefix",
+                    "type": "integer",
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "role": {
+                    "title": "Role",
+                    "description": "The primary function of this prefix",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "is_pool": {
+                    "title": "Is a pool",
+                    "description": "All IP addresses within this prefix are considered usable",
+                    "type": "boolean"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "tags": {
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "prefix_length": {
+                    "title": "PrefixLengthSerializer",
+                    "description": "Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size",
+                    "type": "integer"
+                },
+                "custom_fields": {
+                    "title": "Custom fields",
+                    "type": "object",
+                    "default": {}
+                },
+                "created": {
+                    "title": "Created",
+                    "type": "string",
+                    "format": "date",
+                    "readOnly": true
+                },
+                "last_updated": {
+                    "title": "Last updated",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
         "Prefix": {
             "required": [
                 "prefix"
@@ -16565,7 +16708,10 @@
                 },
                 "tags": {
                     "title": "Tags",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",

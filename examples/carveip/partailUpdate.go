@@ -13,8 +13,8 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-var authHeaderName = "Authorization"
-var authHeaderFormat = "Token %v"
+//var authHeaderName = "Authorization"
+//var authHeaderFormat = "Token %v"
 
 func main() {
 	host := "127.0.0.1"

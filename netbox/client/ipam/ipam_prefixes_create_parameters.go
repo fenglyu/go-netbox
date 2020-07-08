@@ -78,7 +78,7 @@ for the ipam prefixes create operation typically these are written to a http.Req
 type IpamPrefixesCreateParams struct {
 
 	/*Data*/
-	Data *models.Prefix
+	Data *models.WritablePrefix
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamPrefixesCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam prefixes create params
-func (o *IpamPrefixesCreateParams) WithData(data *models.Prefix) *IpamPrefixesCreateParams {
+func (o *IpamPrefixesCreateParams) WithData(data *models.WritablePrefix) *IpamPrefixesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam prefixes create params
-func (o *IpamPrefixesCreateParams) SetData(data *models.Prefix) {
+func (o *IpamPrefixesCreateParams) SetData(data *models.WritablePrefix) {
 	o.Data = data
 }
 

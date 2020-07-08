@@ -765,7 +765,10 @@ func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailab
 }
 
 /*
-  IpamPrefixesAvailablePrefixesRead A convenience method for returning available child prefixes within a parent.
+  IpamPrefixesAvailablePrefixesRead as convenience method for returning available child prefixes within a parent
+
+  The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
+invoked in parallel, which results in a race condition where multiple insertions can occur.
 */
 func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesReadOK, error) {
 	// TODO: Validate the params before sending
