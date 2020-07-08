@@ -19,6 +19,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	//"github.com/fenglyu/go-netbox/netbox"
@@ -79,30 +81,59 @@ func main() {
 	//		Value: &statusValue,
 	//	}
 
-	data := models.WritablePrefix{
-		Prefix: &cidr,
-		//Status: &prefixStatus,
-		//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
-		Tags: []string{"demos", "k8s", "gke"},
+	withinInclude := cidr
+	prefixLength, _ := strconv.Atoi(strings.Split(withinInclude, "/")[1])
+	maskLength := float64(prefixLength)
+	beforeParam := ipam.IpamPrefixesListParams{
+		MaskLength:    &maskLength,
+		WithinInclude: &withinInclude,
+	}
+	/*
+			curl --location --request GET 'http://netbox.k8s.me/api/ipam/prefixes/?mask_length=24&within_include=10.247.5.0/24' \
+		--header 'Authorization: Token ...'
+	*/
+	beforeParam.WithContext(context.Background())
+	//	rs, err := c.Ipam.IpamIPAddressesList(nil, nil)
+	brs, err := c.Ipam.IpamPrefixesList(&beforeParam, nil)
+
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		os.Exit(1)
 	}
 
-	param := ipam.IpamPrefixesCreateParams{
-		Data:    &data,
-		Context: context.Background(),
+	var available_prefixes_id int64
+
+	if *brs.Payload.Count <= 0 {
+		data := models.WritablePrefix{
+			Prefix: &cidr,
+			//Status: &prefixStatus,
+			//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
+			Tags: []string{"demos", "k8s", "gke"},
+		}
+
+		param := ipam.IpamPrefixesCreateParams{
+			Data:    &data,
+			Context: context.Background(),
+		}
+		param.SetTimeout(5 * time.Second)
+
+		pparam, _ := json.Marshal(param)
+		fmt.Println("pparam> ", string(pparam))
+
+		prefixCreated, cerr := c.Ipam.IpamPrefixesCreate(&param, nil)
+
+		if cerr != nil {
+			fmt.Println("create failed")
+
+			fmt.Println(cerr)
+		}
+		fmt.Println(prefixCreated)
+		available_prefixes_id = prefixCreated.Payload.ID
+		fmt.Printf("[count %d ]  available_prefixes_id [%d]\n", *brs.Payload.Count, available_prefixes_id)
+	} else {
+		available_prefixes_id = brs.Payload.Results[0].ID
+		fmt.Printf("[count %d ]  available_prefixes_id [%d]\n", *brs.Payload.Count, available_prefixes_id)
 	}
-	param.SetTimeout(5 * time.Second)
-
-	pparam, _ := json.Marshal(param)
-	fmt.Println("pparam> ", string(pparam))
-
-	prefixCreated, cerr := c.Ipam.IpamPrefixesCreate(&param, nil)
-
-	if cerr != nil {
-		fmt.Println("create failed")
-
-		fmt.Println(cerr)
-	}
-	fmt.Println(prefixCreated)
 
 	//pc, _ := json.Marshal(prefixCreated)
 	//fmt.Println(string(pc))
@@ -132,7 +163,7 @@ func main() {
 	//	}
 
 	ipaprp := ipam.IpamPrefixesAvailablePrefixesReadParams{
-		ID: 18,
+		ID: available_prefixes_id,
 	}
 	ipaprp.WithContext(context.Background())
 
@@ -166,7 +197,7 @@ func main() {
 	}
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
-		ID:   18,
+		ID:   available_prefixes_id,
 		Data: &dpcData,
 	}
 	dpc.WithContext(context.Background())
