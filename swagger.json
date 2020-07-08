@@ -9449,7 +9449,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9493,7 +9493,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9518,7 +9518,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -9635,7 +9635,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "$ref": "#/definitions/WritablePrefix"
                         }
                     }
                 ],
@@ -16496,6 +16496,107 @@
                     "pattern": "^[-a-zA-Z0-9_]+$",
                     "maxLength": 50,
                     "minLength": 1
+                }
+            }
+        },
+        "WritablePrefix": {
+            "required": [
+                "prefix"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "family": {
+                    "title": "Family",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "prefix": {
+                    "title": "Prefix",
+                    "description": "IPv4 or IPv6 network with mask",
+                    "type": "string"
+                },
+                "site": {
+                    "title": "Site",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "vrf": {
+                    "title": "VRF",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "tenant": {
+                    "title": "Tenant",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "vlan": {
+                    "title": "VLAN",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "status": {
+                    "title": "Status",
+                    "description": "Operational status of this prefix",
+                    "type": "integer",
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "role": {
+                    "title": "Role",
+                    "description": "The primary function of this prefix",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "is_pool": {
+                    "title": "Is a pool",
+                    "description": "All IP addresses within this prefix are considered usable",
+                    "type": "boolean"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "tags": {
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "prefix_length": {
+                    "title": "PrefixLengthSerializer",
+                    "description": "Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size",
+                    "type": "integer"
+                },
+                "custom_fields": {
+                    "title": "Custom fields",
+                    "type": "object",
+                    "default": {}
+                },
+                "created": {
+                    "title": "Created",
+                    "type": "string",
+                    "format": "date",
+                    "readOnly": true
+                },
+                "last_updated": {
+                    "title": "Last updated",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
                 }
             }
         },

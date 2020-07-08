@@ -47,7 +47,7 @@ func main() {
 
 	IDIn := "2,"
 	prefixParam := ipam.IpamPrefixesListParams{
-		IDIn: &IDIn,
+		ID: &IDIn,
 	}
 	prefixParam.WithContext(context.Background())
 	//	rs, err := c.Ipam.IpamIPAddressesList(nil, nil)
@@ -78,7 +78,8 @@ func main() {
 	//		Label: &statusLabel,
 	//		Value: &statusValue,
 	//	}
-	data := models.Prefix{
+
+	data := models.WritablePrefix{
 		Prefix: &cidr,
 		//Status: &prefixStatus,
 		//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
