@@ -44,6 +44,12 @@ func (o *IpamPrefixesAvailablePrefixesReadReader) ReadResponse(response runtime.
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewIpamPrefixesAvailablePrefixesReadBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -75,6 +81,39 @@ func (o *IpamPrefixesAvailablePrefixesReadOK) readResponse(response runtime.Clie
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamPrefixesAvailablePrefixesReadBadRequest creates a IpamPrefixesAvailablePrefixesReadBadRequest with default headers values
+func NewIpamPrefixesAvailablePrefixesReadBadRequest() *IpamPrefixesAvailablePrefixesReadBadRequest {
+	return &IpamPrefixesAvailablePrefixesReadBadRequest{}
+}
+
+/*IpamPrefixesAvailablePrefixesReadBadRequest handles this case with default header values.
+
+Bad request
+*/
+type IpamPrefixesAvailablePrefixesReadBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *IpamPrefixesAvailablePrefixesReadBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/prefixes/{id}/available-prefixes/][%d] ipamPrefixesAvailablePrefixesReadBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IpamPrefixesAvailablePrefixesReadBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *IpamPrefixesAvailablePrefixesReadBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

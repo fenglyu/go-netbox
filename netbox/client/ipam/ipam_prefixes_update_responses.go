@@ -44,6 +44,12 @@ func (o *IpamPrefixesUpdateReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewIpamPrefixesUpdateBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -74,6 +80,39 @@ func (o *IpamPrefixesUpdateOK) GetPayload() *models.Prefix {
 func (o *IpamPrefixesUpdateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Prefix)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamPrefixesUpdateBadRequest creates a IpamPrefixesUpdateBadRequest with default headers values
+func NewIpamPrefixesUpdateBadRequest() *IpamPrefixesUpdateBadRequest {
+	return &IpamPrefixesUpdateBadRequest{}
+}
+
+/*IpamPrefixesUpdateBadRequest handles this case with default header values.
+
+Bad request
+*/
+type IpamPrefixesUpdateBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *IpamPrefixesUpdateBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /ipam/prefixes/{id}/][%d] ipamPrefixesUpdateBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IpamPrefixesUpdateBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *IpamPrefixesUpdateBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
