@@ -16403,7 +16403,10 @@
                 },
                 "tags": {
                     "title": "Tags",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",
@@ -16565,7 +16568,10 @@
                 },
                 "tags": {
                     "title": "Tags",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",

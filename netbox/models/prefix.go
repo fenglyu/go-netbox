@@ -83,7 +83,7 @@ type Prefix struct {
 	Status *PrefixStatus `json:"status,omitempty"`
 
 	// Tags
-	Tags string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitempty"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
