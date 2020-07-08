@@ -9612,13 +9612,17 @@
         "/ipam/prefixes/{id}/available-prefixes/": {
             "get": {
                 "operationId": "ipam_prefixes_available-prefixes_read",
-                "description": "A convenience method for returning available child prefixes within a parent.",
+                "summary": "A convenience method for returning available child prefixes within a parent.",
+                "description": "The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being\ninvoked in parallel, which results in a race condition where multiple insertions can occur.",
                 "parameters": [],
                 "responses": {
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/Prefix"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AvailablePrefix"
+                            }
                         }
                     }
                 },
@@ -16496,6 +16500,41 @@
                     "pattern": "^[-a-zA-Z0-9_]+$",
                     "maxLength": 50,
                     "minLength": 1
+                }
+            }
+        },
+        "WritableAvailableIP": {
+            "type": "object",
+            "properties": {
+                "family": {
+                    "title": "Family",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "address": {
+                    "title": "Address",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                }
+            }
+        },
+        "AvailablePrefix": {
+            "type": "object",
+            "properties": {
+                "family": {
+                    "title": "Family",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "prefix": {
+                    "title": "Prefix",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                },
+                "vrf": {
+                    "$ref": "#/definitions/NestedVRF"
                 }
             }
         },

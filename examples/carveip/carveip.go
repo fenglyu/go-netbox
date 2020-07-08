@@ -47,7 +47,7 @@ func main() {
 
 	IDIn := "2,"
 	prefixParam := ipam.IpamPrefixesListParams{
-		ID: &IDIn,
+		IDIn: &IDIn,
 	}
 	prefixParam.WithContext(context.Background())
 	//	rs, err := c.Ipam.IpamIPAddressesList(nil, nil)
@@ -141,7 +141,7 @@ func main() {
 		fmt.Println(
 			"IpamPrefixesAvailablePrefixesRead", err)
 	}
-	fmt.Println(ipaprpr)
+	fmt.Println("ipaprpr > ", ipaprpr)
 
 	//jsonIpaprpr, _ := json.Marshal(ipaprpr)
 	//fmt.Println(string(jsonIpaprpr))
@@ -151,12 +151,12 @@ func main() {
 
 	//role := models.NestedRole{ID: 0}
 	//site := models.NestedSite{ID: 0}
-	dpcData := models.Prefix{
+	dpcData := models.WritablePrefix{
 		//ID: 2,
 		//PrefixLength: &prefixlength,
 		//Prefix:       &rootCidr,
 		PrefixLength: prefixlength,
-		Status:       &prefixStatus,
+		Status:       2,
 		//Status:       "container",
 		IsPool: false,
 		//Role:   &role,
