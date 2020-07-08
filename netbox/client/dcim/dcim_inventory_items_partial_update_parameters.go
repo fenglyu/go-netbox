@@ -79,7 +79,7 @@ for the dcim inventory items partial update operation typically these are writte
 type DcimInventoryItemsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.InventoryItem
+	Data *models.WritableInventoryItem
 	/*ID
 	  A unique integer value identifying this inventory item.
 
@@ -125,13 +125,13 @@ func (o *DcimInventoryItemsPartialUpdateParams) SetHTTPClient(client *http.Clien
 }
 
 // WithData adds the data to the dcim inventory items partial update params
-func (o *DcimInventoryItemsPartialUpdateParams) WithData(data *models.InventoryItem) *DcimInventoryItemsPartialUpdateParams {
+func (o *DcimInventoryItemsPartialUpdateParams) WithData(data *models.WritableInventoryItem) *DcimInventoryItemsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim inventory items partial update params
-func (o *DcimInventoryItemsPartialUpdateParams) SetData(data *models.InventoryItem) {
+func (o *DcimInventoryItemsPartialUpdateParams) SetData(data *models.WritableInventoryItem) {
 	o.Data = data
 }
 

@@ -78,7 +78,7 @@ for the tenancy tenant groups create operation typically these are written to a 
 type TenancyTenantGroupsCreateParams struct {
 
 	/*Data*/
-	Data *models.TenantGroup
+	Data *models.WritableTenantGroup
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *TenancyTenantGroupsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the tenancy tenant groups create params
-func (o *TenancyTenantGroupsCreateParams) WithData(data *models.TenantGroup) *TenancyTenantGroupsCreateParams {
+func (o *TenancyTenantGroupsCreateParams) WithData(data *models.WritableTenantGroup) *TenancyTenantGroupsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the tenancy tenant groups create params
-func (o *TenancyTenantGroupsCreateParams) SetData(data *models.TenantGroup) {
+func (o *TenancyTenantGroupsCreateParams) SetData(data *models.WritableTenantGroup) {
 	o.Data = data
 }
 

@@ -27,7 +27,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NestedTenantGroup Group
+// NestedTenantGroup nested tenant group
 //
 // swagger:model NestedTenantGroup
 type NestedTenantGroup struct {
@@ -48,6 +48,10 @@ type NestedTenantGroup struct {
 	// Min Length: 1
 	// Pattern: ^[-a-zA-Z0-9_]+$
 	Slug *string `json:"slug"`
+
+	// Tenant count
+	// Read Only: true
+	TenantCount int64 `json:"tenant_count,omitempty"`
 
 	// Url
 	// Read Only: true

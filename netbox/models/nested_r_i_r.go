@@ -32,6 +32,10 @@ import (
 // swagger:model NestedRIR
 type NestedRIR struct {
 
+	// Aggregate count
+	// Read Only: true
+	AggregateCount int64 `json:"aggregate_count,omitempty"`
+
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`

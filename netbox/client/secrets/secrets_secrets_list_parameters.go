@@ -76,15 +76,38 @@ for the secrets secrets list operation typically these are written to a http.Req
 */
 type SecretsSecretsListParams struct {
 
+	/*Created*/
+	Created *string
+	/*CreatedGte*/
+	CreatedGte *string
+	/*CreatedLte*/
+	CreatedLte *string
 	/*Device*/
 	Device *string
+	/*Devicen*/
+	Devicen *string
 	/*DeviceID*/
 	DeviceID *string
-	/*IDIn
-	  Multiple values may be separated by commas.
-
-	*/
-	IDIn *string
+	/*DeviceIDn*/
+	DeviceIDn *string
+	/*ID*/
+	ID *string
+	/*IDGt*/
+	IDGt *string
+	/*IDGte*/
+	IDGte *string
+	/*IDLt*/
+	IDLt *string
+	/*IDLte*/
+	IDLte *string
+	/*IDn*/
+	IDn *string
+	/*LastUpdated*/
+	LastUpdated *string
+	/*LastUpdatedGte*/
+	LastUpdatedGte *string
+	/*LastUpdatedLte*/
+	LastUpdatedLte *string
 	/*Limit
 	  Number of results to return per page.
 
@@ -92,6 +115,24 @@ type SecretsSecretsListParams struct {
 	Limit *int64
 	/*Name*/
 	Name *string
+	/*NameIc*/
+	NameIc *string
+	/*NameIe*/
+	NameIe *string
+	/*NameIew*/
+	NameIew *string
+	/*NameIsw*/
+	NameIsw *string
+	/*Namen*/
+	Namen *string
+	/*NameNic*/
+	NameNic *string
+	/*NameNie*/
+	NameNie *string
+	/*NameNiew*/
+	NameNiew *string
+	/*NameNisw*/
+	NameNisw *string
 	/*Offset
 	  The initial index from which to return the results.
 
@@ -101,10 +142,16 @@ type SecretsSecretsListParams struct {
 	Q *string
 	/*Role*/
 	Role *string
+	/*Rolen*/
+	Rolen *string
 	/*RoleID*/
 	RoleID *string
+	/*RoleIDn*/
+	RoleIDn *string
 	/*Tag*/
 	Tag *string
+	/*Tagn*/
+	Tagn *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -144,6 +191,39 @@ func (o *SecretsSecretsListParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithCreated adds the created to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithCreated(created *string) *SecretsSecretsListParams {
+	o.SetCreated(created)
+	return o
+}
+
+// SetCreated adds the created to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetCreated(created *string) {
+	o.Created = created
+}
+
+// WithCreatedGte adds the createdGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithCreatedGte(createdGte *string) *SecretsSecretsListParams {
+	o.SetCreatedGte(createdGte)
+	return o
+}
+
+// SetCreatedGte adds the createdGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetCreatedGte(createdGte *string) {
+	o.CreatedGte = createdGte
+}
+
+// WithCreatedLte adds the createdLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithCreatedLte(createdLte *string) *SecretsSecretsListParams {
+	o.SetCreatedLte(createdLte)
+	return o
+}
+
+// SetCreatedLte adds the createdLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetCreatedLte(createdLte *string) {
+	o.CreatedLte = createdLte
+}
+
 // WithDevice adds the device to the secrets secrets list params
 func (o *SecretsSecretsListParams) WithDevice(device *string) *SecretsSecretsListParams {
 	o.SetDevice(device)
@@ -153,6 +233,17 @@ func (o *SecretsSecretsListParams) WithDevice(device *string) *SecretsSecretsLis
 // SetDevice adds the device to the secrets secrets list params
 func (o *SecretsSecretsListParams) SetDevice(device *string) {
 	o.Device = device
+}
+
+// WithDevicen adds the devicen to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithDevicen(devicen *string) *SecretsSecretsListParams {
+	o.SetDevicen(devicen)
+	return o
+}
+
+// SetDevicen adds the deviceN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetDevicen(devicen *string) {
+	o.Devicen = devicen
 }
 
 // WithDeviceID adds the deviceID to the secrets secrets list params
@@ -166,15 +257,114 @@ func (o *SecretsSecretsListParams) SetDeviceID(deviceID *string) {
 	o.DeviceID = deviceID
 }
 
-// WithIDIn adds the iDIn to the secrets secrets list params
-func (o *SecretsSecretsListParams) WithIDIn(iDIn *string) *SecretsSecretsListParams {
-	o.SetIDIn(iDIn)
+// WithDeviceIDn adds the deviceIDn to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithDeviceIDn(deviceIDn *string) *SecretsSecretsListParams {
+	o.SetDeviceIDn(deviceIDn)
 	return o
 }
 
-// SetIDIn adds the idIn to the secrets secrets list params
-func (o *SecretsSecretsListParams) SetIDIn(iDIn *string) {
-	o.IDIn = iDIn
+// SetDeviceIDn adds the deviceIdN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetDeviceIDn(deviceIDn *string) {
+	o.DeviceIDn = deviceIDn
+}
+
+// WithID adds the id to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithID(id *string) *SecretsSecretsListParams {
+	o.SetID(id)
+	return o
+}
+
+// SetID adds the id to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetID(id *string) {
+	o.ID = id
+}
+
+// WithIDGt adds the iDGt to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithIDGt(iDGt *string) *SecretsSecretsListParams {
+	o.SetIDGt(iDGt)
+	return o
+}
+
+// SetIDGt adds the idGt to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetIDGt(iDGt *string) {
+	o.IDGt = iDGt
+}
+
+// WithIDGte adds the iDGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithIDGte(iDGte *string) *SecretsSecretsListParams {
+	o.SetIDGte(iDGte)
+	return o
+}
+
+// SetIDGte adds the idGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetIDGte(iDGte *string) {
+	o.IDGte = iDGte
+}
+
+// WithIDLt adds the iDLt to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithIDLt(iDLt *string) *SecretsSecretsListParams {
+	o.SetIDLt(iDLt)
+	return o
+}
+
+// SetIDLt adds the idLt to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetIDLt(iDLt *string) {
+	o.IDLt = iDLt
+}
+
+// WithIDLte adds the iDLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithIDLte(iDLte *string) *SecretsSecretsListParams {
+	o.SetIDLte(iDLte)
+	return o
+}
+
+// SetIDLte adds the idLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetIDLte(iDLte *string) {
+	o.IDLte = iDLte
+}
+
+// WithIDn adds the iDn to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithIDn(iDn *string) *SecretsSecretsListParams {
+	o.SetIDn(iDn)
+	return o
+}
+
+// SetIDn adds the idN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetIDn(iDn *string) {
+	o.IDn = iDn
+}
+
+// WithLastUpdated adds the lastUpdated to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithLastUpdated(lastUpdated *string) *SecretsSecretsListParams {
+	o.SetLastUpdated(lastUpdated)
+	return o
+}
+
+// SetLastUpdated adds the lastUpdated to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetLastUpdated(lastUpdated *string) {
+	o.LastUpdated = lastUpdated
+}
+
+// WithLastUpdatedGte adds the lastUpdatedGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithLastUpdatedGte(lastUpdatedGte *string) *SecretsSecretsListParams {
+	o.SetLastUpdatedGte(lastUpdatedGte)
+	return o
+}
+
+// SetLastUpdatedGte adds the lastUpdatedGte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetLastUpdatedGte(lastUpdatedGte *string) {
+	o.LastUpdatedGte = lastUpdatedGte
+}
+
+// WithLastUpdatedLte adds the lastUpdatedLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithLastUpdatedLte(lastUpdatedLte *string) *SecretsSecretsListParams {
+	o.SetLastUpdatedLte(lastUpdatedLte)
+	return o
+}
+
+// SetLastUpdatedLte adds the lastUpdatedLte to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetLastUpdatedLte(lastUpdatedLte *string) {
+	o.LastUpdatedLte = lastUpdatedLte
 }
 
 // WithLimit adds the limit to the secrets secrets list params
@@ -197,6 +387,105 @@ func (o *SecretsSecretsListParams) WithName(name *string) *SecretsSecretsListPar
 // SetName adds the name to the secrets secrets list params
 func (o *SecretsSecretsListParams) SetName(name *string) {
 	o.Name = name
+}
+
+// WithNameIc adds the nameIc to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameIc(nameIc *string) *SecretsSecretsListParams {
+	o.SetNameIc(nameIc)
+	return o
+}
+
+// SetNameIc adds the nameIc to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameIc(nameIc *string) {
+	o.NameIc = nameIc
+}
+
+// WithNameIe adds the nameIe to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameIe(nameIe *string) *SecretsSecretsListParams {
+	o.SetNameIe(nameIe)
+	return o
+}
+
+// SetNameIe adds the nameIe to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameIe(nameIe *string) {
+	o.NameIe = nameIe
+}
+
+// WithNameIew adds the nameIew to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameIew(nameIew *string) *SecretsSecretsListParams {
+	o.SetNameIew(nameIew)
+	return o
+}
+
+// SetNameIew adds the nameIew to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameIew(nameIew *string) {
+	o.NameIew = nameIew
+}
+
+// WithNameIsw adds the nameIsw to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameIsw(nameIsw *string) *SecretsSecretsListParams {
+	o.SetNameIsw(nameIsw)
+	return o
+}
+
+// SetNameIsw adds the nameIsw to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameIsw(nameIsw *string) {
+	o.NameIsw = nameIsw
+}
+
+// WithNamen adds the namen to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNamen(namen *string) *SecretsSecretsListParams {
+	o.SetNamen(namen)
+	return o
+}
+
+// SetNamen adds the nameN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNamen(namen *string) {
+	o.Namen = namen
+}
+
+// WithNameNic adds the nameNic to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameNic(nameNic *string) *SecretsSecretsListParams {
+	o.SetNameNic(nameNic)
+	return o
+}
+
+// SetNameNic adds the nameNic to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameNic(nameNic *string) {
+	o.NameNic = nameNic
+}
+
+// WithNameNie adds the nameNie to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameNie(nameNie *string) *SecretsSecretsListParams {
+	o.SetNameNie(nameNie)
+	return o
+}
+
+// SetNameNie adds the nameNie to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameNie(nameNie *string) {
+	o.NameNie = nameNie
+}
+
+// WithNameNiew adds the nameNiew to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameNiew(nameNiew *string) *SecretsSecretsListParams {
+	o.SetNameNiew(nameNiew)
+	return o
+}
+
+// SetNameNiew adds the nameNiew to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameNiew(nameNiew *string) {
+	o.NameNiew = nameNiew
+}
+
+// WithNameNisw adds the nameNisw to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithNameNisw(nameNisw *string) *SecretsSecretsListParams {
+	o.SetNameNisw(nameNisw)
+	return o
+}
+
+// SetNameNisw adds the nameNisw to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetNameNisw(nameNisw *string) {
+	o.NameNisw = nameNisw
 }
 
 // WithOffset adds the offset to the secrets secrets list params
@@ -232,6 +521,17 @@ func (o *SecretsSecretsListParams) SetRole(role *string) {
 	o.Role = role
 }
 
+// WithRolen adds the rolen to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithRolen(rolen *string) *SecretsSecretsListParams {
+	o.SetRolen(rolen)
+	return o
+}
+
+// SetRolen adds the roleN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetRolen(rolen *string) {
+	o.Rolen = rolen
+}
+
 // WithRoleID adds the roleID to the secrets secrets list params
 func (o *SecretsSecretsListParams) WithRoleID(roleID *string) *SecretsSecretsListParams {
 	o.SetRoleID(roleID)
@@ -241,6 +541,17 @@ func (o *SecretsSecretsListParams) WithRoleID(roleID *string) *SecretsSecretsLis
 // SetRoleID adds the roleId to the secrets secrets list params
 func (o *SecretsSecretsListParams) SetRoleID(roleID *string) {
 	o.RoleID = roleID
+}
+
+// WithRoleIDn adds the roleIDn to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithRoleIDn(roleIDn *string) *SecretsSecretsListParams {
+	o.SetRoleIDn(roleIDn)
+	return o
+}
+
+// SetRoleIDn adds the roleIdN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetRoleIDn(roleIDn *string) {
+	o.RoleIDn = roleIDn
 }
 
 // WithTag adds the tag to the secrets secrets list params
@@ -254,6 +565,17 @@ func (o *SecretsSecretsListParams) SetTag(tag *string) {
 	o.Tag = tag
 }
 
+// WithTagn adds the tagn to the secrets secrets list params
+func (o *SecretsSecretsListParams) WithTagn(tagn *string) *SecretsSecretsListParams {
+	o.SetTagn(tagn)
+	return o
+}
+
+// SetTagn adds the tagN to the secrets secrets list params
+func (o *SecretsSecretsListParams) SetTagn(tagn *string) {
+	o.Tagn = tagn
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -261,6 +583,54 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
+
+	if o.Created != nil {
+
+		// query param created
+		var qrCreated string
+		if o.Created != nil {
+			qrCreated = *o.Created
+		}
+		qCreated := qrCreated
+		if qCreated != "" {
+			if err := r.SetQueryParam("created", qCreated); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.CreatedGte != nil {
+
+		// query param created__gte
+		var qrCreatedGte string
+		if o.CreatedGte != nil {
+			qrCreatedGte = *o.CreatedGte
+		}
+		qCreatedGte := qrCreatedGte
+		if qCreatedGte != "" {
+			if err := r.SetQueryParam("created__gte", qCreatedGte); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.CreatedLte != nil {
+
+		// query param created__lte
+		var qrCreatedLte string
+		if o.CreatedLte != nil {
+			qrCreatedLte = *o.CreatedLte
+		}
+		qCreatedLte := qrCreatedLte
+		if qCreatedLte != "" {
+			if err := r.SetQueryParam("created__lte", qCreatedLte); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.Device != nil {
 
@@ -272,6 +642,22 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 		qDevice := qrDevice
 		if qDevice != "" {
 			if err := r.SetQueryParam("device", qDevice); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Devicen != nil {
+
+		// query param device__n
+		var qrDevicen string
+		if o.Devicen != nil {
+			qrDevicen = *o.Devicen
+		}
+		qDevicen := qrDevicen
+		if qDevicen != "" {
+			if err := r.SetQueryParam("device__n", qDevicen); err != nil {
 				return err
 			}
 		}
@@ -294,16 +680,160 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 	}
 
-	if o.IDIn != nil {
+	if o.DeviceIDn != nil {
 
-		// query param id__in
-		var qrIDIn string
-		if o.IDIn != nil {
-			qrIDIn = *o.IDIn
+		// query param device_id__n
+		var qrDeviceIDn string
+		if o.DeviceIDn != nil {
+			qrDeviceIDn = *o.DeviceIDn
 		}
-		qIDIn := qrIDIn
-		if qIDIn != "" {
-			if err := r.SetQueryParam("id__in", qIDIn); err != nil {
+		qDeviceIDn := qrDeviceIDn
+		if qDeviceIDn != "" {
+			if err := r.SetQueryParam("device_id__n", qDeviceIDn); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.ID != nil {
+
+		// query param id
+		var qrID string
+		if o.ID != nil {
+			qrID = *o.ID
+		}
+		qID := qrID
+		if qID != "" {
+			if err := r.SetQueryParam("id", qID); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.IDGt != nil {
+
+		// query param id__gt
+		var qrIDGt string
+		if o.IDGt != nil {
+			qrIDGt = *o.IDGt
+		}
+		qIDGt := qrIDGt
+		if qIDGt != "" {
+			if err := r.SetQueryParam("id__gt", qIDGt); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.IDGte != nil {
+
+		// query param id__gte
+		var qrIDGte string
+		if o.IDGte != nil {
+			qrIDGte = *o.IDGte
+		}
+		qIDGte := qrIDGte
+		if qIDGte != "" {
+			if err := r.SetQueryParam("id__gte", qIDGte); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.IDLt != nil {
+
+		// query param id__lt
+		var qrIDLt string
+		if o.IDLt != nil {
+			qrIDLt = *o.IDLt
+		}
+		qIDLt := qrIDLt
+		if qIDLt != "" {
+			if err := r.SetQueryParam("id__lt", qIDLt); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.IDLte != nil {
+
+		// query param id__lte
+		var qrIDLte string
+		if o.IDLte != nil {
+			qrIDLte = *o.IDLte
+		}
+		qIDLte := qrIDLte
+		if qIDLte != "" {
+			if err := r.SetQueryParam("id__lte", qIDLte); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.IDn != nil {
+
+		// query param id__n
+		var qrIDn string
+		if o.IDn != nil {
+			qrIDn = *o.IDn
+		}
+		qIDn := qrIDn
+		if qIDn != "" {
+			if err := r.SetQueryParam("id__n", qIDn); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.LastUpdated != nil {
+
+		// query param last_updated
+		var qrLastUpdated string
+		if o.LastUpdated != nil {
+			qrLastUpdated = *o.LastUpdated
+		}
+		qLastUpdated := qrLastUpdated
+		if qLastUpdated != "" {
+			if err := r.SetQueryParam("last_updated", qLastUpdated); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.LastUpdatedGte != nil {
+
+		// query param last_updated__gte
+		var qrLastUpdatedGte string
+		if o.LastUpdatedGte != nil {
+			qrLastUpdatedGte = *o.LastUpdatedGte
+		}
+		qLastUpdatedGte := qrLastUpdatedGte
+		if qLastUpdatedGte != "" {
+			if err := r.SetQueryParam("last_updated__gte", qLastUpdatedGte); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.LastUpdatedLte != nil {
+
+		// query param last_updated__lte
+		var qrLastUpdatedLte string
+		if o.LastUpdatedLte != nil {
+			qrLastUpdatedLte = *o.LastUpdatedLte
+		}
+		qLastUpdatedLte := qrLastUpdatedLte
+		if qLastUpdatedLte != "" {
+			if err := r.SetQueryParam("last_updated__lte", qLastUpdatedLte); err != nil {
 				return err
 			}
 		}
@@ -336,6 +866,150 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 		qName := qrName
 		if qName != "" {
 			if err := r.SetQueryParam("name", qName); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameIc != nil {
+
+		// query param name__ic
+		var qrNameIc string
+		if o.NameIc != nil {
+			qrNameIc = *o.NameIc
+		}
+		qNameIc := qrNameIc
+		if qNameIc != "" {
+			if err := r.SetQueryParam("name__ic", qNameIc); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameIe != nil {
+
+		// query param name__ie
+		var qrNameIe string
+		if o.NameIe != nil {
+			qrNameIe = *o.NameIe
+		}
+		qNameIe := qrNameIe
+		if qNameIe != "" {
+			if err := r.SetQueryParam("name__ie", qNameIe); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameIew != nil {
+
+		// query param name__iew
+		var qrNameIew string
+		if o.NameIew != nil {
+			qrNameIew = *o.NameIew
+		}
+		qNameIew := qrNameIew
+		if qNameIew != "" {
+			if err := r.SetQueryParam("name__iew", qNameIew); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameIsw != nil {
+
+		// query param name__isw
+		var qrNameIsw string
+		if o.NameIsw != nil {
+			qrNameIsw = *o.NameIsw
+		}
+		qNameIsw := qrNameIsw
+		if qNameIsw != "" {
+			if err := r.SetQueryParam("name__isw", qNameIsw); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Namen != nil {
+
+		// query param name__n
+		var qrNamen string
+		if o.Namen != nil {
+			qrNamen = *o.Namen
+		}
+		qNamen := qrNamen
+		if qNamen != "" {
+			if err := r.SetQueryParam("name__n", qNamen); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameNic != nil {
+
+		// query param name__nic
+		var qrNameNic string
+		if o.NameNic != nil {
+			qrNameNic = *o.NameNic
+		}
+		qNameNic := qrNameNic
+		if qNameNic != "" {
+			if err := r.SetQueryParam("name__nic", qNameNic); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameNie != nil {
+
+		// query param name__nie
+		var qrNameNie string
+		if o.NameNie != nil {
+			qrNameNie = *o.NameNie
+		}
+		qNameNie := qrNameNie
+		if qNameNie != "" {
+			if err := r.SetQueryParam("name__nie", qNameNie); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameNiew != nil {
+
+		// query param name__niew
+		var qrNameNiew string
+		if o.NameNiew != nil {
+			qrNameNiew = *o.NameNiew
+		}
+		qNameNiew := qrNameNiew
+		if qNameNiew != "" {
+			if err := r.SetQueryParam("name__niew", qNameNiew); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.NameNisw != nil {
+
+		// query param name__nisw
+		var qrNameNisw string
+		if o.NameNisw != nil {
+			qrNameNisw = *o.NameNisw
+		}
+		qNameNisw := qrNameNisw
+		if qNameNisw != "" {
+			if err := r.SetQueryParam("name__nisw", qNameNisw); err != nil {
 				return err
 			}
 		}
@@ -390,6 +1064,22 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 	}
 
+	if o.Rolen != nil {
+
+		// query param role__n
+		var qrRolen string
+		if o.Rolen != nil {
+			qrRolen = *o.Rolen
+		}
+		qRolen := qrRolen
+		if qRolen != "" {
+			if err := r.SetQueryParam("role__n", qRolen); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.RoleID != nil {
 
 		// query param role_id
@@ -406,6 +1096,22 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 	}
 
+	if o.RoleIDn != nil {
+
+		// query param role_id__n
+		var qrRoleIDn string
+		if o.RoleIDn != nil {
+			qrRoleIDn = *o.RoleIDn
+		}
+		qRoleIDn := qrRoleIDn
+		if qRoleIDn != "" {
+			if err := r.SetQueryParam("role_id__n", qRoleIDn); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	if o.Tag != nil {
 
 		// query param tag
@@ -416,6 +1122,22 @@ func (o *SecretsSecretsListParams) WriteToRequest(r runtime.ClientRequest, reg s
 		qTag := qrTag
 		if qTag != "" {
 			if err := r.SetQueryParam("tag", qTag); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Tagn != nil {
+
+		// query param tag__n
+		var qrTagn string
+		if o.Tagn != nil {
+			qrTagn = *o.Tagn
+		}
+		qTagn := qrTagn
+		if qTagn != "" {
+			if err := r.SetQueryParam("tag__n", qTagn); err != nil {
 				return err
 			}
 		}

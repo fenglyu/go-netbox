@@ -79,7 +79,7 @@ for the ipam aggregates partial update operation typically these are written to 
 type IpamAggregatesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.Aggregate
+	Data *models.WritableAggregate
 	/*ID
 	  A unique integer value identifying this aggregate.
 
@@ -125,13 +125,13 @@ func (o *IpamAggregatesPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam aggregates partial update params
-func (o *IpamAggregatesPartialUpdateParams) WithData(data *models.Aggregate) *IpamAggregatesPartialUpdateParams {
+func (o *IpamAggregatesPartialUpdateParams) WithData(data *models.WritableAggregate) *IpamAggregatesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam aggregates partial update params
-func (o *IpamAggregatesPartialUpdateParams) SetData(data *models.Aggregate) {
+func (o *IpamAggregatesPartialUpdateParams) SetData(data *models.WritableAggregate) {
 	o.Data = data
 }
 

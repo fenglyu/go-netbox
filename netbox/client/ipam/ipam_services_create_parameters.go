@@ -78,7 +78,7 @@ for the ipam services create operation typically these are written to a http.Req
 type IpamServicesCreateParams struct {
 
 	/*Data*/
-	Data *models.Service
+	Data *models.WritableService
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamServicesCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam services create params
-func (o *IpamServicesCreateParams) WithData(data *models.Service) *IpamServicesCreateParams {
+func (o *IpamServicesCreateParams) WithData(data *models.WritableService) *IpamServicesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam services create params
-func (o *IpamServicesCreateParams) SetData(data *models.Service) {
+func (o *IpamServicesCreateParams) SetData(data *models.WritableService) {
 	o.Data = data
 }
 

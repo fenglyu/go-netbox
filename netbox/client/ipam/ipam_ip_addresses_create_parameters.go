@@ -78,7 +78,7 @@ for the ipam ip addresses create operation typically these are written to a http
 type IpamIPAddressesCreateParams struct {
 
 	/*Data*/
-	Data *models.IPAddress
+	Data *models.WritableIPAddress
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamIPAddressesCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam ip addresses create params
-func (o *IpamIPAddressesCreateParams) WithData(data *models.IPAddress) *IpamIPAddressesCreateParams {
+func (o *IpamIPAddressesCreateParams) WithData(data *models.WritableIPAddress) *IpamIPAddressesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam ip addresses create params
-func (o *IpamIPAddressesCreateParams) SetData(data *models.IPAddress) {
+func (o *IpamIPAddressesCreateParams) SetData(data *models.WritableIPAddress) {
 	o.Data = data
 }
 

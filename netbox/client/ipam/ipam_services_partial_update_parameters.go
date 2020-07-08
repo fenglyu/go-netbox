@@ -79,7 +79,7 @@ for the ipam services partial update operation typically these are written to a 
 type IpamServicesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.Service
+	Data *models.WritableService
 	/*ID
 	  A unique integer value identifying this service.
 
@@ -125,13 +125,13 @@ func (o *IpamServicesPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam services partial update params
-func (o *IpamServicesPartialUpdateParams) WithData(data *models.Service) *IpamServicesPartialUpdateParams {
+func (o *IpamServicesPartialUpdateParams) WithData(data *models.WritableService) *IpamServicesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam services partial update params
-func (o *IpamServicesPartialUpdateParams) SetData(data *models.Service) {
+func (o *IpamServicesPartialUpdateParams) SetData(data *models.WritableService) {
 	o.Data = data
 }
 

@@ -79,7 +79,7 @@ for the ipam vlans partial update operation typically these are written to a htt
 type IpamVlansPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.VLAN
+	Data *models.WritableVLAN
 	/*ID
 	  A unique integer value identifying this VLAN.
 
@@ -125,13 +125,13 @@ func (o *IpamVlansPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam vlans partial update params
-func (o *IpamVlansPartialUpdateParams) WithData(data *models.VLAN) *IpamVlansPartialUpdateParams {
+func (o *IpamVlansPartialUpdateParams) WithData(data *models.WritableVLAN) *IpamVlansPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam vlans partial update params
-func (o *IpamVlansPartialUpdateParams) SetData(data *models.VLAN) {
+func (o *IpamVlansPartialUpdateParams) SetData(data *models.WritableVLAN) {
 	o.Data = data
 }
 

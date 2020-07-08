@@ -21,8 +21,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,6 +32,14 @@ import (
 // swagger:model Platform
 type Platform struct {
 
+	// Description
+	// Max Length: 200
+	Description string `json:"description,omitempty"`
+
+	// Device count
+	// Read Only: true
+	DeviceCount int64 `json:"device_count,omitempty"`
+
 	// ID
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
@@ -43,14 +49,14 @@ type Platform struct {
 
 	// Name
 	// Required: true
-	// Max Length: 50
+	// Max Length: 100
 	// Min Length: 1
 	Name *string `json:"name"`
 
 	// NAPALM arguments
 	//
 	// Additional arguments to pass when initiating the NAPALM driver (JSON format)
-	NapalmArgs string `json:"napalm_args,omitempty"`
+	NapalmArgs *string `json:"napalm_args,omitempty"`
 
 	// NAPALM driver
 	//
@@ -58,21 +64,25 @@ type Platform struct {
 	// Max Length: 50
 	NapalmDriver string `json:"napalm_driver,omitempty"`
 
-	// Legacy RPC client
-	// Enum: [juniper-junos cisco-ios opengear]
-	RPCClient string `json:"rpc_client,omitempty"`
-
 	// Slug
 	// Required: true
-	// Max Length: 50
+	// Max Length: 100
 	// Min Length: 1
 	// Pattern: ^[-a-zA-Z0-9_]+$
 	Slug *string `json:"slug"`
+
+	// Virtualmachine count
+	// Read Only: true
+	VirtualmachineCount int64 `json:"virtualmachine_count,omitempty"`
 }
 
 // Validate validates this platform
 func (m *Platform) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateDescription(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateManufacturer(formats); err != nil {
 		res = append(res, err)
@@ -86,10 +96,6 @@ func (m *Platform) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateRPCClient(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateSlug(formats); err != nil {
 		res = append(res, err)
 	}
@@ -97,6 +103,19 @@ func (m *Platform) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Platform) validateDescription(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Description) { // not required
+		return nil
+	}
+
+	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -128,7 +147,7 @@ func (m *Platform) validateName(formats strfmt.Registry) error {
 		return err
 	}
 
-	if err := validate.MaxLength("name", "body", string(*m.Name), 50); err != nil {
+	if err := validate.MaxLength("name", "body", string(*m.Name), 100); err != nil {
 		return err
 	}
 
@@ -148,52 +167,6 @@ func (m *Platform) validateNapalmDriver(formats strfmt.Registry) error {
 	return nil
 }
 
-var platformTypeRPCClientPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["juniper-junos","cisco-ios","opengear"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		platformTypeRPCClientPropEnum = append(platformTypeRPCClientPropEnum, v)
-	}
-}
-
-const (
-
-	// PlatformRPCClientJuniperJunos captures enum value "juniper-junos"
-	PlatformRPCClientJuniperJunos string = "juniper-junos"
-
-	// PlatformRPCClientCiscoIos captures enum value "cisco-ios"
-	PlatformRPCClientCiscoIos string = "cisco-ios"
-
-	// PlatformRPCClientOpengear captures enum value "opengear"
-	PlatformRPCClientOpengear string = "opengear"
-)
-
-// prop value enum
-func (m *Platform) validateRPCClientEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, platformTypeRPCClientPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *Platform) validateRPCClient(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.RPCClient) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateRPCClientEnum("rpc_client", "body", m.RPCClient); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (m *Platform) validateSlug(formats strfmt.Registry) error {
 
 	if err := validate.Required("slug", "body", m.Slug); err != nil {
@@ -204,7 +177,7 @@ func (m *Platform) validateSlug(formats strfmt.Registry) error {
 		return err
 	}
 
-	if err := validate.MaxLength("slug", "body", string(*m.Slug), 50); err != nil {
+	if err := validate.MaxLength("slug", "body", string(*m.Slug), 100); err != nil {
 		return err
 	}
 

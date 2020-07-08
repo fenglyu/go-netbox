@@ -78,7 +78,7 @@ for the ipam vrfs create operation typically these are written to a http.Request
 type IpamVrfsCreateParams struct {
 
 	/*Data*/
-	Data *models.VRF
+	Data *models.WritableVRF
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamVrfsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam vrfs create params
-func (o *IpamVrfsCreateParams) WithData(data *models.VRF) *IpamVrfsCreateParams {
+func (o *IpamVrfsCreateParams) WithData(data *models.WritableVRF) *IpamVrfsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam vrfs create params
-func (o *IpamVrfsCreateParams) SetData(data *models.VRF) {
+func (o *IpamVrfsCreateParams) SetData(data *models.WritableVRF) {
 	o.Data = data
 }
 

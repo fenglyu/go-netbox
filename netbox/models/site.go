@@ -21,6 +21,9 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -33,9 +36,15 @@ import (
 type Site struct {
 
 	// ASN
+	//
+	// 32-bit autonomous system number
 	// Maximum: 4.294967295e+09
 	// Minimum: 1
-	Asn int64 `json:"asn,omitempty"`
+	Asn *int64 `json:"asn,omitempty"`
+
+	// Circuit count
+	// Read Only: true
+	CircuitCount int64 `json:"circuit_count,omitempty"`
 
 	// Comments
 	Comments string `json:"comments,omitempty"`
@@ -53,26 +62,6 @@ type Site struct {
 	// Max Length: 20
 	ContactPhone string `json:"contact_phone,omitempty"`
 
-	// Count circuits
-	// Read Only: true
-	CountCircuits string `json:"count_circuits,omitempty"`
-
-	// Count devices
-	// Read Only: true
-	CountDevices string `json:"count_devices,omitempty"`
-
-	// Count prefixes
-	// Read Only: true
-	CountPrefixes string `json:"count_prefixes,omitempty"`
-
-	// Count racks
-	// Read Only: true
-	CountRacks string `json:"count_racks,omitempty"`
-
-	// Count vlans
-	// Read Only: true
-	CountVlans string `json:"count_vlans,omitempty"`
-
 	// Created
 	// Read Only: true
 	// Format: date
@@ -82,10 +71,16 @@ type Site struct {
 	CustomFields interface{} `json:"custom_fields,omitempty"`
 
 	// Description
-	// Max Length: 100
+	// Max Length: 200
 	Description string `json:"description,omitempty"`
 
+	// Device count
+	// Read Only: true
+	DeviceCount int64 `json:"device_count,omitempty"`
+
 	// Facility
+	//
+	// Local facility ID or description
 	// Max Length: 50
 	Facility string `json:"facility,omitempty"`
 
@@ -99,10 +94,14 @@ type Site struct {
 	LastUpdated strfmt.DateTime `json:"last_updated,omitempty"`
 
 	// Latitude
-	Latitude string `json:"latitude,omitempty"`
+	//
+	// GPS coordinate (latitude)
+	Latitude *string `json:"latitude,omitempty"`
 
 	// Longitude
-	Longitude string `json:"longitude,omitempty"`
+	//
+	// GPS coordinate (longitude)
+	Longitude *string `json:"longitude,omitempty"`
 
 	// Name
 	// Required: true
@@ -113,6 +112,14 @@ type Site struct {
 	// Physical address
 	// Max Length: 200
 	PhysicalAddress string `json:"physical_address,omitempty"`
+
+	// Prefix count
+	// Read Only: true
+	PrefixCount int64 `json:"prefix_count,omitempty"`
+
+	// Rack count
+	// Read Only: true
+	RackCount int64 `json:"rack_count,omitempty"`
 
 	// region
 	Region *NestedRegion `json:"region,omitempty"`
@@ -131,14 +138,22 @@ type Site struct {
 	// status
 	Status *SiteStatus `json:"status,omitempty"`
 
-	// Tags
-	Tags string `json:"tags,omitempty"`
+	// tags
+	Tags []string `json:"tags"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
 
 	// Time zone
 	TimeZone string `json:"time_zone,omitempty"`
+
+	// Virtualmachine count
+	// Read Only: true
+	VirtualmachineCount int64 `json:"virtualmachine_count,omitempty"`
+
+	// Vlan count
+	// Read Only: true
+	VlanCount int64 `json:"vlan_count,omitempty"`
 }
 
 // Validate validates this site
@@ -201,6 +216,10 @@ func (m *Site) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTenant(formats); err != nil {
 		res = append(res, err)
 	}
@@ -217,11 +236,11 @@ func (m *Site) validateAsn(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MinimumInt("asn", "body", int64(m.Asn), 1, false); err != nil {
+	if err := validate.MinimumInt("asn", "body", int64(*m.Asn), 1, false); err != nil {
 		return err
 	}
 
-	if err := validate.MaximumInt("asn", "body", int64(m.Asn), 4.294967295e+09, false); err != nil {
+	if err := validate.MaximumInt("asn", "body", int64(*m.Asn), 4.294967295e+09, false); err != nil {
 		return err
 	}
 
@@ -290,7 +309,7 @@ func (m *Site) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
 		return err
 	}
 
@@ -423,6 +442,23 @@ func (m *Site) validateStatus(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *Site) validateTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tags); i++ {
+
+		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
 func (m *Site) validateTenant(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Tenant) { // not required
@@ -466,11 +502,13 @@ type SiteStatus struct {
 
 	// label
 	// Required: true
+	// Enum: [Active Planned Retired]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	Value *int64 `json:"value"`
+	// Enum: [active planned retired]
+	Value *string `json:"value"`
 }
 
 // Validate validates this site status
@@ -491,18 +529,92 @@ func (m *SiteStatus) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+var siteStatusTypeLabelPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Active","Planned","Retired"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		siteStatusTypeLabelPropEnum = append(siteStatusTypeLabelPropEnum, v)
+	}
+}
+
+const (
+
+	// SiteStatusLabelActive captures enum value "Active"
+	SiteStatusLabelActive string = "Active"
+
+	// SiteStatusLabelPlanned captures enum value "Planned"
+	SiteStatusLabelPlanned string = "Planned"
+
+	// SiteStatusLabelRetired captures enum value "Retired"
+	SiteStatusLabelRetired string = "Retired"
+)
+
+// prop value enum
+func (m *SiteStatus) validateLabelEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, siteStatusTypeLabelPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (m *SiteStatus) validateLabel(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"label", "body", m.Label); err != nil {
 		return err
 	}
 
+	// value enum
+	if err := m.validateLabelEnum("status"+"."+"label", "body", *m.Label); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var siteStatusTypeValuePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["active","planned","retired"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		siteStatusTypeValuePropEnum = append(siteStatusTypeValuePropEnum, v)
+	}
+}
+
+const (
+
+	// SiteStatusValueActive captures enum value "active"
+	SiteStatusValueActive string = "active"
+
+	// SiteStatusValuePlanned captures enum value "planned"
+	SiteStatusValuePlanned string = "planned"
+
+	// SiteStatusValueRetired captures enum value "retired"
+	SiteStatusValueRetired string = "retired"
+)
+
+// prop value enum
+func (m *SiteStatus) validateValueEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, siteStatusTypeValuePropEnum, true); err != nil {
+		return err
+	}
 	return nil
 }
 
 func (m *SiteStatus) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("status"+"."+"value", "body", m.Value); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateValueEnum("status"+"."+"value", "body", *m.Value); err != nil {
 		return err
 	}
 

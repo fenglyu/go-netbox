@@ -78,7 +78,7 @@ for the dcim console port templates create operation typically these are written
 type DcimConsolePortTemplatesCreateParams struct {
 
 	/*Data*/
-	Data *models.ConsolePortTemplate
+	Data *models.WritableConsolePortTemplate
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimConsolePortTemplatesCreateParams) SetHTTPClient(client *http.Client
 }
 
 // WithData adds the data to the dcim console port templates create params
-func (o *DcimConsolePortTemplatesCreateParams) WithData(data *models.ConsolePortTemplate) *DcimConsolePortTemplatesCreateParams {
+func (o *DcimConsolePortTemplatesCreateParams) WithData(data *models.WritableConsolePortTemplate) *DcimConsolePortTemplatesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim console port templates create params
-func (o *DcimConsolePortTemplatesCreateParams) SetData(data *models.ConsolePortTemplate) {
+func (o *DcimConsolePortTemplatesCreateParams) SetData(data *models.WritableConsolePortTemplate) {
 	o.Data = data
 }
 

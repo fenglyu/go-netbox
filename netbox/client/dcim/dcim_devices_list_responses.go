@@ -106,7 +106,7 @@ type DcimDevicesListOKBody struct {
 
 	// results
 	// Required: true
-	Results []*models.Device `json:"results"`
+	Results []*models.DeviceWithConfigContext `json:"results"`
 }
 
 // Validate validates this dcim devices list o k body

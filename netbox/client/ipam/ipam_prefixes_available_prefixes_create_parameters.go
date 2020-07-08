@@ -79,7 +79,7 @@ for the ipam prefixes available prefixes create operation typically these are wr
 type IpamPrefixesAvailablePrefixesCreateParams struct {
 
 	/*Data*/
-	Data *models.Prefix
+	Data *models.WritablePrefix
 	/*ID
 	  A unique integer value identifying this prefix.
 
@@ -125,13 +125,13 @@ func (o *IpamPrefixesAvailablePrefixesCreateParams) SetHTTPClient(client *http.C
 }
 
 // WithData adds the data to the ipam prefixes available prefixes create params
-func (o *IpamPrefixesAvailablePrefixesCreateParams) WithData(data *models.Prefix) *IpamPrefixesAvailablePrefixesCreateParams {
+func (o *IpamPrefixesAvailablePrefixesCreateParams) WithData(data *models.WritablePrefix) *IpamPrefixesAvailablePrefixesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam prefixes available prefixes create params
-func (o *IpamPrefixesAvailablePrefixesCreateParams) SetData(data *models.Prefix) {
+func (o *IpamPrefixesAvailablePrefixesCreateParams) SetData(data *models.WritablePrefix) {
 	o.Data = data
 }
 

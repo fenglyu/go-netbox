@@ -79,7 +79,7 @@ for the dcim power ports partial update operation typically these are written to
 type DcimPowerPortsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.PowerPort
+	Data *models.WritablePowerPort
 	/*ID
 	  A unique integer value identifying this power port.
 
@@ -125,13 +125,13 @@ func (o *DcimPowerPortsPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim power ports partial update params
-func (o *DcimPowerPortsPartialUpdateParams) WithData(data *models.PowerPort) *DcimPowerPortsPartialUpdateParams {
+func (o *DcimPowerPortsPartialUpdateParams) WithData(data *models.WritablePowerPort) *DcimPowerPortsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power ports partial update params
-func (o *DcimPowerPortsPartialUpdateParams) SetData(data *models.PowerPort) {
+func (o *DcimPowerPortsPartialUpdateParams) SetData(data *models.WritablePowerPort) {
 	o.Data = data
 }
 

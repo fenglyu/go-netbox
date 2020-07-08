@@ -79,7 +79,7 @@ for the extras config contexts update operation typically these are written to a
 type ExtrasConfigContextsUpdateParams struct {
 
 	/*Data*/
-	Data *models.ConfigContext
+	Data *models.WritableConfigContext
 	/*ID
 	  A unique integer value identifying this config context.
 
@@ -125,13 +125,13 @@ func (o *ExtrasConfigContextsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the extras config contexts update params
-func (o *ExtrasConfigContextsUpdateParams) WithData(data *models.ConfigContext) *ExtrasConfigContextsUpdateParams {
+func (o *ExtrasConfigContextsUpdateParams) WithData(data *models.WritableConfigContext) *ExtrasConfigContextsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the extras config contexts update params
-func (o *ExtrasConfigContextsUpdateParams) SetData(data *models.ConfigContext) {
+func (o *ExtrasConfigContextsUpdateParams) SetData(data *models.WritableConfigContext) {
 	o.Data = data
 }
 

@@ -78,7 +78,7 @@ for the dcim racks create operation typically these are written to a http.Reques
 type DcimRacksCreateParams struct {
 
 	/*Data*/
-	Data *models.Rack
+	Data *models.WritableRack
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimRacksCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim racks create params
-func (o *DcimRacksCreateParams) WithData(data *models.Rack) *DcimRacksCreateParams {
+func (o *DcimRacksCreateParams) WithData(data *models.WritableRack) *DcimRacksCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim racks create params
-func (o *DcimRacksCreateParams) SetData(data *models.Rack) {
+func (o *DcimRacksCreateParams) SetData(data *models.WritableRack) {
 	o.Data = data
 }
 

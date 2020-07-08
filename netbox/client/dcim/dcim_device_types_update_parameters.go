@@ -79,7 +79,7 @@ for the dcim device types update operation typically these are written to a http
 type DcimDeviceTypesUpdateParams struct {
 
 	/*Data*/
-	Data *models.DeviceType
+	Data *models.WritableDeviceType
 	/*ID
 	  A unique integer value identifying this device type.
 
@@ -125,13 +125,13 @@ func (o *DcimDeviceTypesUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim device types update params
-func (o *DcimDeviceTypesUpdateParams) WithData(data *models.DeviceType) *DcimDeviceTypesUpdateParams {
+func (o *DcimDeviceTypesUpdateParams) WithData(data *models.WritableDeviceType) *DcimDeviceTypesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device types update params
-func (o *DcimDeviceTypesUpdateParams) SetData(data *models.DeviceType) {
+func (o *DcimDeviceTypesUpdateParams) SetData(data *models.WritableDeviceType) {
 	o.Data = data
 }
 

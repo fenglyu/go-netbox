@@ -78,7 +78,7 @@ for the dcim power ports create operation typically these are written to a http.
 type DcimPowerPortsCreateParams struct {
 
 	/*Data*/
-	Data *models.PowerPort
+	Data *models.WritablePowerPort
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimPowerPortsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim power ports create params
-func (o *DcimPowerPortsCreateParams) WithData(data *models.PowerPort) *DcimPowerPortsCreateParams {
+func (o *DcimPowerPortsCreateParams) WithData(data *models.WritablePowerPort) *DcimPowerPortsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power ports create params
-func (o *DcimPowerPortsCreateParams) SetData(data *models.PowerPort) {
+func (o *DcimPowerPortsCreateParams) SetData(data *models.WritablePowerPort) {
 	o.Data = data
 }
 

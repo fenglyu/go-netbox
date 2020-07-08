@@ -78,7 +78,7 @@ for the ipam aggregates create operation typically these are written to a http.R
 type IpamAggregatesCreateParams struct {
 
 	/*Data*/
-	Data *models.Aggregate
+	Data *models.WritableAggregate
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamAggregatesCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam aggregates create params
-func (o *IpamAggregatesCreateParams) WithData(data *models.Aggregate) *IpamAggregatesCreateParams {
+func (o *IpamAggregatesCreateParams) WithData(data *models.WritableAggregate) *IpamAggregatesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam aggregates create params
-func (o *IpamAggregatesCreateParams) SetData(data *models.Aggregate) {
+func (o *IpamAggregatesCreateParams) SetData(data *models.WritableAggregate) {
 	o.Data = data
 }
 

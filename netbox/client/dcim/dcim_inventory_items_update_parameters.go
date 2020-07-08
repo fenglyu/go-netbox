@@ -79,7 +79,7 @@ for the dcim inventory items update operation typically these are written to a h
 type DcimInventoryItemsUpdateParams struct {
 
 	/*Data*/
-	Data *models.InventoryItem
+	Data *models.WritableInventoryItem
 	/*ID
 	  A unique integer value identifying this inventory item.
 
@@ -125,13 +125,13 @@ func (o *DcimInventoryItemsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim inventory items update params
-func (o *DcimInventoryItemsUpdateParams) WithData(data *models.InventoryItem) *DcimInventoryItemsUpdateParams {
+func (o *DcimInventoryItemsUpdateParams) WithData(data *models.WritableInventoryItem) *DcimInventoryItemsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim inventory items update params
-func (o *DcimInventoryItemsUpdateParams) SetData(data *models.InventoryItem) {
+func (o *DcimInventoryItemsUpdateParams) SetData(data *models.WritableInventoryItem) {
 	o.Data = data
 }
 

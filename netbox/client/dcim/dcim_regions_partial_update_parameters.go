@@ -79,7 +79,7 @@ for the dcim regions partial update operation typically these are written to a h
 type DcimRegionsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.Region
+	Data *models.WritableRegion
 	/*ID
 	  A unique integer value identifying this region.
 
@@ -125,13 +125,13 @@ func (o *DcimRegionsPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim regions partial update params
-func (o *DcimRegionsPartialUpdateParams) WithData(data *models.Region) *DcimRegionsPartialUpdateParams {
+func (o *DcimRegionsPartialUpdateParams) WithData(data *models.WritableRegion) *DcimRegionsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim regions partial update params
-func (o *DcimRegionsPartialUpdateParams) SetData(data *models.Region) {
+func (o *DcimRegionsPartialUpdateParams) SetData(data *models.WritableRegion) {
 	o.Data = data
 }
 

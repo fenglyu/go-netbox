@@ -79,7 +79,7 @@ for the dcim sites update operation typically these are written to a http.Reques
 type DcimSitesUpdateParams struct {
 
 	/*Data*/
-	Data *models.Site
+	Data *models.WritableSite
 	/*ID
 	  A unique integer value identifying this site.
 
@@ -125,13 +125,13 @@ func (o *DcimSitesUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim sites update params
-func (o *DcimSitesUpdateParams) WithData(data *models.Site) *DcimSitesUpdateParams {
+func (o *DcimSitesUpdateParams) WithData(data *models.WritableSite) *DcimSitesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim sites update params
-func (o *DcimSitesUpdateParams) SetData(data *models.Site) {
+func (o *DcimSitesUpdateParams) SetData(data *models.WritableSite) {
 	o.Data = data
 }
 

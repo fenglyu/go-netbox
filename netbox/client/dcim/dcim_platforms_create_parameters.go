@@ -78,7 +78,7 @@ for the dcim platforms create operation typically these are written to a http.Re
 type DcimPlatformsCreateParams struct {
 
 	/*Data*/
-	Data *models.Platform
+	Data *models.WritablePlatform
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimPlatformsCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim platforms create params
-func (o *DcimPlatformsCreateParams) WithData(data *models.Platform) *DcimPlatformsCreateParams {
+func (o *DcimPlatformsCreateParams) WithData(data *models.WritablePlatform) *DcimPlatformsCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim platforms create params
-func (o *DcimPlatformsCreateParams) SetData(data *models.Platform) {
+func (o *DcimPlatformsCreateParams) SetData(data *models.WritablePlatform) {
 	o.Data = data
 }
 

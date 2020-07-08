@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -44,8 +46,12 @@ type VirtualChassis struct {
 	// Required: true
 	Master *NestedDevice `json:"master"`
 
-	// Tags
-	Tags string `json:"tags,omitempty"`
+	// Member count
+	// Read Only: true
+	MemberCount int64 `json:"member_count,omitempty"`
+
+	// tags
+	Tags []string `json:"tags"`
 }
 
 // Validate validates this virtual chassis
@@ -57,6 +63,10 @@ func (m *VirtualChassis) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateMaster(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -92,6 +102,23 @@ func (m *VirtualChassis) validateMaster(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *VirtualChassis) validateTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tags); i++ {
+
+		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
+			return err
+		}
+
 	}
 
 	return nil

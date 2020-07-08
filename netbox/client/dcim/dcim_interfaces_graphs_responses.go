@@ -60,20 +60,20 @@ func NewDcimInterfacesGraphsOK() *DcimInterfacesGraphsOK {
 DcimInterfacesGraphsOK dcim interfaces graphs o k
 */
 type DcimInterfacesGraphsOK struct {
-	Payload *models.Interface
+	Payload *models.DeviceInterface
 }
 
 func (o *DcimInterfacesGraphsOK) Error() string {
 	return fmt.Sprintf("[GET /dcim/interfaces/{id}/graphs/][%d] dcimInterfacesGraphsOK  %+v", 200, o.Payload)
 }
 
-func (o *DcimInterfacesGraphsOK) GetPayload() *models.Interface {
+func (o *DcimInterfacesGraphsOK) GetPayload() *models.DeviceInterface {
 	return o.Payload
 }
 
 func (o *DcimInterfacesGraphsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.Interface)
+	o.Payload = new(models.DeviceInterface)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -41,7 +43,7 @@ type VRF struct {
 	CustomFields interface{} `json:"custom_fields,omitempty"`
 
 	// Description
-	// Max Length: 100
+	// Max Length: 200
 	Description string `json:"description,omitempty"`
 
 	// Display name
@@ -57,6 +59,10 @@ type VRF struct {
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
 
+	// Ipaddress count
+	// Read Only: true
+	IpaddressCount int64 `json:"ipaddress_count,omitempty"`
+
 	// Last updated
 	// Read Only: true
 	// Format: date-time
@@ -68,14 +74,18 @@ type VRF struct {
 	// Min Length: 1
 	Name *string `json:"name"`
 
-	// Route distinguisher
-	// Required: true
-	// Max Length: 21
-	// Min Length: 1
-	Rd *string `json:"rd"`
+	// Prefix count
+	// Read Only: true
+	PrefixCount int64 `json:"prefix_count,omitempty"`
 
-	// Tags
-	Tags string `json:"tags,omitempty"`
+	// Route distinguisher
+	//
+	// Unique route distinguisher (as defined in RFC 4364)
+	// Max Length: 21
+	Rd *string `json:"rd,omitempty"`
+
+	// tags
+	Tags []string `json:"tags"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
@@ -102,6 +112,10 @@ func (m *VRF) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRd(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -134,7 +148,7 @@ func (m *VRF) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
 		return err
 	}
 
@@ -173,16 +187,29 @@ func (m *VRF) validateName(formats strfmt.Registry) error {
 
 func (m *VRF) validateRd(formats strfmt.Registry) error {
 
-	if err := validate.Required("rd", "body", m.Rd); err != nil {
-		return err
-	}
-
-	if err := validate.MinLength("rd", "body", string(*m.Rd), 1); err != nil {
-		return err
+	if swag.IsZero(m.Rd) { // not required
+		return nil
 	}
 
 	if err := validate.MaxLength("rd", "body", string(*m.Rd), 21); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *VRF) validateTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tags); i++ {
+
+		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
+			return err
+		}
+
 	}
 
 	return nil

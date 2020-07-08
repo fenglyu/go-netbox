@@ -79,7 +79,7 @@ for the virtualization clusters partial update operation typically these are wri
 type VirtualizationClustersPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.Cluster
+	Data *models.WritableCluster
 	/*ID
 	  A unique integer value identifying this cluster.
 
@@ -125,13 +125,13 @@ func (o *VirtualizationClustersPartialUpdateParams) SetHTTPClient(client *http.C
 }
 
 // WithData adds the data to the virtualization clusters partial update params
-func (o *VirtualizationClustersPartialUpdateParams) WithData(data *models.Cluster) *VirtualizationClustersPartialUpdateParams {
+func (o *VirtualizationClustersPartialUpdateParams) WithData(data *models.WritableCluster) *VirtualizationClustersPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the virtualization clusters partial update params
-func (o *VirtualizationClustersPartialUpdateParams) SetData(data *models.Cluster) {
+func (o *VirtualizationClustersPartialUpdateParams) SetData(data *models.WritableCluster) {
 	o.Data = data
 }
 

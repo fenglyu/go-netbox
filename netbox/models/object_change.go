@@ -34,18 +34,26 @@ import (
 // swagger:model ObjectChange
 type ObjectChange struct {
 
-	// Action
-	// Required: true
-	// Enum: [1 2 3]
-	Action *int64 `json:"action"`
+	// action
+	Action *ObjectChangeAction `json:"action,omitempty"`
 
 	// Changed object
+	//
+	//
+	// Serialize a nested representation of the changed object.
+	//
 	// Read Only: true
-	ChangedObject string `json:"changed_object,omitempty"`
+	ChangedObject map[string]string `json:"changed_object,omitempty"`
 
-	// Content type
+	// Changed object id
+	// Required: true
+	// Maximum: 2.147483647e+09
+	// Minimum: 0
+	ChangedObjectID *int64 `json:"changed_object_id"`
+
+	// Changed object type
 	// Read Only: true
-	ContentType string `json:"content_type,omitempty"`
+	ChangedObjectType string `json:"changed_object_type,omitempty"`
 
 	// ID
 	// Read Only: true
@@ -82,6 +90,10 @@ func (m *ObjectChange) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateChangedObjectID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRequestID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -104,34 +116,35 @@ func (m *ObjectChange) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var objectChangeTypeActionPropEnum []interface{}
+func (m *ObjectChange) validateAction(formats strfmt.Registry) error {
 
-func init() {
-	var res []int64
-	if err := json.Unmarshal([]byte(`[1,2,3]`), &res); err != nil {
-		panic(err)
+	if swag.IsZero(m.Action) { // not required
+		return nil
 	}
-	for _, v := range res {
-		objectChangeTypeActionPropEnum = append(objectChangeTypeActionPropEnum, v)
-	}
-}
 
-// prop value enum
-func (m *ObjectChange) validateActionEnum(path, location string, value int64) error {
-	if err := validate.EnumCase(path, location, value, objectChangeTypeActionPropEnum, true); err != nil {
-		return err
+	if m.Action != nil {
+		if err := m.Action.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("action")
+			}
+			return err
+		}
 	}
+
 	return nil
 }
 
-func (m *ObjectChange) validateAction(formats strfmt.Registry) error {
+func (m *ObjectChange) validateChangedObjectID(formats strfmt.Registry) error {
 
-	if err := validate.Required("action", "body", m.Action); err != nil {
+	if err := validate.Required("changed_object_id", "body", m.ChangedObjectID); err != nil {
 		return err
 	}
 
-	// value enum
-	if err := m.validateActionEnum("action", "body", *m.Action); err != nil {
+	if err := validate.MinimumInt("changed_object_id", "body", int64(*m.ChangedObjectID), 0, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("changed_object_id", "body", int64(*m.ChangedObjectID), 2.147483647e+09, false); err != nil {
 		return err
 	}
 
@@ -206,6 +219,150 @@ func (m *ObjectChange) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (m *ObjectChange) UnmarshalBinary(b []byte) error {
 	var res ObjectChange
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
+// ObjectChangeAction Action
+//
+// swagger:model ObjectChangeAction
+type ObjectChangeAction struct {
+
+	// label
+	// Required: true
+	// Enum: [Created Updated Deleted]
+	Label *string `json:"label"`
+
+	// value
+	// Required: true
+	// Enum: [create update delete]
+	Value *string `json:"value"`
+}
+
+// Validate validates this object change action
+func (m *ObjectChangeAction) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateLabel(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateValue(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var objectChangeActionTypeLabelPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Created","Updated","Deleted"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		objectChangeActionTypeLabelPropEnum = append(objectChangeActionTypeLabelPropEnum, v)
+	}
+}
+
+const (
+
+	// ObjectChangeActionLabelCreated captures enum value "Created"
+	ObjectChangeActionLabelCreated string = "Created"
+
+	// ObjectChangeActionLabelUpdated captures enum value "Updated"
+	ObjectChangeActionLabelUpdated string = "Updated"
+
+	// ObjectChangeActionLabelDeleted captures enum value "Deleted"
+	ObjectChangeActionLabelDeleted string = "Deleted"
+)
+
+// prop value enum
+func (m *ObjectChangeAction) validateLabelEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, objectChangeActionTypeLabelPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ObjectChangeAction) validateLabel(formats strfmt.Registry) error {
+
+	if err := validate.Required("action"+"."+"label", "body", m.Label); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateLabelEnum("action"+"."+"label", "body", *m.Label); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var objectChangeActionTypeValuePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["create","update","delete"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		objectChangeActionTypeValuePropEnum = append(objectChangeActionTypeValuePropEnum, v)
+	}
+}
+
+const (
+
+	// ObjectChangeActionValueCreate captures enum value "create"
+	ObjectChangeActionValueCreate string = "create"
+
+	// ObjectChangeActionValueUpdate captures enum value "update"
+	ObjectChangeActionValueUpdate string = "update"
+
+	// ObjectChangeActionValueDelete captures enum value "delete"
+	ObjectChangeActionValueDelete string = "delete"
+)
+
+// prop value enum
+func (m *ObjectChangeAction) validateValueEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, objectChangeActionTypeValuePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ObjectChangeAction) validateValue(formats strfmt.Registry) error {
+
+	if err := validate.Required("action"+"."+"value", "body", m.Value); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateValueEnum("action"+"."+"value", "body", *m.Value); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *ObjectChangeAction) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *ObjectChangeAction) UnmarshalBinary(b []byte) error {
+	var res ObjectChangeAction
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

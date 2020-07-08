@@ -79,7 +79,7 @@ for the dcim power outlets partial update operation typically these are written 
 type DcimPowerOutletsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.PowerOutlet
+	Data *models.WritablePowerOutlet
 	/*ID
 	  A unique integer value identifying this power outlet.
 
@@ -125,13 +125,13 @@ func (o *DcimPowerOutletsPartialUpdateParams) SetHTTPClient(client *http.Client)
 }
 
 // WithData adds the data to the dcim power outlets partial update params
-func (o *DcimPowerOutletsPartialUpdateParams) WithData(data *models.PowerOutlet) *DcimPowerOutletsPartialUpdateParams {
+func (o *DcimPowerOutletsPartialUpdateParams) WithData(data *models.WritablePowerOutlet) *DcimPowerOutletsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power outlets partial update params
-func (o *DcimPowerOutletsPartialUpdateParams) SetData(data *models.PowerOutlet) {
+func (o *DcimPowerOutletsPartialUpdateParams) SetData(data *models.WritablePowerOutlet) {
 	o.Data = data
 }
 

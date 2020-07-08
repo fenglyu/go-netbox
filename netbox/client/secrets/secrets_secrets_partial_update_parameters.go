@@ -79,7 +79,7 @@ for the secrets secrets partial update operation typically these are written to 
 type SecretsSecretsPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.Secret
+	Data *models.WritableSecret
 	/*ID
 	  A unique integer value identifying this secret.
 
@@ -125,13 +125,13 @@ func (o *SecretsSecretsPartialUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the secrets secrets partial update params
-func (o *SecretsSecretsPartialUpdateParams) WithData(data *models.Secret) *SecretsSecretsPartialUpdateParams {
+func (o *SecretsSecretsPartialUpdateParams) WithData(data *models.WritableSecret) *SecretsSecretsPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the secrets secrets partial update params
-func (o *SecretsSecretsPartialUpdateParams) SetData(data *models.Secret) {
+func (o *SecretsSecretsPartialUpdateParams) SetData(data *models.WritableSecret) {
 	o.Data = data
 }
 

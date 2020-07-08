@@ -79,7 +79,7 @@ for the dcim regions update operation typically these are written to a http.Requ
 type DcimRegionsUpdateParams struct {
 
 	/*Data*/
-	Data *models.Region
+	Data *models.WritableRegion
 	/*ID
 	  A unique integer value identifying this region.
 
@@ -125,13 +125,13 @@ func (o *DcimRegionsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim regions update params
-func (o *DcimRegionsUpdateParams) WithData(data *models.Region) *DcimRegionsUpdateParams {
+func (o *DcimRegionsUpdateParams) WithData(data *models.WritableRegion) *DcimRegionsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim regions update params
-func (o *DcimRegionsUpdateParams) SetData(data *models.Region) {
+func (o *DcimRegionsUpdateParams) SetData(data *models.WritableRegion) {
 	o.Data = data
 }
 

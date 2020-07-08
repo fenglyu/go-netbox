@@ -78,7 +78,7 @@ for the dcim virtual chassis create operation typically these are written to a h
 type DcimVirtualChassisCreateParams struct {
 
 	/*Data*/
-	Data *models.VirtualChassis
+	Data *models.WritableVirtualChassis
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimVirtualChassisCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim virtual chassis create params
-func (o *DcimVirtualChassisCreateParams) WithData(data *models.VirtualChassis) *DcimVirtualChassisCreateParams {
+func (o *DcimVirtualChassisCreateParams) WithData(data *models.WritableVirtualChassis) *DcimVirtualChassisCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim virtual chassis create params
-func (o *DcimVirtualChassisCreateParams) SetData(data *models.VirtualChassis) {
+func (o *DcimVirtualChassisCreateParams) SetData(data *models.WritableVirtualChassis) {
 	o.Data = data
 }
 

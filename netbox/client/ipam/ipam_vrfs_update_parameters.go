@@ -79,7 +79,7 @@ for the ipam vrfs update operation typically these are written to a http.Request
 type IpamVrfsUpdateParams struct {
 
 	/*Data*/
-	Data *models.VRF
+	Data *models.WritableVRF
 	/*ID
 	  A unique integer value identifying this VRF.
 
@@ -125,13 +125,13 @@ func (o *IpamVrfsUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam vrfs update params
-func (o *IpamVrfsUpdateParams) WithData(data *models.VRF) *IpamVrfsUpdateParams {
+func (o *IpamVrfsUpdateParams) WithData(data *models.WritableVRF) *IpamVrfsUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam vrfs update params
-func (o *IpamVrfsUpdateParams) SetData(data *models.VRF) {
+func (o *IpamVrfsUpdateParams) SetData(data *models.WritableVRF) {
 	o.Data = data
 }
 

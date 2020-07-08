@@ -79,7 +79,7 @@ for the dcim device bay templates partial update operation typically these are w
 type DcimDeviceBayTemplatesPartialUpdateParams struct {
 
 	/*Data*/
-	Data *models.DeviceBayTemplate
+	Data *models.WritableDeviceBayTemplate
 	/*ID
 	  A unique integer value identifying this device bay template.
 
@@ -125,13 +125,13 @@ func (o *DcimDeviceBayTemplatesPartialUpdateParams) SetHTTPClient(client *http.C
 }
 
 // WithData adds the data to the dcim device bay templates partial update params
-func (o *DcimDeviceBayTemplatesPartialUpdateParams) WithData(data *models.DeviceBayTemplate) *DcimDeviceBayTemplatesPartialUpdateParams {
+func (o *DcimDeviceBayTemplatesPartialUpdateParams) WithData(data *models.WritableDeviceBayTemplate) *DcimDeviceBayTemplatesPartialUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim device bay templates partial update params
-func (o *DcimDeviceBayTemplatesPartialUpdateParams) SetData(data *models.DeviceBayTemplate) {
+func (o *DcimDeviceBayTemplatesPartialUpdateParams) SetData(data *models.WritableDeviceBayTemplate) {
 	o.Data = data
 }
 

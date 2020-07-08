@@ -21,6 +21,9 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -41,7 +44,7 @@ type Service struct {
 	CustomFields interface{} `json:"custom_fields,omitempty"`
 
 	// Description
-	// Max Length: 100
+	// Max Length: 200
 	Description string `json:"description,omitempty"`
 
 	// device
@@ -53,7 +56,7 @@ type Service struct {
 
 	// ipaddresses
 	// Unique: true
-	Ipaddresses []int64 `json:"ipaddresses"`
+	Ipaddresses []*NestedIPAddress `json:"ipaddresses"`
 
 	// Last updated
 	// Read Only: true
@@ -73,8 +76,10 @@ type Service struct {
 	Port *int64 `json:"port"`
 
 	// protocol
-	// Required: true
-	Protocol *ServiceProtocol `json:"protocol"`
+	Protocol *ServiceProtocol `json:"protocol,omitempty"`
+
+	// tags
+	Tags []string `json:"tags"`
 
 	// virtual machine
 	VirtualMachine *NestedVirtualMachine `json:"virtual_machine,omitempty"`
@@ -116,6 +121,10 @@ func (m *Service) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateVirtualMachine(formats); err != nil {
 		res = append(res, err)
 	}
@@ -145,7 +154,7 @@ func (m *Service) validateDescription(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.MaxLength("description", "body", string(m.Description), 100); err != nil {
+	if err := validate.MaxLength("description", "body", string(m.Description), 200); err != nil {
 		return err
 	}
 
@@ -178,6 +187,22 @@ func (m *Service) validateIpaddresses(formats strfmt.Registry) error {
 
 	if err := validate.UniqueItems("ipaddresses", "body", m.Ipaddresses); err != nil {
 		return err
+	}
+
+	for i := 0; i < len(m.Ipaddresses); i++ {
+		if swag.IsZero(m.Ipaddresses[i]) { // not required
+			continue
+		}
+
+		if m.Ipaddresses[i] != nil {
+			if err := m.Ipaddresses[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("ipaddresses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -232,8 +257,8 @@ func (m *Service) validatePort(formats strfmt.Registry) error {
 
 func (m *Service) validateProtocol(formats strfmt.Registry) error {
 
-	if err := validate.Required("protocol", "body", m.Protocol); err != nil {
-		return err
+	if swag.IsZero(m.Protocol) { // not required
+		return nil
 	}
 
 	if m.Protocol != nil {
@@ -243,6 +268,23 @@ func (m *Service) validateProtocol(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *Service) validateTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tags); i++ {
+
+		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
+			return err
+		}
+
 	}
 
 	return nil
@@ -291,11 +333,13 @@ type ServiceProtocol struct {
 
 	// label
 	// Required: true
+	// Enum: [TCP UDP]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	Value *int64 `json:"value"`
+	// Enum: [tcp udp]
+	Value *string `json:"value"`
 }
 
 // Validate validates this service protocol
@@ -316,18 +360,86 @@ func (m *ServiceProtocol) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+var serviceProtocolTypeLabelPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["TCP","UDP"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		serviceProtocolTypeLabelPropEnum = append(serviceProtocolTypeLabelPropEnum, v)
+	}
+}
+
+const (
+
+	// ServiceProtocolLabelTCP captures enum value "TCP"
+	ServiceProtocolLabelTCP string = "TCP"
+
+	// ServiceProtocolLabelUDP captures enum value "UDP"
+	ServiceProtocolLabelUDP string = "UDP"
+)
+
+// prop value enum
+func (m *ServiceProtocol) validateLabelEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, serviceProtocolTypeLabelPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (m *ServiceProtocol) validateLabel(formats strfmt.Registry) error {
 
 	if err := validate.Required("protocol"+"."+"label", "body", m.Label); err != nil {
 		return err
 	}
 
+	// value enum
+	if err := m.validateLabelEnum("protocol"+"."+"label", "body", *m.Label); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var serviceProtocolTypeValuePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["tcp","udp"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		serviceProtocolTypeValuePropEnum = append(serviceProtocolTypeValuePropEnum, v)
+	}
+}
+
+const (
+
+	// ServiceProtocolValueTCP captures enum value "tcp"
+	ServiceProtocolValueTCP string = "tcp"
+
+	// ServiceProtocolValueUDP captures enum value "udp"
+	ServiceProtocolValueUDP string = "udp"
+)
+
+// prop value enum
+func (m *ServiceProtocol) validateValueEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, serviceProtocolTypeValuePropEnum, true); err != nil {
+		return err
+	}
 	return nil
 }
 
 func (m *ServiceProtocol) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("protocol"+"."+"value", "body", m.Value); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateValueEnum("protocol"+"."+"value", "body", *m.Value); err != nil {
 		return err
 	}
 

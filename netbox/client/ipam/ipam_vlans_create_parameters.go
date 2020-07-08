@@ -78,7 +78,7 @@ for the ipam vlans create operation typically these are written to a http.Reques
 type IpamVlansCreateParams struct {
 
 	/*Data*/
-	Data *models.VLAN
+	Data *models.WritableVLAN
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *IpamVlansCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam vlans create params
-func (o *IpamVlansCreateParams) WithData(data *models.VLAN) *IpamVlansCreateParams {
+func (o *IpamVlansCreateParams) WithData(data *models.WritableVLAN) *IpamVlansCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam vlans create params
-func (o *IpamVlansCreateParams) SetData(data *models.VLAN) {
+func (o *IpamVlansCreateParams) SetData(data *models.WritableVLAN) {
 	o.Data = data
 }
 

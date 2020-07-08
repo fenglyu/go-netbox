@@ -78,7 +78,7 @@ for the dcim sites create operation typically these are written to a http.Reques
 type DcimSitesCreateParams struct {
 
 	/*Data*/
-	Data *models.Site
+	Data *models.WritableSite
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,13 +119,13 @@ func (o *DcimSitesCreateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the dcim sites create params
-func (o *DcimSitesCreateParams) WithData(data *models.Site) *DcimSitesCreateParams {
+func (o *DcimSitesCreateParams) WithData(data *models.WritableSite) *DcimSitesCreateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim sites create params
-func (o *DcimSitesCreateParams) SetData(data *models.Site) {
+func (o *DcimSitesCreateParams) SetData(data *models.WritableSite) {
 	o.Data = data
 }
 

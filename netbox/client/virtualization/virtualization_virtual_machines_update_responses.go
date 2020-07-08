@@ -60,20 +60,20 @@ func NewVirtualizationVirtualMachinesUpdateOK() *VirtualizationVirtualMachinesUp
 VirtualizationVirtualMachinesUpdateOK virtualization virtual machines update o k
 */
 type VirtualizationVirtualMachinesUpdateOK struct {
-	Payload *models.VirtualMachine
+	Payload *models.VirtualMachineWithConfigContext
 }
 
 func (o *VirtualizationVirtualMachinesUpdateOK) Error() string {
 	return fmt.Sprintf("[PUT /virtualization/virtual-machines/{id}/][%d] virtualizationVirtualMachinesUpdateOK  %+v", 200, o.Payload)
 }
 
-func (o *VirtualizationVirtualMachinesUpdateOK) GetPayload() *models.VirtualMachine {
+func (o *VirtualizationVirtualMachinesUpdateOK) GetPayload() *models.VirtualMachineWithConfigContext {
 	return o.Payload
 }
 
 func (o *VirtualizationVirtualMachinesUpdateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.VirtualMachine)
+	o.Payload = new(models.VirtualMachineWithConfigContext)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

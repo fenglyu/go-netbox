@@ -79,7 +79,7 @@ for the dcim console port templates update operation typically these are written
 type DcimConsolePortTemplatesUpdateParams struct {
 
 	/*Data*/
-	Data *models.ConsolePortTemplate
+	Data *models.WritableConsolePortTemplate
 	/*ID
 	  A unique integer value identifying this console port template.
 
@@ -125,13 +125,13 @@ func (o *DcimConsolePortTemplatesUpdateParams) SetHTTPClient(client *http.Client
 }
 
 // WithData adds the data to the dcim console port templates update params
-func (o *DcimConsolePortTemplatesUpdateParams) WithData(data *models.ConsolePortTemplate) *DcimConsolePortTemplatesUpdateParams {
+func (o *DcimConsolePortTemplatesUpdateParams) WithData(data *models.WritableConsolePortTemplate) *DcimConsolePortTemplatesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim console port templates update params
-func (o *DcimConsolePortTemplatesUpdateParams) SetData(data *models.ConsolePortTemplate) {
+func (o *DcimConsolePortTemplatesUpdateParams) SetData(data *models.WritableConsolePortTemplate) {
 	o.Data = data
 }
 

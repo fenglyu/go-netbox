@@ -106,7 +106,7 @@ type VirtualizationInterfacesListOKBody struct {
 
 	// results
 	// Required: true
-	Results []*models.Interface `json:"results"`
+	Results []*models.VirtualMachineInterface `json:"results"`
 }
 
 // Validate validates this virtualization interfaces list o k body

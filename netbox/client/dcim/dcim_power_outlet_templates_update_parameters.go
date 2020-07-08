@@ -79,7 +79,7 @@ for the dcim power outlet templates update operation typically these are written
 type DcimPowerOutletTemplatesUpdateParams struct {
 
 	/*Data*/
-	Data *models.PowerOutletTemplate
+	Data *models.WritablePowerOutletTemplate
 	/*ID
 	  A unique integer value identifying this power outlet template.
 
@@ -125,13 +125,13 @@ func (o *DcimPowerOutletTemplatesUpdateParams) SetHTTPClient(client *http.Client
 }
 
 // WithData adds the data to the dcim power outlet templates update params
-func (o *DcimPowerOutletTemplatesUpdateParams) WithData(data *models.PowerOutletTemplate) *DcimPowerOutletTemplatesUpdateParams {
+func (o *DcimPowerOutletTemplatesUpdateParams) WithData(data *models.WritablePowerOutletTemplate) *DcimPowerOutletTemplatesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the dcim power outlet templates update params
-func (o *DcimPowerOutletTemplatesUpdateParams) SetData(data *models.PowerOutletTemplate) {
+func (o *DcimPowerOutletTemplatesUpdateParams) SetData(data *models.WritablePowerOutletTemplate) {
 	o.Data = data
 }
 

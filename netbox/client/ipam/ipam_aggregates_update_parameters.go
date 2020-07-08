@@ -79,7 +79,7 @@ for the ipam aggregates update operation typically these are written to a http.R
 type IpamAggregatesUpdateParams struct {
 
 	/*Data*/
-	Data *models.Aggregate
+	Data *models.WritableAggregate
 	/*ID
 	  A unique integer value identifying this aggregate.
 
@@ -125,13 +125,13 @@ func (o *IpamAggregatesUpdateParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithData adds the data to the ipam aggregates update params
-func (o *IpamAggregatesUpdateParams) WithData(data *models.Aggregate) *IpamAggregatesUpdateParams {
+func (o *IpamAggregatesUpdateParams) WithData(data *models.WritableAggregate) *IpamAggregatesUpdateParams {
 	o.SetData(data)
 	return o
 }
 
 // SetData adds the data to the ipam aggregates update params
-func (o *IpamAggregatesUpdateParams) SetData(data *models.Aggregate) {
+func (o *IpamAggregatesUpdateParams) SetData(data *models.WritableAggregate) {
 	o.Data = data
 }
 
