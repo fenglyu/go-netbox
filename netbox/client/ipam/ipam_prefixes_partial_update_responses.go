@@ -23,7 +23,6 @@ package ipam
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
