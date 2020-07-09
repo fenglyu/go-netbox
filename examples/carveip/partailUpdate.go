@@ -13,8 +13,8 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-//var authHeaderName = "Authorization"
-//var authHeaderFormat = "Token %v"
+var authHeaderName = "Authorization"
+var authHeaderFormat = "Token %v"
 
 func main() {
 	host := "127.0.0.1"
@@ -32,9 +32,12 @@ func main() {
 
 	cidr := "10.0.18.0/26"
 	writablePrefix.Prefix = &cidr
+	var tenant, vrf int64 = 0, 0
+	writablePrefix.Tenant = &tenant
+	writablePrefix.Vrf = &vrf
 
 	partialUpdatePrefix := ipam.IpamPrefixesPartialUpdateParams{
-		ID:   122,
+		ID:   27,
 		Data: &writablePrefix,
 	}
 	partialUpdatePrefix.WithContext(context.Background())
@@ -44,5 +47,5 @@ func main() {
 	}
 
 	fmt.Println("result: \n", p)
-	p.ReadResponse()
+
 }

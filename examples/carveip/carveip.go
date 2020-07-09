@@ -70,7 +70,7 @@ func main() {
 		fmt.Println("ID > ", m.ID)
 	}
 
-	cidr := "10.247.5.0/24"
+	cidr := "10.248.5.0/24"
 	//cidr := "10.247.0.0/16"
 
 	//statusLabel := "active"
@@ -104,11 +104,14 @@ func main() {
 	var available_prefixes_id int64
 
 	if *brs.Payload.Count <= 0 {
+		var tenant, vrf int64 = 0, 0
 		data := models.WritablePrefix{
 			Prefix: &cidr,
 			//Status: &prefixStatus,
 			//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
-			Tags: []string{"demos", "k8s", "gke"},
+			Tenant: &tenant,
+			Vrf:    &vrf,
+			Tags:   []string{"demos", "k8s", "gke"},
 		}
 
 		param := ipam.IpamPrefixesCreateParams{
@@ -148,6 +151,7 @@ func main() {
 	//	_, nerr := c.Ipam.IpamPrefixesDelete(&deleteParam, nil)
 	//	if nerr != nil {
 	//		fmt.Println(nerr)
+
 	//		panic(nerr)
 	//	}
 	//

@@ -44,6 +44,12 @@ func (o *IpamPrefixesAvailableIpsCreateReader) ReadResponse(response runtime.Cli
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewIpamPrefixesAvailableIpsCreateBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -74,6 +80,39 @@ func (o *IpamPrefixesAvailableIpsCreateCreated) GetPayload() *models.Prefix {
 func (o *IpamPrefixesAvailableIpsCreateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Prefix)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamPrefixesAvailableIpsCreateBadRequest creates a IpamPrefixesAvailableIpsCreateBadRequest with default headers values
+func NewIpamPrefixesAvailableIpsCreateBadRequest() *IpamPrefixesAvailableIpsCreateBadRequest {
+	return &IpamPrefixesAvailableIpsCreateBadRequest{}
+}
+
+/*IpamPrefixesAvailableIpsCreateBadRequest handles this case with default header values.
+
+Bad request
+*/
+type IpamPrefixesAvailableIpsCreateBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *IpamPrefixesAvailableIpsCreateBadRequest) Error() string {
+	return fmt.Sprintf("[POST /ipam/prefixes/{id}/available-ips/][%d] ipamPrefixesAvailableIpsCreateBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IpamPrefixesAvailableIpsCreateBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *IpamPrefixesAvailableIpsCreateBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
