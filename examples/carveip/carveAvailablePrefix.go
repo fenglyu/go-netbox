@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	//"github.com/fenglyu/go-netbox/netbox"
 
@@ -19,10 +20,15 @@ const authHeaderName = "Authorization"
 const authHeaderFormat = "Token %v"
 
 func main() {
-	host := "127.0.0.1"
+	host := "netbox.k8s.me"
 	apiToken := "434476c51e79b0badfad4afcd9a64b4dede1adb9"
 
-	t := runtimeclient.New(host, client.DefaultBasePath, []string{"https", "http"})
+	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
+	if err != nil {
+		log.Fatal(err)
+	}
+	t := runtimeclient.NewWithClient(host, client.DefaultBasePath, []string{"https", "http"}, httpClient)
+
 	t.DefaultAuthentication = runtimeclient.APIKeyAuth(authHeaderName, "header", fmt.Sprintf(authHeaderFormat, apiToken))
 	//t.SetDebug(true)
 
@@ -32,17 +38,18 @@ func main() {
 	// Sites Begin
 	siteName := "se1"
 	siteParam := dcim.DcimSitesListParams{
-		Name:  &siteName,
-		Limit: &generalQueryLimit,
+		Name:    &siteName,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
 	}
-	siteRes, err := dcim.DcimSitesList{&siteParam, nil}
+	siteRes, err := c.Dcim.DcimSitesList(&siteParam, nil)
 	if err != nil {
 		fmt.Println("DcimSitesList ", err)
 	}
 
 	site := siteRes.Payload.Results[0]
 
-	if siteRes.count < 1 {
+	if *siteRes.Payload.Count < 1 {
 		fmt.Println("no site %s", siteName)
 		return
 	}
@@ -51,10 +58,11 @@ func main() {
 
 	// Vlan-group start
 	vlanGroupParam := ipam.IpamVlanGroupsListParams{
-		SiteID: site.ID,
-		Limit:  &generalQueryLimit,
+		//SiteID: site.ID,
+		Site:  site.Name,
+		Limit: &generalQueryLimit,
 	}
-	vlanGData, err := ipam.IpamVlanGroupsList(&vlanGroupParam, nil)
+	vlanGData, err := c.Ipam.IpamVlanGroupsList(&vlanGroupParam, nil)
 	if err != nil {
 		fmt.Println("IpamVlanGroupsList ", err)
 	}
@@ -64,14 +72,15 @@ func main() {
 
 	// Vlanstart
 	vlanParam := ipam.IpamVlansListParams{
-		Site:  &siteName,
-		Limit: &generalQueryLimit,
+		Site:    &siteName,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
 	}
-	vlanData, err := ipam.IpamVlansList(&vlanParam, nil)
+	vlanData, err := c.Ipam.IpamVlansList(&vlanParam, nil)
 	if err != nil {
 		fmt.Println("IpamVlansList ", err)
 	}
-	if vlanData.count < 1 {
+	if *vlanData.Payload.Count < 1 {
 		fmt.Println("no vlan in Site %s", siteName)
 		return
 	}
@@ -82,8 +91,9 @@ func main() {
 	// VRF Begin
 	vrfName := "activision"
 	vrfData := ipam.IpamVrfsListParams{
-		Name:  &vrfName,
-		Limit: &generalQueryLimit,
+		Name:    &vrfName,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
 	}
 	vrfOk, err := c.Ipam.IpamVrfsList(&vrfData, nil)
 	if err != nil {
@@ -102,8 +112,8 @@ func main() {
 		IsPool:       false,
 		Vrf:          &vrf.ID,
 		Site:         &site.ID,
-		Tenant:       &site.Tenant.Id,
-		Vlan:         &vlan.Id,
+		Tenant:       &site.Tenant.ID,
+		Vlan:         &vlan.ID,
 		//Role:   &role,
 		//Site:   &site,
 		Tags: []string{"demos", "k8s", "gke"},
