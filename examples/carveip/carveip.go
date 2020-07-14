@@ -101,6 +101,9 @@ func main() {
 		os.Exit(1)
 	}
 
+	brsparam, _ := json.Marshal(brs)
+	fmt.Println("brsparam> ", string(brsparam))
+
 	var available_prefixes_id int64
 
 	if *brs.Payload.Count <= 0 {
@@ -129,6 +132,7 @@ func main() {
 			fmt.Println("create failed")
 
 			fmt.Println(cerr)
+			return
 		}
 		fmt.Println(prefixCreated)
 		available_prefixes_id = prefixCreated.Payload.ID
@@ -205,6 +209,7 @@ func main() {
 		Data: &dpcData,
 	}
 	dpc.WithContext(context.Background())
+
 	dpcpparam, _ := json.Marshal(dpc)
 	fmt.Println("dpcpparam> ", string(dpcpparam))
 	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil)
