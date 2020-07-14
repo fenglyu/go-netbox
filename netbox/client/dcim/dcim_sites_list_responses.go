@@ -48,6 +48,12 @@ func (o *DcimSitesListReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewDcimSitesListBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -78,6 +84,39 @@ func (o *DcimSitesListOK) GetPayload() *DcimSitesListOKBody {
 func (o *DcimSitesListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(DcimSitesListOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDcimSitesListBadRequest creates a DcimSitesListBadRequest with default headers values
+func NewDcimSitesListBadRequest() *DcimSitesListBadRequest {
+	return &DcimSitesListBadRequest{}
+}
+
+/*DcimSitesListBadRequest handles this case with default header values.
+
+Bad request
+*/
+type DcimSitesListBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *DcimSitesListBadRequest) Error() string {
+	return fmt.Sprintf("[GET /dcim/sites/][%d] dcimSitesListBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DcimSitesListBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *DcimSitesListBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

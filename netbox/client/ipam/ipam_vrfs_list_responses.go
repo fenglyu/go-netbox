@@ -48,6 +48,12 @@ func (o *IpamVrfsListReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewIpamVrfsListBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -78,6 +84,39 @@ func (o *IpamVrfsListOK) GetPayload() *IpamVrfsListOKBody {
 func (o *IpamVrfsListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(IpamVrfsListOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamVrfsListBadRequest creates a IpamVrfsListBadRequest with default headers values
+func NewIpamVrfsListBadRequest() *IpamVrfsListBadRequest {
+	return &IpamVrfsListBadRequest{}
+}
+
+/*IpamVrfsListBadRequest handles this case with default header values.
+
+Bad request
+*/
+type IpamVrfsListBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *IpamVrfsListBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/vrfs/][%d] ipamVrfsListBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IpamVrfsListBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *IpamVrfsListBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

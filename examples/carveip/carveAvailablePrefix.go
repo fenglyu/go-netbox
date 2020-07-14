@@ -59,8 +59,9 @@ func main() {
 	// Vlan-group start
 	vlanGroupParam := ipam.IpamVlanGroupsListParams{
 		//SiteID: site.ID,
-		Site:  site.Name,
-		Limit: &generalQueryLimit,
+		Site:    site.Name,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
 	}
 	vlanGData, err := c.Ipam.IpamVlanGroupsList(&vlanGroupParam, nil)
 	if err != nil {

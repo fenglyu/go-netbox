@@ -6823,6 +6823,12 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -9459,6 +9465,12 @@
                         "schema": {
                             "$ref": "#/definitions/Prefix"
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -9503,6 +9515,12 @@
                         "schema": {
                             "$ref": "#/definitions/Prefix"
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -9527,6 +9545,12 @@
                         "description": "",
                         "schema": {
                             "$ref": "#/definitions/Prefix"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 },
@@ -9593,6 +9617,12 @@
                         "schema": {
                             "$ref": "#/definitions/Prefix"
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -9624,6 +9654,12 @@
                                 "$ref": "#/definitions/AvailablePrefix"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -9648,6 +9684,12 @@
                         "description": "",
                         "schema": {
                             "$ref": "#/definitions/Prefix"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 },
@@ -10643,6 +10685,12 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -10872,6 +10920,12 @@
                                     }
                                 }
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 },
@@ -15626,8 +15680,13 @@
                     "type": "string"
                 },
                 "tags": {
-                    "title": "Tags",
-                    "type": "string"
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",
@@ -15647,27 +15706,27 @@
                 },
                 "count_prefixes": {
                     "title": "Count prefixes",
-                    "type": "string",
+                    "type": "integer",
                     "readOnly": true
                 },
                 "count_vlans": {
                     "title": "Count vlans",
-                    "type": "string",
+                    "type": "integer",
                     "readOnly": true
                 },
                 "count_racks": {
                     "title": "Count racks",
-                    "type": "string",
+                    "type": "integer",
                     "readOnly": true
                 },
                 "count_devices": {
                     "title": "Count devices",
-                    "type": "string",
+                    "type": "integer",
                     "readOnly": true
                 },
                 "count_circuits": {
                     "title": "Count circuits",
-                    "type": "string",
+                    "type": "integer",
                     "readOnly": true
                 }
             }
@@ -16519,6 +16578,21 @@
                 }
             }
         },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "message"
+            ]
+        },
         "AvailablePrefix": {
             "type": "object",
             "properties": {
@@ -16999,8 +17073,13 @@
                     "maxLength": 100
                 },
                 "tags": {
-                    "title": "Tags",
-                    "type": "string"
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
                 },
                 "display_name": {
                     "title": "Display name",
@@ -17063,8 +17142,13 @@
                     "maxLength": 100
                 },
                 "tags": {
-                    "title": "Tags",
-                    "type": "string"
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
                 },
                 "display_name": {
                     "title": "Display name",
