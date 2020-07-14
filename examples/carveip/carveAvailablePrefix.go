@@ -35,6 +35,20 @@ func main() {
 	c := client.New(t, strfmt.Default)
 	var generalQueryLimit int64 = 0
 
+	roleName := "gcp"
+
+	roleParam := ipam.IpamRolesListParams{
+		Name:    &roleName,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
+	}
+	roleRes, err := c.Ipam.IpamRolesList(&roleParam, nil)
+	if err != nil {
+		fmt.Println("IpamRolesList ", err)
+	}
+
+	role := roleRes.Payload.Results[0]
+
 	// Sites Begin
 	siteName := "se1"
 	siteParam := dcim.DcimSitesListParams{
@@ -115,6 +129,7 @@ func main() {
 		Site:         &site.ID,
 		Tenant:       &site.Tenant.ID,
 		Vlan:         &vlan.ID,
+		Role:         &role.ID,
 		//Role:   &role,
 		//Site:   &site,
 		Tags: []string{"demos", "k8s", "gke"},
