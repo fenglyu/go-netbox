@@ -11859,6 +11859,12 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 },
                 "tags": [
@@ -17396,8 +17402,13 @@
                     "type": "string"
                 },
                 "tags": {
-                    "title": "Tags",
-                    "type": "string"
+                    "title": "tags",
+                    "type": "array",
+                    "x-omitempty": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
                 },
                 "custom_fields": {
                     "title": "Custom fields",

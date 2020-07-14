@@ -11,6 +11,7 @@ import (
 	"github.com/fenglyu/go-netbox/netbox/client"
 	"github.com/fenglyu/go-netbox/netbox/client/dcim"
 	"github.com/fenglyu/go-netbox/netbox/client/ipam"
+	"github.com/fenglyu/go-netbox/netbox/client/tenancy"
 	"github.com/fenglyu/go-netbox/netbox/models"
 	runtimeclient "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
@@ -117,6 +118,22 @@ func main() {
 	vrf := vrfOk.Payload.Results[0]
 	// VRF End
 
+	// tenant start
+
+	tenantName := "cloud"
+	tenantParam := tenancy.TenancyTenantsListParams{
+		Name:    &tenantName,
+		Limit:   &generalQueryLimit,
+		Context: context.Background(),
+	}
+	tenantData, err := c.Tenancy.TenancyTenantsList(&tenantParam, nil)
+	if err != nil {
+		fmt.Println("TenancyTenantsList ", err)
+	}
+	tenant := tenantData.Payload.Results[0]
+
+	//tenant end
+
 	var prefixlength int64 = 28
 	dpcData := models.WritablePrefix{
 		//ID: 2,
@@ -127,7 +144,7 @@ func main() {
 		IsPool:       false,
 		Vrf:          &vrf.ID,
 		Site:         &site.ID,
-		Tenant:       &site.Tenant.ID,
+		Tenant:       &tenant.ID,
 		Vlan:         &vlan.ID,
 		Role:         &role.ID,
 		//Role:   &role,
