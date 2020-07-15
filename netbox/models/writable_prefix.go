@@ -58,7 +58,7 @@ type WritablePrefix struct {
 	// Is a pool
 	//
 	// All IP addresses within this prefix are considered usable
-	IsPool **bool `json:"is_pool,omitempty"`
+	IsPool *bool `json:"is_pool,omitempty"`
 
 	// Last updated
 	// Read Only: true
