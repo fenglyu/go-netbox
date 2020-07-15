@@ -57,22 +57,22 @@ type DeviceType struct {
 	// Is a console server
 	//
 	// This type of device has console server ports
-	IsConsoleServer bool `json:"is_console_server,omitempty"`
+	IsConsoleServer *****bool `json:"is_console_server,omitempty"`
 
 	// Is full depth
 	//
 	// Device consumes both front and rear rack faces
-	IsFullDepth bool `json:"is_full_depth,omitempty"`
+	IsFullDepth *****bool `json:"is_full_depth,omitempty"`
 
 	// Is a network device
 	//
 	// This type of device has network interfaces
-	IsNetworkDevice bool `json:"is_network_device,omitempty"`
+	IsNetworkDevice *****bool `json:"is_network_device,omitempty"`
 
 	// Is a PDU
 	//
 	// This type of device has power outlets
-	IsPdu bool `json:"is_pdu,omitempty"`
+	IsPdu *****bool `json:"is_pdu,omitempty"`
 
 	// Last updated
 	// Read Only: true
@@ -405,7 +405,7 @@ type DeviceTypeSubdeviceRole struct {
 
 	// value
 	// Required: true
-	Value *bool `json:"value"`
+	Value ******bool `json:"value"`
 }
 
 // Validate validates this device type subdevice role

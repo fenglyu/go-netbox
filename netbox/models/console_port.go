@@ -36,7 +36,7 @@ type ConsolePort struct {
 
 	// Connection status
 	// Enum: [false true]
-	ConnectionStatus bool `json:"connection_status,omitempty"`
+	ConnectionStatus ***bool `json:"connection_status,omitempty"`
 
 	// cs port
 	CsPort *NestedConsoleServerPort `json:"cs_port,omitempty"`

@@ -47,7 +47,7 @@ type InventoryItem struct {
 	Device *NestedDevice `json:"device"`
 
 	// Discovered
-	Discovered bool `json:"discovered,omitempty"`
+	Discovered *bool `json:"discovered,omitempty"`
 
 	// ID
 	// Read Only: true
