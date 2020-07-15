@@ -153,7 +153,7 @@ type InterfaceConnectionConnectionStatus struct {
 
 	// value
 	// Required: true
-	Value **bool `json:"value"`
+	Value *bool `json:"value"`
 }
 
 // Validate validates this interface connection connection status

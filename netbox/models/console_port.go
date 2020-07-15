@@ -36,7 +36,7 @@ type ConsolePort struct {
 
 	// Connection status
 	// Enum: [false true]
-	ConnectionStatus ***bool `json:"connection_status,omitempty"`
+	ConnectionStatus *bool `json:"connection_status,omitempty"`
 
 	// cs port
 	CsPort *NestedConsoleServerPort `json:"cs_port,omitempty"`
@@ -98,8 +98,8 @@ func init() {
 }
 
 // prop value enum
-func (m *ConsolePort) validateConnectionStatusEnum(path, location string, value bool) error {
-	if err := validate.EnumCase(path, location, value, consolePortTypeConnectionStatusPropEnum, true); err != nil {
+func (m *ConsolePort) validateConnectionStatusEnum(path, location string, value *bool) error {
+	if err := validate.EnumCase(path, location, *value, consolePortTypeConnectionStatusPropEnum, true); err != nil {
 		return err
 	}
 	return nil
