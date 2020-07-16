@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -55,23 +57,23 @@ type Site struct {
 
 	// Count circuits
 	// Read Only: true
-	CountCircuits string `json:"count_circuits,omitempty"`
+	CountCircuits int64 `json:"count_circuits,omitempty"`
 
 	// Count devices
 	// Read Only: true
-	CountDevices string `json:"count_devices,omitempty"`
+	CountDevices int64 `json:"count_devices,omitempty"`
 
 	// Count prefixes
 	// Read Only: true
-	CountPrefixes string `json:"count_prefixes,omitempty"`
+	CountPrefixes int64 `json:"count_prefixes,omitempty"`
 
 	// Count racks
 	// Read Only: true
-	CountRacks string `json:"count_racks,omitempty"`
+	CountRacks int64 `json:"count_racks,omitempty"`
 
 	// Count vlans
 	// Read Only: true
-	CountVlans string `json:"count_vlans,omitempty"`
+	CountVlans int64 `json:"count_vlans,omitempty"`
 
 	// Created
 	// Read Only: true
@@ -131,8 +133,8 @@ type Site struct {
 	// status
 	Status *SiteStatus `json:"status,omitempty"`
 
-	// Tags
-	Tags string `json:"tags,omitempty"`
+	// tags
+	Tags []string `json:"tags,omitempty"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`
@@ -198,6 +200,10 @@ func (m *Site) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -418,6 +424,23 @@ func (m *Site) validateStatus(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *Site) validateTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tags); i++ {
+
+		if err := validate.MinLength("tags"+"."+strconv.Itoa(i), "body", string(m.Tags[i]), 1); err != nil {
+			return err
+		}
+
 	}
 
 	return nil

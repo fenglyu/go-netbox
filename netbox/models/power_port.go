@@ -36,7 +36,7 @@ type PowerPort struct {
 
 	// Connection status
 	// Enum: [false true]
-	ConnectionStatus bool `json:"connection_status,omitempty"`
+	ConnectionStatus *bool `json:"connection_status,omitempty"`
 
 	// device
 	// Required: true
@@ -98,8 +98,8 @@ func init() {
 }
 
 // prop value enum
-func (m *PowerPort) validateConnectionStatusEnum(path, location string, value bool) error {
-	if err := validate.EnumCase(path, location, value, powerPortTypeConnectionStatusPropEnum, true); err != nil {
+func (m *PowerPort) validateConnectionStatusEnum(path, location string, value *bool) error {
+	if err := validate.EnumCase(path, location, *value, powerPortTypeConnectionStatusPropEnum, true); err != nil {
 		return err
 	}
 	return nil

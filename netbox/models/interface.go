@@ -44,7 +44,7 @@ type Interface struct {
 	Device *NestedDevice `json:"device"`
 
 	// Enabled
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// form factor
 	FormFactor *InterfaceFormFactor `json:"form_factor,omitempty"`
@@ -70,7 +70,7 @@ type Interface struct {
 	// OOB Management
 	//
 	// This interface is used only for out-of-band management
-	MgmtOnly bool `json:"mgmt_only,omitempty"`
+	MgmtOnly *bool `json:"mgmt_only,omitempty"`
 
 	// mode
 	Mode *InterfaceMode `json:"mode,omitempty"`

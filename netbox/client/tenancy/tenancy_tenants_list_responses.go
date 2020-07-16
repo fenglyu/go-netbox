@@ -48,6 +48,12 @@ func (o *TenancyTenantsListReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewTenancyTenantsListBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -78,6 +84,39 @@ func (o *TenancyTenantsListOK) GetPayload() *TenancyTenantsListOKBody {
 func (o *TenancyTenantsListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(TenancyTenantsListOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewTenancyTenantsListBadRequest creates a TenancyTenantsListBadRequest with default headers values
+func NewTenancyTenantsListBadRequest() *TenancyTenantsListBadRequest {
+	return &TenancyTenantsListBadRequest{}
+}
+
+/*TenancyTenantsListBadRequest handles this case with default header values.
+
+Bad request
+*/
+type TenancyTenantsListBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *TenancyTenantsListBadRequest) Error() string {
+	return fmt.Sprintf("[GET /tenancy/tenants/][%d] tenancyTenantsListBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *TenancyTenantsListBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *TenancyTenantsListBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

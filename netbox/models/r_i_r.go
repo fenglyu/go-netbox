@@ -39,7 +39,7 @@ type RIR struct {
 	// Private
 	//
 	// IP space managed by this RIR is considered private
-	IsPrivate bool `json:"is_private,omitempty"`
+	IsPrivate *bool `json:"is_private,omitempty"`
 
 	// Name
 	// Required: true

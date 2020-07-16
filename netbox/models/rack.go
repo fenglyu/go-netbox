@@ -46,7 +46,7 @@ type Rack struct {
 	// Descending units
 	//
 	// Units are numbered top-to-bottom
-	DescUnits bool `json:"desc_units,omitempty"`
+	DescUnits *bool `json:"desc_units,omitempty"`
 
 	// Display name
 	// Read Only: true

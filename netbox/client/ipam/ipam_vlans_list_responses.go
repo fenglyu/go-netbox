@@ -48,6 +48,12 @@ func (o *IpamVlansListReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 400:
+		result := NewIpamVlansListBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -78,6 +84,39 @@ func (o *IpamVlansListOK) GetPayload() *IpamVlansListOKBody {
 func (o *IpamVlansListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(IpamVlansListOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamVlansListBadRequest creates a IpamVlansListBadRequest with default headers values
+func NewIpamVlansListBadRequest() *IpamVlansListBadRequest {
+	return &IpamVlansListBadRequest{}
+}
+
+/*IpamVlansListBadRequest handles this case with default header values.
+
+Bad request
+*/
+type IpamVlansListBadRequest struct {
+	Payload *models.Error
+}
+
+func (o *IpamVlansListBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/vlans/][%d] ipamVlansListBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IpamVlansListBadRequest) GetPayload() *models.Error {
+	return o.Payload
+}
+
+func (o *IpamVlansListBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
