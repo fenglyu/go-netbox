@@ -502,12 +502,12 @@ type SiteStatus struct {
 
 	// label
 	// Required: true
-	// Enum: [Active Planned Retired]
+	// Enum: [Planned Staging Active Decommissioning Retired]
 	Label *string `json:"label"`
 
 	// value
 	// Required: true
-	// Enum: [active planned retired]
+	// Enum: [planned staging active decommissioning retired]
 	Value *string `json:"value"`
 }
 
@@ -533,7 +533,7 @@ var siteStatusTypeLabelPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Active","Planned","Retired"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Planned","Staging","Active","Decommissioning","Retired"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -543,11 +543,17 @@ func init() {
 
 const (
 
+	// SiteStatusLabelPlanned captures enum value "Planned"
+	SiteStatusLabelPlanned string = "Planned"
+
+	// SiteStatusLabelStaging captures enum value "Staging"
+	SiteStatusLabelStaging string = "Staging"
+
 	// SiteStatusLabelActive captures enum value "Active"
 	SiteStatusLabelActive string = "Active"
 
-	// SiteStatusLabelPlanned captures enum value "Planned"
-	SiteStatusLabelPlanned string = "Planned"
+	// SiteStatusLabelDecommissioning captures enum value "Decommissioning"
+	SiteStatusLabelDecommissioning string = "Decommissioning"
 
 	// SiteStatusLabelRetired captures enum value "Retired"
 	SiteStatusLabelRetired string = "Retired"
@@ -579,7 +585,7 @@ var siteStatusTypeValuePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["active","planned","retired"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["planned","staging","active","decommissioning","retired"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -589,11 +595,17 @@ func init() {
 
 const (
 
+	// SiteStatusValuePlanned captures enum value "planned"
+	SiteStatusValuePlanned string = "planned"
+
+	// SiteStatusValueStaging captures enum value "staging"
+	SiteStatusValueStaging string = "staging"
+
 	// SiteStatusValueActive captures enum value "active"
 	SiteStatusValueActive string = "active"
 
-	// SiteStatusValuePlanned captures enum value "planned"
-	SiteStatusValuePlanned string = "planned"
+	// SiteStatusValueDecommissioning captures enum value "decommissioning"
+	SiteStatusValueDecommissioning string = "decommissioning"
 
 	// SiteStatusValueRetired captures enum value "retired"
 	SiteStatusValueRetired string = "retired"

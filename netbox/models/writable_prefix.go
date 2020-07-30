@@ -71,11 +71,6 @@ type WritablePrefix struct {
 	// Required: true
 	Prefix *string `json:"prefix"`
 
-	// PrefixLengthSerializer
-	//
-	// Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size
-	PrefixLength int64 `json:"prefix_length,omitempty"`
-
 	// Role
 	//
 	// The primary function of this prefix
@@ -91,7 +86,7 @@ type WritablePrefix struct {
 	Status string `json:"status,omitempty"`
 
 	// tags
-	Tags []string `json:"tags,omitempty"`
+	Tags []string `json:"tags"`
 
 	// Tenant
 	Tenant *int64 `json:"tenant,omitempty"`

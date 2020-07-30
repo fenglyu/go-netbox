@@ -27,40 +27,21 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NestedIPAddress Primary ip
+// PrefixLength prefix length
 //
-// swagger:model NestedIPAddress
-type NestedIPAddress struct {
+// swagger:model PrefixLength
+type PrefixLength struct {
 
-	// Address
-	//
-	// IPv4 or IPv6 address (with mask)
+	// Prefix length
 	// Required: true
-	Address *string `json:"address"`
-
-	// Family
-	// Read Only: true
-	Family int64 `json:"family,omitempty"`
-
-	// ID
-	// Read Only: true
-	ID int64 `json:"id,omitempty"`
-
-	// Url
-	// Read Only: true
-	// Format: uri
-	URL strfmt.URI `json:"url,omitempty"`
+	PrefixLength *int64 `json:"prefix_length"`
 }
 
-// Validate validates this nested IP address
-func (m *NestedIPAddress) Validate(formats strfmt.Registry) error {
+// Validate validates this prefix length
+func (m *PrefixLength) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAddress(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateURL(formats); err != nil {
+	if err := m.validatePrefixLength(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -70,22 +51,9 @@ func (m *NestedIPAddress) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NestedIPAddress) validateAddress(formats strfmt.Registry) error {
+func (m *PrefixLength) validatePrefixLength(formats strfmt.Registry) error {
 
-	if err := validate.Required("address", "body", m.Address); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *NestedIPAddress) validateURL(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.URL) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("url", "body", "uri", m.URL.String(), formats); err != nil {
+	if err := validate.Required("prefix_length", "body", m.PrefixLength); err != nil {
 		return err
 	}
 
@@ -93,7 +61,7 @@ func (m *NestedIPAddress) validateURL(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *NestedIPAddress) MarshalBinary() ([]byte, error) {
+func (m *PrefixLength) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -101,8 +69,8 @@ func (m *NestedIPAddress) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *NestedIPAddress) UnmarshalBinary(b []byte) error {
-	var res NestedIPAddress
+func (m *PrefixLength) UnmarshalBinary(b []byte) error {
+	var res PrefixLength
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

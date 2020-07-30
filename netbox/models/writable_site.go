@@ -136,7 +136,7 @@ type WritableSite struct {
 	Slug *string `json:"slug"`
 
 	// Status
-	// Enum: [active planned retired]
+	// Enum: [planned staging active decommissioning retired]
 	Status string `json:"status,omitempty"`
 
 	// tags
@@ -403,7 +403,7 @@ var writableSiteTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["active","planned","retired"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["planned","staging","active","decommissioning","retired"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -413,11 +413,17 @@ func init() {
 
 const (
 
+	// WritableSiteStatusPlanned captures enum value "planned"
+	WritableSiteStatusPlanned string = "planned"
+
+	// WritableSiteStatusStaging captures enum value "staging"
+	WritableSiteStatusStaging string = "staging"
+
 	// WritableSiteStatusActive captures enum value "active"
 	WritableSiteStatusActive string = "active"
 
-	// WritableSiteStatusPlanned captures enum value "planned"
-	WritableSiteStatusPlanned string = "planned"
+	// WritableSiteStatusDecommissioning captures enum value "decommissioning"
+	WritableSiteStatusDecommissioning string = "decommissioning"
 
 	// WritableSiteStatusRetired captures enum value "retired"
 	WritableSiteStatusRetired string = "retired"

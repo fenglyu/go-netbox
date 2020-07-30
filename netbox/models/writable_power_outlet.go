@@ -87,7 +87,7 @@ type WritablePowerOutlet struct {
 	// Type
 	//
 	// Physical port type
-	// Enum: [iec-60320-c5 iec-60320-c7 iec-60320-c13 iec-60320-c15 iec-60320-c19 iec-60309-p-n-e-4h iec-60309-p-n-e-6h iec-60309-p-n-e-9h iec-60309-2p-e-4h iec-60309-2p-e-6h iec-60309-2p-e-9h iec-60309-3p-e-4h iec-60309-3p-e-6h iec-60309-3p-e-9h iec-60309-3p-n-e-4h iec-60309-3p-n-e-6h iec-60309-3p-n-e-9h nema-5-15r nema-5-20r nema-5-30r nema-5-50r nema-6-15r nema-6-20r nema-6-30r nema-6-50r nema-l5-15r nema-l5-20r nema-l5-30r nema-l5-50r nema-l6-20r nema-l6-30r nema-l6-50r nema-l14-20r nema-l14-30r nema-l21-20r nema-l21-30r CS6360C CS6364C CS8164C CS8264C CS8364C CS8464C ita-e ita-f ita-g ita-h ita-i ita-j ita-k ita-l ita-m ita-n ita-o hdot-cx]
+	// Enum: [iec-60320-c5 iec-60320-c7 iec-60320-c13 iec-60320-c15 iec-60320-c19 iec-60309-p-n-e-4h iec-60309-p-n-e-6h iec-60309-p-n-e-9h iec-60309-2p-e-4h iec-60309-2p-e-6h iec-60309-2p-e-9h iec-60309-3p-e-4h iec-60309-3p-e-6h iec-60309-3p-e-9h iec-60309-3p-n-e-4h iec-60309-3p-n-e-6h iec-60309-3p-n-e-9h nema-1-15r nema-5-15r nema-5-20r nema-5-30r nema-5-50r nema-6-15r nema-6-20r nema-6-30r nema-6-50r nema-10-30r nema-10-50r nema-14-20r nema-14-30r nema-14-50r nema-14-60r nema-15-15r nema-15-20r nema-15-30r nema-15-50r nema-15-60r nema-l1-15r nema-l5-15r nema-l5-20r nema-l5-30r nema-l5-50r nema-l6-15r nema-l6-20r nema-l6-30r nema-l6-50r nema-l10-30r nema-l14-20r nema-l14-30r nema-l14-50r nema-l14-60r nema-l15-20r nema-l15-30r nema-l15-50r nema-l15-60r nema-l21-20r nema-l21-30r CS6360C CS6364C CS8164C CS8264C CS8364C CS8464C ita-e ita-f ita-g ita-h ita-i ita-j ita-k ita-l ita-m ita-n ita-o hdot-cx]
 	Type string `json:"type,omitempty"`
 }
 
@@ -291,7 +291,7 @@ var writablePowerOutletTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["iec-60320-c5","iec-60320-c7","iec-60320-c13","iec-60320-c15","iec-60320-c19","iec-60309-p-n-e-4h","iec-60309-p-n-e-6h","iec-60309-p-n-e-9h","iec-60309-2p-e-4h","iec-60309-2p-e-6h","iec-60309-2p-e-9h","iec-60309-3p-e-4h","iec-60309-3p-e-6h","iec-60309-3p-e-9h","iec-60309-3p-n-e-4h","iec-60309-3p-n-e-6h","iec-60309-3p-n-e-9h","nema-5-15r","nema-5-20r","nema-5-30r","nema-5-50r","nema-6-15r","nema-6-20r","nema-6-30r","nema-6-50r","nema-l5-15r","nema-l5-20r","nema-l5-30r","nema-l5-50r","nema-l6-20r","nema-l6-30r","nema-l6-50r","nema-l14-20r","nema-l14-30r","nema-l21-20r","nema-l21-30r","CS6360C","CS6364C","CS8164C","CS8264C","CS8364C","CS8464C","ita-e","ita-f","ita-g","ita-h","ita-i","ita-j","ita-k","ita-l","ita-m","ita-n","ita-o","hdot-cx"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["iec-60320-c5","iec-60320-c7","iec-60320-c13","iec-60320-c15","iec-60320-c19","iec-60309-p-n-e-4h","iec-60309-p-n-e-6h","iec-60309-p-n-e-9h","iec-60309-2p-e-4h","iec-60309-2p-e-6h","iec-60309-2p-e-9h","iec-60309-3p-e-4h","iec-60309-3p-e-6h","iec-60309-3p-e-9h","iec-60309-3p-n-e-4h","iec-60309-3p-n-e-6h","iec-60309-3p-n-e-9h","nema-1-15r","nema-5-15r","nema-5-20r","nema-5-30r","nema-5-50r","nema-6-15r","nema-6-20r","nema-6-30r","nema-6-50r","nema-10-30r","nema-10-50r","nema-14-20r","nema-14-30r","nema-14-50r","nema-14-60r","nema-15-15r","nema-15-20r","nema-15-30r","nema-15-50r","nema-15-60r","nema-l1-15r","nema-l5-15r","nema-l5-20r","nema-l5-30r","nema-l5-50r","nema-l6-15r","nema-l6-20r","nema-l6-30r","nema-l6-50r","nema-l10-30r","nema-l14-20r","nema-l14-30r","nema-l14-50r","nema-l14-60r","nema-l15-20r","nema-l15-30r","nema-l15-50r","nema-l15-60r","nema-l21-20r","nema-l21-30r","CS6360C","CS6364C","CS8164C","CS8264C","CS8364C","CS8464C","ita-e","ita-f","ita-g","ita-h","ita-i","ita-j","ita-k","ita-l","ita-m","ita-n","ita-o","hdot-cx"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -352,6 +352,9 @@ const (
 	// WritablePowerOutletTypeIec603093pne9h captures enum value "iec-60309-3p-n-e-9h"
 	WritablePowerOutletTypeIec603093pne9h string = "iec-60309-3p-n-e-9h"
 
+	// WritablePowerOutletTypeNema115r captures enum value "nema-1-15r"
+	WritablePowerOutletTypeNema115r string = "nema-1-15r"
+
 	// WritablePowerOutletTypeNema515r captures enum value "nema-5-15r"
 	WritablePowerOutletTypeNema515r string = "nema-5-15r"
 
@@ -376,6 +379,42 @@ const (
 	// WritablePowerOutletTypeNema650r captures enum value "nema-6-50r"
 	WritablePowerOutletTypeNema650r string = "nema-6-50r"
 
+	// WritablePowerOutletTypeNema1030r captures enum value "nema-10-30r"
+	WritablePowerOutletTypeNema1030r string = "nema-10-30r"
+
+	// WritablePowerOutletTypeNema1050r captures enum value "nema-10-50r"
+	WritablePowerOutletTypeNema1050r string = "nema-10-50r"
+
+	// WritablePowerOutletTypeNema1420r captures enum value "nema-14-20r"
+	WritablePowerOutletTypeNema1420r string = "nema-14-20r"
+
+	// WritablePowerOutletTypeNema1430r captures enum value "nema-14-30r"
+	WritablePowerOutletTypeNema1430r string = "nema-14-30r"
+
+	// WritablePowerOutletTypeNema1450r captures enum value "nema-14-50r"
+	WritablePowerOutletTypeNema1450r string = "nema-14-50r"
+
+	// WritablePowerOutletTypeNema1460r captures enum value "nema-14-60r"
+	WritablePowerOutletTypeNema1460r string = "nema-14-60r"
+
+	// WritablePowerOutletTypeNema1515r captures enum value "nema-15-15r"
+	WritablePowerOutletTypeNema1515r string = "nema-15-15r"
+
+	// WritablePowerOutletTypeNema1520r captures enum value "nema-15-20r"
+	WritablePowerOutletTypeNema1520r string = "nema-15-20r"
+
+	// WritablePowerOutletTypeNema1530r captures enum value "nema-15-30r"
+	WritablePowerOutletTypeNema1530r string = "nema-15-30r"
+
+	// WritablePowerOutletTypeNema1550r captures enum value "nema-15-50r"
+	WritablePowerOutletTypeNema1550r string = "nema-15-50r"
+
+	// WritablePowerOutletTypeNema1560r captures enum value "nema-15-60r"
+	WritablePowerOutletTypeNema1560r string = "nema-15-60r"
+
+	// WritablePowerOutletTypeNemaL115r captures enum value "nema-l1-15r"
+	WritablePowerOutletTypeNemaL115r string = "nema-l1-15r"
+
 	// WritablePowerOutletTypeNemaL515r captures enum value "nema-l5-15r"
 	WritablePowerOutletTypeNemaL515r string = "nema-l5-15r"
 
@@ -388,6 +427,9 @@ const (
 	// WritablePowerOutletTypeNemaL550r captures enum value "nema-l5-50r"
 	WritablePowerOutletTypeNemaL550r string = "nema-l5-50r"
 
+	// WritablePowerOutletTypeNemaL615r captures enum value "nema-l6-15r"
+	WritablePowerOutletTypeNemaL615r string = "nema-l6-15r"
+
 	// WritablePowerOutletTypeNemaL620r captures enum value "nema-l6-20r"
 	WritablePowerOutletTypeNemaL620r string = "nema-l6-20r"
 
@@ -397,11 +439,32 @@ const (
 	// WritablePowerOutletTypeNemaL650r captures enum value "nema-l6-50r"
 	WritablePowerOutletTypeNemaL650r string = "nema-l6-50r"
 
+	// WritablePowerOutletTypeNemaL1030r captures enum value "nema-l10-30r"
+	WritablePowerOutletTypeNemaL1030r string = "nema-l10-30r"
+
 	// WritablePowerOutletTypeNemaL1420r captures enum value "nema-l14-20r"
 	WritablePowerOutletTypeNemaL1420r string = "nema-l14-20r"
 
 	// WritablePowerOutletTypeNemaL1430r captures enum value "nema-l14-30r"
 	WritablePowerOutletTypeNemaL1430r string = "nema-l14-30r"
+
+	// WritablePowerOutletTypeNemaL1450r captures enum value "nema-l14-50r"
+	WritablePowerOutletTypeNemaL1450r string = "nema-l14-50r"
+
+	// WritablePowerOutletTypeNemaL1460r captures enum value "nema-l14-60r"
+	WritablePowerOutletTypeNemaL1460r string = "nema-l14-60r"
+
+	// WritablePowerOutletTypeNemaL1520r captures enum value "nema-l15-20r"
+	WritablePowerOutletTypeNemaL1520r string = "nema-l15-20r"
+
+	// WritablePowerOutletTypeNemaL1530r captures enum value "nema-l15-30r"
+	WritablePowerOutletTypeNemaL1530r string = "nema-l15-30r"
+
+	// WritablePowerOutletTypeNemaL1550r captures enum value "nema-l15-50r"
+	WritablePowerOutletTypeNemaL1550r string = "nema-l15-50r"
+
+	// WritablePowerOutletTypeNemaL1560r captures enum value "nema-l15-60r"
+	WritablePowerOutletTypeNemaL1560r string = "nema-l15-60r"
 
 	// WritablePowerOutletTypeNemaL2120r captures enum value "nema-l21-20r"
 	WritablePowerOutletTypeNemaL2120r string = "nema-l21-20r"
