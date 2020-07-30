@@ -43,7 +43,7 @@ type WritableInterfaceTemplate struct {
 	ID int64 `json:"id,omitempty"`
 
 	// Management only
-	MgmtOnly bool `json:"mgmt_only,omitempty"`
+	MgmtOnly *bool `json:"mgmt_only,omitempty"`
 
 	// Name
 	// Required: true

@@ -52,7 +52,7 @@ type WritableConsoleServerPort struct {
 
 	// Connection status
 	// Enum: [false true]
-	ConnectionStatus bool `json:"connection_status,omitempty"`
+	ConnectionStatus *bool `json:"connection_status,omitempty"`
 
 	// Description
 	// Max Length: 200
@@ -165,7 +165,7 @@ func (m *WritableConsoleServerPort) validateConnectionStatus(formats strfmt.Regi
 	}
 
 	// value enum
-	if err := m.validateConnectionStatusEnum("connection_status", "body", m.ConnectionStatus); err != nil {
+	if err := m.validateConnectionStatusEnum("connection_status", "body", *m.ConnectionStatus); err != nil {
 		return err
 	}
 

@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -37,9 +38,14 @@ func main() {
 	host := "127.0.0.1"
 	apiToken := "a30439d5093375b36c9d810c845054c0a73c760f"
 
-	//t := runtimeclient.New(client.DefaultHost, client.DefaultBasePath, client.DefaultSchemes)
-	t := runtimeclient.New(host, client.DefaultBasePath, client.DefaultSchemes)
+	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t := runtimeclient.NewWithClient(host, client.DefaultBasePath, []string{"https", "http"}, httpClient)
 	t.DefaultAuthentication = runtimeclient.APIKeyAuth(authHeaderName, "header", fmt.Sprintf(authHeaderFormat, apiToken))
+
 	//t.SetDebug(true)
 
 	//c := netbox.NewNetboxWithAPIKey(host, apiToken)
