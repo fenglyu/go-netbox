@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -14,41 +15,44 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-var authHeaderName = "Authorization"
-var authHeaderFormat = "Token %v"
+const authHeaderName = "Authorization"
+const authHeaderFormat = "Token %v"
 
 func main() {
-	host := "127.0.0.1"
+	host := "netbox.k8s.me"
 	apiToken := "a30439d5093375b36c9d810c845054c0a73c760f"
 
 	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	t := runtimeclient.NewWithClient(host, client.DefaultBasePath, []string{"https", "http"}, httpClient)
-	t.DefaultAuthentication = runtimeclient.APIKeyAuth(authHeaderName, "header", fmt.Sprintf(authHeaderFormat, apiToken))
 
-	//c := netbox.NewNetboxWithAPIKey(host, apiToken)
+	t.DefaultAuthentication = runtimeclient.APIKeyAuth(authHeaderName, "header", fmt.Sprintf(authHeaderFormat, apiToken))
+	t.SetDebug(true)
+
 	c := client.New(t, strfmt.Default)
 
-	var writablePrefix models.WritablePrefix
+	var prefixlength int64 = 28
 
-	cidr := "10.0.18.0/26"
-	writablePrefix.Prefix = &cidr
-	tr := new(bool)
-	*tr = true
-	writablePrefix.IsPool = tr
-
-	partialUpdatePrefix := ipam.IpamPrefixesPartialUpdateParams{
-		ID:   14,
-		Data: &writablePrefix,
-	}
-	partialUpdatePrefix.WithContext(context.Background())
-	p, uerr := c.Ipam.IpamPrefixesPartialUpdate(&partialUpdatePrefix, nil)
-	if uerr != nil {
-		fmt.Println("err\n", uerr)
+	dpcData := models.PrefixLength{
+		PrefixLength: &prefixlength,
 	}
 
-	fmt.Println("result: \n", p)
+	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
+		ID:   1,
+		Data: &dpcData,
+	}
+	dpc.WithContext(context.Background())
+
+	dpcpparam, _ := json.Marshal(dpc)
+	fmt.Println("dpcpparam> ", string(dpcpparam))
+	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil)
+	if err != nil {
+		fmt.Println("IpamPrefixesAvailablePrefixesCreate	", err)
+	}
+
+	fmt.Println("New created", ipapc)
+	jsonIpapc, _ := json.Marshal(ipapc)
+	fmt.Println("IpamPrefixesAvailablePrefixesCreate	", string(jsonIpapc))
 }

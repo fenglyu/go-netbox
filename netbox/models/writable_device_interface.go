@@ -52,7 +52,7 @@ type WritableDeviceInterface struct {
 
 	// Connection status
 	// Enum: [false true]
-	ConnectionStatus *bool `json:"connection_status,omitempty"`
+	ConnectionStatus bool `json:"connection_status,omitempty"`
 
 	// Count ipaddresses
 	// Read Only: true
@@ -67,7 +67,7 @@ type WritableDeviceInterface struct {
 	Device *int64 `json:"device"`
 
 	// Enabled
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
 
 	// ID
 	// Read Only: true
@@ -82,7 +82,7 @@ type WritableDeviceInterface struct {
 	// OOB Management
 	//
 	// This interface is used only for out-of-band management
-	MgmtOnly *bool `json:"mgmt_only,omitempty"`
+	MgmtOnly bool `json:"mgmt_only,omitempty"`
 
 	// Mode
 	// Enum: [access tagged tagged-all]
@@ -210,7 +210,7 @@ func (m *WritableDeviceInterface) validateConnectionStatus(formats strfmt.Regist
 	}
 
 	// value enum
-	if err := m.validateConnectionStatusEnum("connection_status", "body", *m.ConnectionStatus); err != nil {
+	if err := m.validateConnectionStatusEnum("connection_status", "body", m.ConnectionStatus); err != nil {
 		return err
 	}
 

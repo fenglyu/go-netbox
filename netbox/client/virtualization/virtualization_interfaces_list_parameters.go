@@ -154,10 +154,6 @@ type VirtualizationInterfacesListParams struct {
 	Offset *int64
 	/*Q*/
 	Q *string
-	/*Tag*/
-	Tag *string
-	/*Tagn*/
-	Tagn *string
 	/*VirtualMachine*/
 	VirtualMachine *string
 	/*VirtualMachinen*/
@@ -599,28 +595,6 @@ func (o *VirtualizationInterfacesListParams) WithQ(q *string) *VirtualizationInt
 // SetQ adds the q to the virtualization interfaces list params
 func (o *VirtualizationInterfacesListParams) SetQ(q *string) {
 	o.Q = q
-}
-
-// WithTag adds the tag to the virtualization interfaces list params
-func (o *VirtualizationInterfacesListParams) WithTag(tag *string) *VirtualizationInterfacesListParams {
-	o.SetTag(tag)
-	return o
-}
-
-// SetTag adds the tag to the virtualization interfaces list params
-func (o *VirtualizationInterfacesListParams) SetTag(tag *string) {
-	o.Tag = tag
-}
-
-// WithTagn adds the tagn to the virtualization interfaces list params
-func (o *VirtualizationInterfacesListParams) WithTagn(tagn *string) *VirtualizationInterfacesListParams {
-	o.SetTagn(tagn)
-	return o
-}
-
-// SetTagn adds the tagN to the virtualization interfaces list params
-func (o *VirtualizationInterfacesListParams) SetTagn(tagn *string) {
-	o.Tagn = tagn
 }
 
 // WithVirtualMachine adds the virtualMachine to the virtualization interfaces list params
@@ -1245,38 +1219,6 @@ func (o *VirtualizationInterfacesListParams) WriteToRequest(r runtime.ClientRequ
 		qQ := qrQ
 		if qQ != "" {
 			if err := r.SetQueryParam("q", qQ); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.Tag != nil {
-
-		// query param tag
-		var qrTag string
-		if o.Tag != nil {
-			qrTag = *o.Tag
-		}
-		qTag := qrTag
-		if qTag != "" {
-			if err := r.SetQueryParam("tag", qTag); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.Tagn != nil {
-
-		// query param tag__n
-		var qrTagn string
-		if o.Tagn != nil {
-			qrTagn = *o.Tagn
-		}
-		qTagn := qrTagn
-		if qTagn != "" {
-			if err := r.SetQueryParam("tag__n", qTagn); err != nil {
 				return err
 			}
 		}

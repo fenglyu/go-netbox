@@ -15,8 +15,10 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-var authHeaderName = "Authorization"
-var authHeaderFormat = "Token %v"
+var (
+	authHeaderName   = "Authorization"
+	authHeaderFormat = "Token %v"
+)
 
 func main() {
 	host := "127.0.0.1"
@@ -54,7 +56,7 @@ func main() {
 	fmt.Println(string(res))
 
 	partialUpdatePrefix := ipam.IpamPrefixesPartialUpdateParams{
-		ID:   330,
+		ID:   14,
 		Data: &writablePrefix,
 	}
 	partialUpdatePrefixRes, _ := json.Marshal(partialUpdatePrefix)

@@ -34,13 +34,13 @@ func main() {
 	//t.SetDebug(true)
 
 	c := client.New(t, strfmt.Default)
-	var generalQueryLimit int64 = 0
 
+	var generalQueryLimit int64 = 0
 	roleName := "gcp"
 
 	roleParam := ipam.IpamRolesListParams{
-		Name:    &roleName,
-		Limit:   &generalQueryLimit,
+		Name: &roleName,
+		//Limit:   &generalQueryLimit,
 		Context: context.Background(),
 	}
 	roleRes, err := c.Ipam.IpamRolesList(&roleParam, nil)
@@ -74,8 +74,8 @@ func main() {
 	// Vlan-group start
 	vlanGroupParam := ipam.IpamVlanGroupsListParams{
 		//SiteID: site.ID,
-		Site:    site.Name,
-		Limit:   &generalQueryLimit,
+		Site: site.Name,
+		//	Limit:   &generalQueryLimit,
 		Context: context.Background(),
 	}
 	vlanGData, err := c.Ipam.IpamVlanGroupsList(&vlanGroupParam, nil)
@@ -135,13 +135,15 @@ func main() {
 	//tenant end
 
 	var prefixlength int64 = 28
+	tr := new(bool)
+	*tr = false
 	dpcData := models.WritablePrefix{
 		//ID: 2,
 		//PrefixLength: &prefixlength,
 		//Prefix:       &rootCidr,
 		PrefixLength: prefixlength,
-		Status:       2,
-		IsPool:       false,
+		Status:       "reserved",
+		IsPool:       tr,
 		Vrf:          &vrf.ID,
 		Site:         &site.ID,
 		Tenant:       &tenant.ID,
@@ -151,9 +153,15 @@ func main() {
 		//Site:   &site,
 		Tags: []string{"demos", "k8s", "gke"},
 	}
+	/*
+		var prefixlength int64 = 28
+
+		dpcData := models.PrefixLength{
+			PrefixLength: &prefixlength,
+		}	*/
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
-		ID:   125,
+		ID:   1,
 		Data: &dpcData,
 	}
 	dpc.WithContext(context.Background())
