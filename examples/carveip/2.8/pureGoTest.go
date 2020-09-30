@@ -9,8 +9,8 @@ import (
 
 func main() {
 
-	host := "www.example.com"
-	host = "netbox.k8s.me"
+	host := "127.0.0.1:8080"
+
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
@@ -25,7 +25,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	req.Header.Add("Authorization", "Token a30439d5093375b36c9d810c845054c0a73c760f")
+	req.Header.Add("Authorization", "Token lovhVVETaKQPcmIQh0DSmQjr3rl4F7MARle3EVYq")
 
 	res, err := client.Do(req)
 	if err != nil {

@@ -35,8 +35,8 @@ const authHeaderName = "Authorization"
 const authHeaderFormat = "Token %v"
 
 func main() {
-	host := "127.0.0.1"
-	apiToken := "a30439d5093375b36c9d810c845054c0a73c760f"
+	host := "127.0.0.1:8080"
+	apiToken := "lovhVVETaKQPcmIQh0DSmQjr3rl4F7MARle3EVYq"
 
 	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
 	if err != nil {
