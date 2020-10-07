@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -430,6 +431,47 @@ func (m *WritableCable) validateType(formats strfmt.Registry) error {
 	if err := m.validateTypeEnum("type", "body", m.Type); err != nil {
 		return err
 	}
+
+	return nil
+}
+
+// ContextValidate validate this writable cable based on the context it is used
+func (m *WritableCable) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTerminationa(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTerminationb(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *WritableCable) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *WritableCable) contextValidateTerminationa(ctx context.Context, formats strfmt.Registry) error {
+
+	return nil
+}
+
+func (m *WritableCable) contextValidateTerminationb(ctx context.Context, formats strfmt.Registry) error {
 
 	return nil
 }

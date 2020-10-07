@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -389,6 +390,199 @@ func (m *IPAddress) validateVrf(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validate this IP address based on the context it is used
+func (m *IPAddress) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCreated(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFamily(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInterface(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateLastUpdated(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateNatInside(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateNatOutside(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRole(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTenant(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVrf(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *IPAddress) contextValidateCreated(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "created", "body", strfmt.Date(m.Created)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateFamily(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Family != nil {
+		if err := m.Family.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("family")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateInterface(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Interface != nil {
+		if err := m.Interface.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("interface")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateLastUpdated(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "last_updated", "body", strfmt.DateTime(m.LastUpdated)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateNatInside(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.NatInside != nil {
+		if err := m.NatInside.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("nat_inside")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateNatOutside(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.NatOutside != nil {
+		if err := m.NatOutside.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("nat_outside")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateRole(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Role != nil {
+		if err := m.Role.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("role")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Status != nil {
+		if err := m.Status.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateTenant(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Tenant != nil {
+		if err := m.Tenant.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("tenant")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *IPAddress) contextValidateVrf(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Vrf != nil {
+		if err := m.Vrf.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vrf")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *IPAddress) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -515,6 +709,16 @@ func (m *IPAddressFamily) validateValue(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validate this IP address family based on the context it is used
+func (m *IPAddressFamily) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
@@ -692,6 +896,11 @@ func (m *IPAddressRole) validateValue(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validates this IP address role based on context it is used
+func (m *IPAddressRole) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *IPAddressRole) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -839,6 +1048,11 @@ func (m *IPAddressStatus) validateValue(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this IP address status based on context it is used
+func (m *IPAddressStatus) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

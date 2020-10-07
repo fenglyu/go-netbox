@@ -21,6 +21,7 @@ package ipam
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"strconv"
@@ -37,6 +38,7 @@ import (
 // IpamPrefixesListReader is a Reader for the IpamPrefixesList structure.
 type IpamPrefixesListReader struct {
 	formats strfmt.Registry
+	writer  io.Writer
 }
 
 // ReadResponse reads a server response into the received o.
@@ -48,9 +50,15 @@ func (o *IpamPrefixesListReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewIpamPrefixesListDefault(response.Code(), o.writer)
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -78,6 +86,47 @@ func (o *IpamPrefixesListOK) GetPayload() *IpamPrefixesListOKBody {
 func (o *IpamPrefixesListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(IpamPrefixesListOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamPrefixesListDefault creates a IpamPrefixesListDefault with default headers values
+func NewIpamPrefixesListDefault(code int, writer io.Writer) *IpamPrefixesListDefault {
+	return &IpamPrefixesListDefault{
+		_statusCode: code,
+		Payload:     writer,
+	}
+}
+
+/*IpamPrefixesListDefault handles this case with default header values.
+
+IpamPrefixesListDefault ipam prefixes list default
+*/
+type IpamPrefixesListDefault struct {
+	_statusCode int
+
+	Payload io.Writer
+}
+
+// Code gets the status code for the ipam prefixes list default response
+func (o *IpamPrefixesListDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *IpamPrefixesListDefault) Error() string {
+	return fmt.Sprintf("[GET /ipam/prefixes/][%d] ipam_prefixes_list default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *IpamPrefixesListDefault) GetPayload() io.Writer {
+	return o.Payload
+}
+
+func (o *IpamPrefixesListDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -183,6 +232,38 @@ func (o *IpamPrefixesListOKBody) validateResults(formats strfmt.Registry) error 
 
 		if o.Results[i] != nil {
 			if err := o.Results[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("ipamPrefixesListOK" + "." + "results" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this ipam prefixes list o k body based on the context it is used
+func (o *IpamPrefixesListOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateResults(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *IpamPrefixesListOKBody) contextValidateResults(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Results); i++ {
+
+		if o.Results[i] != nil {
+			if err := o.Results[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ipamPrefixesListOK" + "." + "results" + "." + strconv.Itoa(i))
 				}

@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -210,6 +212,64 @@ func (m *ImageAttachment) validateObjectID(formats strfmt.Registry) error {
 	if err := validate.MaximumInt("object_id", "body", int64(*m.ObjectID), 2.147483647e+09, false); err != nil {
 		return err
 	}
+
+	return nil
+}
+
+// ContextValidate validate this image attachment based on the context it is used
+func (m *ImageAttachment) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCreated(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateImage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateParent(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ImageAttachment) contextValidateCreated(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "created", "body", strfmt.DateTime(m.Created)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ImageAttachment) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ImageAttachment) contextValidateImage(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "image", "body", strfmt.URI(m.Image)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ImageAttachment) contextValidateParent(ctx context.Context, formats strfmt.Registry) error {
 
 	return nil
 }

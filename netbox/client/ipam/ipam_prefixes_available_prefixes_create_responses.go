@@ -33,6 +33,7 @@ import (
 // IpamPrefixesAvailablePrefixesCreateReader is a Reader for the IpamPrefixesAvailablePrefixesCreate structure.
 type IpamPrefixesAvailablePrefixesCreateReader struct {
 	formats strfmt.Registry
+	writer  io.Writer
 }
 
 // ReadResponse reads a server response into the received o.
@@ -44,9 +45,15 @@ func (o *IpamPrefixesAvailablePrefixesCreateReader) ReadResponse(response runtim
 			return nil, err
 		}
 		return result, nil
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewIpamPrefixesAvailablePrefixesCreateDefault(response.Code(), o.writer)
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -74,6 +81,47 @@ func (o *IpamPrefixesAvailablePrefixesCreateCreated) GetPayload() *models.Prefix
 func (o *IpamPrefixesAvailablePrefixesCreateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.Prefix)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewIpamPrefixesAvailablePrefixesCreateDefault creates a IpamPrefixesAvailablePrefixesCreateDefault with default headers values
+func NewIpamPrefixesAvailablePrefixesCreateDefault(code int, writer io.Writer) *IpamPrefixesAvailablePrefixesCreateDefault {
+	return &IpamPrefixesAvailablePrefixesCreateDefault{
+		_statusCode: code,
+		Payload:     writer,
+	}
+}
+
+/*IpamPrefixesAvailablePrefixesCreateDefault handles this case with default header values.
+
+IpamPrefixesAvailablePrefixesCreateDefault ipam prefixes available prefixes create default
+*/
+type IpamPrefixesAvailablePrefixesCreateDefault struct {
+	_statusCode int
+
+	Payload io.Writer
+}
+
+// Code gets the status code for the ipam prefixes available prefixes create default response
+func (o *IpamPrefixesAvailablePrefixesCreateDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *IpamPrefixesAvailablePrefixesCreateDefault) Error() string {
+	return fmt.Sprintf("[POST /ipam/prefixes/{id}/available-prefixes/][%d] ipam_prefixes_available-prefixes_create default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *IpamPrefixesAvailablePrefixesCreateDefault) GetPayload() io.Writer {
+	return o.Payload
+}
+
+func (o *IpamPrefixesAvailablePrefixesCreateDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -463,6 +464,205 @@ func (m *ConfigContext) validateWeight(formats strfmt.Registry) error {
 
 	if err := validate.MaximumInt("weight", "body", int64(*m.Weight), 32767, false); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this config context based on the context it is used
+func (m *ConfigContext) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateClusterGroups(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateClusters(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePlatforms(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRegions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRoles(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSites(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTenantGroups(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTenants(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ConfigContext) contextValidateClusterGroups(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ClusterGroups); i++ {
+
+		if m.ClusterGroups[i] != nil {
+			if err := m.ClusterGroups[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("cluster_groups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateClusters(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Clusters); i++ {
+
+		if m.Clusters[i] != nil {
+			if err := m.Clusters[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("clusters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidatePlatforms(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Platforms); i++ {
+
+		if m.Platforms[i] != nil {
+			if err := m.Platforms[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("platforms" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateRegions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Regions); i++ {
+
+		if m.Regions[i] != nil {
+			if err := m.Regions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("regions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateRoles(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Roles); i++ {
+
+		if m.Roles[i] != nil {
+			if err := m.Roles[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("roles" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateSites(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Sites); i++ {
+
+		if m.Sites[i] != nil {
+			if err := m.Sites[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("sites" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateTenantGroups(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.TenantGroups); i++ {
+
+		if m.TenantGroups[i] != nil {
+			if err := m.TenantGroups[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("tenant_groups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ConfigContext) contextValidateTenants(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Tenants); i++ {
+
+		if m.Tenants[i] != nil {
+			if err := m.Tenants[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("tenants" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

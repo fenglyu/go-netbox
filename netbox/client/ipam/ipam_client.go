@@ -22,6 +22,7 @@ package ipam
 
 import (
 	"fmt"
+	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
@@ -70,19 +71,19 @@ type ClientService interface {
 
 	IpamPrefixesAvailableIpsRead(params *IpamPrefixesAvailableIpsReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailableIpsReadOK, error)
 
-	IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailablePrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesCreateCreated, error)
+	IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailablePrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesAvailablePrefixesCreateCreated, error)
 
-	IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesReadOK, error)
+	IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesAvailablePrefixesReadOK, error)
 
 	IpamPrefixesCreate(params *IpamPrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesCreateCreated, error)
 
 	IpamPrefixesDelete(params *IpamPrefixesDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesDeleteNoContent, error)
 
-	IpamPrefixesList(params *IpamPrefixesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesListOK, error)
+	IpamPrefixesList(params *IpamPrefixesListParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesListOK, error)
 
 	IpamPrefixesPartialUpdate(params *IpamPrefixesPartialUpdateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesPartialUpdateOK, error)
 
-	IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesReadOK, error)
+	IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesReadOK, error)
 
 	IpamPrefixesUpdate(params *IpamPrefixesUpdateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesUpdateOK, error)
 
@@ -667,7 +668,7 @@ func (a *Client) IpamPrefixesAvailableIpsRead(params *IpamPrefixesAvailableIpsRe
   The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
 invoked in parallel, which results in a race condition where multiple insertions can occur.
 */
-func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailablePrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesCreateCreated, error) {
+func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailablePrefixesCreateParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesAvailablePrefixesCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamPrefixesAvailablePrefixesCreateParams()
@@ -681,7 +682,7 @@ func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailab
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &IpamPrefixesAvailablePrefixesCreateReader{formats: a.formats},
+		Reader:             &IpamPrefixesAvailablePrefixesCreateReader{formats: a.formats, writer: writer},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -694,9 +695,8 @@ func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailab
 		return success, nil
 	}
 	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ipam_prefixes_available-prefixes_create: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	unexpectedSuccess := result.(*IpamPrefixesAvailablePrefixesCreateDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -705,7 +705,7 @@ func (a *Client) IpamPrefixesAvailablePrefixesCreate(params *IpamPrefixesAvailab
   The advisory lock decorator uses a PostgreSQL advisory lock to prevent this API from being
 invoked in parallel, which results in a race condition where multiple insertions can occur.
 */
-func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesAvailablePrefixesReadOK, error) {
+func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailablePrefixesReadParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesAvailablePrefixesReadOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamPrefixesAvailablePrefixesReadParams()
@@ -719,7 +719,7 @@ func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailable
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &IpamPrefixesAvailablePrefixesReadReader{formats: a.formats},
+		Reader:             &IpamPrefixesAvailablePrefixesReadReader{formats: a.formats, writer: writer},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -732,9 +732,8 @@ func (a *Client) IpamPrefixesAvailablePrefixesRead(params *IpamPrefixesAvailable
 		return success, nil
 	}
 	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ipam_prefixes_available-prefixes_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	unexpectedSuccess := result.(*IpamPrefixesAvailablePrefixesReadDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -810,7 +809,7 @@ func (a *Client) IpamPrefixesDelete(params *IpamPrefixesDeleteParams, authInfo r
 /*
   IpamPrefixesList Call to super to allow for caching
 */
-func (a *Client) IpamPrefixesList(params *IpamPrefixesListParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesListOK, error) {
+func (a *Client) IpamPrefixesList(params *IpamPrefixesListParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesListOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamPrefixesListParams()
@@ -824,7 +823,7 @@ func (a *Client) IpamPrefixesList(params *IpamPrefixesListParams, authInfo runti
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &IpamPrefixesListReader{formats: a.formats},
+		Reader:             &IpamPrefixesListReader{formats: a.formats, writer: writer},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -837,9 +836,8 @@ func (a *Client) IpamPrefixesList(params *IpamPrefixesListParams, authInfo runti
 		return success, nil
 	}
 	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ipam_prefixes_list: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	unexpectedSuccess := result.(*IpamPrefixesListDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -880,7 +878,7 @@ func (a *Client) IpamPrefixesPartialUpdate(params *IpamPrefixesPartialUpdatePara
 /*
   IpamPrefixesRead Call to super to allow for caching
 */
-func (a *Client) IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runtime.ClientAuthInfoWriter) (*IpamPrefixesReadOK, error) {
+func (a *Client) IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer) (*IpamPrefixesReadOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamPrefixesReadParams()
@@ -894,7 +892,7 @@ func (a *Client) IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runti
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &IpamPrefixesReadReader{formats: a.formats},
+		Reader:             &IpamPrefixesReadReader{formats: a.formats, writer: writer},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -907,9 +905,8 @@ func (a *Client) IpamPrefixesRead(params *IpamPrefixesReadParams, authInfo runti
 		return success, nil
 	}
 	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ipam_prefixes_read: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	unexpectedSuccess := result.(*IpamPrefixesReadDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*

@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -63,6 +65,42 @@ func (m *WritableAvailableIP) validateAddress(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MinLength("address", "body", string(m.Address), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this writable available IP based on the context it is used
+func (m *WritableAvailableIP) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFamily(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *WritableAvailableIP) contextValidateAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "address", "body", string(m.Address)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *WritableAvailableIP) contextValidateFamily(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "family", "body", int64(m.Family)); err != nil {
 		return err
 	}
 

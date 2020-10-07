@@ -35,7 +35,7 @@ const authHeaderName = "Authorization"
 const authHeaderFormat = "Token %v"
 
 func main() {
-	host := "127.0.0.1:8080"
+	host := "netbox.k8s.me"
 	apiToken := "lovhVVETaKQPcmIQh0DSmQjr3rl4F7MARle3EVYq"
 
 	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})

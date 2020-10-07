@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -229,6 +230,29 @@ func (m *WritableExportTemplate) validateTemplateLanguage(formats strfmt.Registr
 
 	// value enum
 	if err := m.validateTemplateLanguageEnum("template_language", "body", m.TemplateLanguage); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this writable export template based on the context it is used
+func (m *WritableExportTemplate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *WritableExportTemplate) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
 		return err
 	}
 

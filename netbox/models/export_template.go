@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -209,6 +210,47 @@ func (m *ExportTemplate) validateTemplateLanguage(formats strfmt.Registry) error
 	return nil
 }
 
+// ContextValidate validate this export template based on the context it is used
+func (m *ExportTemplate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTemplateLanguage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ExportTemplate) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *ExportTemplate) contextValidateTemplateLanguage(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.TemplateLanguage != nil {
+		if err := m.TemplateLanguage.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("template_language")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *ExportTemplate) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -357,6 +399,11 @@ func (m *ExportTemplateTemplateLanguage) validateValue(formats strfmt.Registry) 
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this export template template language based on context it is used
+func (m *ExportTemplateTemplateLanguage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

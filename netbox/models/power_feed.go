@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -382,6 +383,163 @@ func (m *PowerFeed) validateVoltage(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validate this power feed based on the context it is used
+func (m *PowerFeed) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCreated(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateLastUpdated(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePhase(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePowerPanel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRack(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSupply(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PowerFeed) contextValidateCreated(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "created", "body", strfmt.Date(m.Created)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateLastUpdated(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "last_updated", "body", strfmt.DateTime(m.LastUpdated)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidatePhase(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Phase != nil {
+		if err := m.Phase.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("phase")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidatePowerPanel(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PowerPanel != nil {
+		if err := m.PowerPanel.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("power_panel")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateRack(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Rack != nil {
+		if err := m.Rack.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("rack")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Status != nil {
+		if err := m.Status.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateSupply(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Supply != nil {
+		if err := m.Supply.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("supply")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PowerFeed) contextValidateType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Type != nil {
+		if err := m.Type.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *PowerFeed) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -530,6 +688,11 @@ func (m *PowerFeedPhase) validateValue(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this power feed phase based on context it is used
+func (m *PowerFeedPhase) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
@@ -696,6 +859,11 @@ func (m *PowerFeedStatus) validateValue(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validates this power feed status based on context it is used
+func (m *PowerFeedStatus) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *PowerFeedStatus) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -847,6 +1015,11 @@ func (m *PowerFeedSupply) validateValue(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validates this power feed supply based on context it is used
+func (m *PowerFeedSupply) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *PowerFeedSupply) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -995,6 +1168,11 @@ func (m *PowerFeedType) validateValue(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this power feed type based on context it is used
+func (m *PowerFeedType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -34,7 +34,7 @@ import (
 	"github.com/fenglyu/go-netbox/netbox/client/virtualization"
 )
 
-// Default net box HTTP client.
+// Default net box API HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -49,14 +49,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"http"}
 
-// NewHTTPClient creates a new net box HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *NetBox {
+// NewHTTPClient creates a new net box API HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *NetBoxAPI {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new net box HTTP client,
+// NewHTTPClientWithConfig creates a new net box API HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *NetBox {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *NetBoxAPI {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -67,14 +67,14 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Net
 	return New(transport, formats)
 }
 
-// New creates a new net box client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *NetBox {
+// New creates a new net box API client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *NetBoxAPI {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(NetBox)
+	cli := new(NetBoxAPI)
 	cli.Transport = transport
 	cli.Circuits = circuits.New(transport, formats)
 	cli.Dcim = dcim.New(transport, formats)
@@ -125,8 +125,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// NetBox is a client for net box
-type NetBox struct {
+// NetBoxAPI is a client for net box API
+type NetBoxAPI struct {
 	Circuits circuits.ClientService
 
 	Dcim dcim.ClientService
@@ -145,7 +145,7 @@ type NetBox struct {
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *NetBox) SetTransport(transport runtime.ClientTransport) {
+func (c *NetBoxAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Circuits.SetTransport(transport)
 	c.Dcim.SetTransport(transport)

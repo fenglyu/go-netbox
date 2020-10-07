@@ -21,8 +21,8 @@ const authHeaderName = "Authorization"
 const authHeaderFormat = "Token %v"
 
 func main() {
-	//host := "netbox.k8s.me"
-	host := "127.0.0.1:8080"
+	host := "netbox.k8s.me"
+	//host := "127.0.0.1:8080"
 	apiToken := "lovhVVETaKQPcmIQh0DSmQjr3rl4F7MARle3EVYq"
 
 	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
@@ -37,19 +37,22 @@ func main() {
 	c := client.New(t, strfmt.Default)
 
 	var generalQueryLimit int64 = 0
-	roleName := "gcp"
 
-	roleParam := ipam.IpamRolesListParams{
-		Name: &roleName,
-		//Limit:   &generalQueryLimit,
-		Context: context.Background(),
-	}
-	roleRes, err := c.Ipam.IpamRolesList(&roleParam, nil)
-	if err != nil {
-		fmt.Println("IpamRolesList ", err)
-	}
+	/*
+		roleName := "gcp"
 
-	role := roleRes.Payload.Results[0]
+		roleParam := ipam.IpamRolesListParams{
+			Name: &roleName,
+			//Limit:   &generalQueryLimit,
+			Context: context.Background(),
+		}
+		roleRes, err := c.Ipam.IpamRolesList(&roleParam, nil)
+		if err != nil {
+			fmt.Println("IpamRolesList ", err)
+		}
+
+		role := roleRes.Payload.Results[0]
+	*/
 
 	// Sites Begin
 	siteName := "se1"
@@ -149,7 +152,7 @@ func main() {
 		Site:         &site.ID,
 		Tenant:       &tenant.ID,
 		Vlan:         &vlan.ID,
-		Role:         &role.ID,
+		//Role:         &role.ID,
 		//Role:   &role,
 		//Site:   &site,
 		Tags: []string{"demos", "k8s", "gke"},

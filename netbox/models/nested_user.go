@@ -21,6 +21,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -75,6 +77,29 @@ func (m *NestedUser) validateUsername(formats strfmt.Registry) error {
 	}
 
 	if err := validate.Pattern("username", "body", string(*m.Username), `^[\w.@+-]+$`); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this nested user based on the context it is used
+func (m *NestedUser) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *NestedUser) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
 		return err
 	}
 

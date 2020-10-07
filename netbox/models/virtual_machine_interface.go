@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -292,6 +293,123 @@ func (m *VirtualMachineInterface) validateVirtualMachine(formats strfmt.Registry
 	return nil
 }
 
+// ContextValidate validate this virtual machine interface based on the context it is used
+func (m *VirtualMachineInterface) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMode(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTaggedVlans(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateUntaggedVlan(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVirtualMachine(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateMode(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Mode != nil {
+		if err := m.Mode.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("mode")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateTaggedVlans(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.TaggedVlans); i++ {
+
+		if m.TaggedVlans[i] != nil {
+			if err := m.TaggedVlans[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("tagged_vlans" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Type != nil {
+		if err := m.Type.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateUntaggedVlan(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.UntaggedVlan != nil {
+		if err := m.UntaggedVlan.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("untagged_vlan")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VirtualMachineInterface) contextValidateVirtualMachine(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VirtualMachine != nil {
+		if err := m.VirtualMachine.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("virtual_machine")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *VirtualMachineInterface) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -433,6 +551,11 @@ func (m *VirtualMachineInterfaceMode) validateValue(formats strfmt.Registry) err
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this virtual machine interface mode based on context it is used
+func (m *VirtualMachineInterfaceMode) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
@@ -578,6 +701,11 @@ func (m *VirtualMachineInterfaceType) validateValue(formats strfmt.Registry) err
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this virtual machine interface type based on context it is used
+func (m *VirtualMachineInterfaceType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

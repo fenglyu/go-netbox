@@ -21,6 +21,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -373,6 +374,83 @@ func (m *Cable) validateType(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validate this cable based on the context it is used
+func (m *Cable) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateLengthUnit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTerminationa(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTerminationb(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Cable) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Cable) contextValidateLengthUnit(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.LengthUnit != nil {
+		if err := m.LengthUnit.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("length_unit")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Cable) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Status != nil {
+		if err := m.Status.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Cable) contextValidateTerminationa(ctx context.Context, formats strfmt.Registry) error {
+
+	return nil
+}
+
+func (m *Cable) contextValidateTerminationb(ctx context.Context, formats strfmt.Registry) error {
+
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *Cable) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -523,6 +601,11 @@ func (m *CableLengthUnit) validateValue(formats strfmt.Registry) error {
 	return nil
 }
 
+// ContextValidate validates this cable length unit based on context it is used
+func (m *CableLengthUnit) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
 // MarshalBinary interface implementation
 func (m *CableLengthUnit) MarshalBinary() ([]byte, error) {
 	if m == nil {
@@ -664,6 +747,11 @@ func (m *CableStatus) validateValue(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this cable status based on context it is used
+func (m *CableStatus) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

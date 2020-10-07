@@ -22442,6 +22442,13 @@
                                 }
                             }
                         }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "type": "string",
+                            "format": "binary"
+                        }
                     }
                 },
                 "tags": [
@@ -22485,6 +22492,13 @@
                         "description": "",
                         "schema": {
                             "$ref": "#/definitions/Prefix"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "type": "string",
+                            "format": "binary"
                         }
                     }
                 },
@@ -22638,6 +22652,13 @@
                                 "$ref": "#/definitions/AvailablePrefix"
                             }
                         }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "type": "string",
+                            "format": "binary"
+                        }
                     }
                 },
                 "tags": [
@@ -22664,6 +22685,13 @@
                         "schema": {
                             "type": "object",
                             "$ref": "#/definitions/Prefix"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "type": "string",
+                            "format": "binary"
                         }
                     }
                 },
