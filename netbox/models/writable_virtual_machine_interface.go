@@ -40,7 +40,7 @@ type WritableVirtualMachineInterface struct {
 	Description string `json:"description,omitempty"`
 
 	// Enabled
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// ID
 	// Read Only: true

@@ -51,7 +51,7 @@ type InventoryItem struct {
 	// Discovered
 	//
 	// This item was automatically discovered
-	Discovered bool `json:"discovered,omitempty"`
+	Discovered *bool `json:"discovered,omitempty"`
 
 	// ID
 	// Read Only: true

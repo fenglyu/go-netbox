@@ -39348,18 +39348,6 @@
                 }
             }
         },
-        "PrefixLength": {
-            "required": [
-                "prefix_length"
-            ],
-            "type": "object",
-            "properties": {
-                "prefix_length": {
-                    "title": "Prefix length",
-                    "type": "integer"
-                }
-            }
-        },
         "RIR": {
             "required": [
                 "name",

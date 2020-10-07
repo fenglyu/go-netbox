@@ -9,7 +9,7 @@
     },
     "version": "2.8"
   },
-  "host": "localhost:8000",
+  "host": "netbox.k8s.me",
   "schemes": [
     "http"
   ],
@@ -22,9 +22,9 @@
   ],
   "securityDefinitions": {
     "Bearer": {
-      "type": "apiKey",
+      "in": "header",
       "name": "Authorization",
-      "in": "header"
+      "type": "apiKey"
     }
   },
   "security": [
@@ -8041,6 +8041,33 @@
         "responses": {
           "204": {
             "description": ""
+          }
+        },
+        "tags": [
+          "dcim"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this front port.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    "/dcim/front-ports/{id}/trace/": {
+      "get": {
+        "operationId": "dcim_front-ports_trace",
+        "description": "Trace a complete cable path and return each segment as a three-tuple of (termination, cable, termination).",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FrontPort"
+            }
           }
         },
         "tags": [
@@ -16977,6 +17004,33 @@
         }
       ]
     },
+    "/dcim/rear-ports/{id}/trace/": {
+      "get": {
+        "operationId": "dcim_rear-ports_trace",
+        "description": "Trace a complete cable path and return each segment as a three-tuple of (termination, cable, termination).",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/RearPort"
+            }
+          }
+        },
+        "tags": [
+          "dcim"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this rear port.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
     "/dcim/regions/": {
       "get": {
         "operationId": "dcim_regions_list",
@@ -22540,12 +22594,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/WritablePrefix"
+              "$ref": "#/definitions/WritableAvailableIP"
             }
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "type": "array",
@@ -22600,12 +22654,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/WritablePrefix"
+              "$ref": "#/definitions/PrefixLength"
             }
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "type": "array",
@@ -28591,6 +28645,13 @@
             "type": "string"
           },
           {
+            "name": "tag",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "id__n",
             "in": "query",
             "description": "",
@@ -28795,6 +28856,13 @@
           },
           {
             "name": "mac_address__nie",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tag__n",
             "in": "query",
             "description": "",
             "required": false,
@@ -31151,7 +31219,7 @@
         },
         "family": {
           "title": "Family",
-          "type": "string",
+          "type": "integer",
           "readOnly": true
         },
         "address": {
@@ -31391,9 +31459,7 @@
         "custom_fields": {
           "title": "Custom fields",
           "type": "object",
-          "default": {
-            "test": null
-          }
+          "default": {}
         },
         "created": {
           "title": "Created",
@@ -32172,8 +32238,7 @@
     "DeviceRole": {
       "required": [
         "name",
-        "slug",
-        "color"
+        "slug"
       ],
       "type": "object",
       "properties": {
@@ -32628,9 +32693,7 @@
         "custom_fields": {
           "title": "Custom fields",
           "type": "object",
-          "default": {
-            "test": null
-          }
+          "default": {}
         },
         "config_context": {
           "title": "Config context",
@@ -32807,9 +32870,7 @@
         "custom_fields": {
           "title": "Custom fields",
           "type": "object",
-          "default": {
-            "test": null
-          }
+          "default": {}
         },
         "config_context": {
           "title": "Config context",
@@ -34438,6 +34499,7 @@
                 "3P+N+E 4H",
                 "3P+N+E 6H",
                 "3P+N+E 9H",
+                "NEMA 1-15P",
                 "NEMA 5-15P",
                 "NEMA 5-20P",
                 "NEMA 5-30P",
@@ -34446,13 +34508,37 @@
                 "NEMA 6-20P",
                 "NEMA 6-30P",
                 "NEMA 6-50P",
+                "NEMA 10-30P",
+                "NEMA 10-50P",
+                "NEMA 14-20P",
+                "NEMA 14-30P",
+                "NEMA 14-50P",
+                "NEMA 14-60P",
+                "NEMA 15-15P",
+                "NEMA 15-20P",
+                "NEMA 15-30P",
+                "NEMA 15-50P",
+                "NEMA 15-60P",
+                "NEMA L1-15P",
                 "NEMA L5-15P",
                 "NEMA L5-20P",
                 "NEMA L5-30P",
+                "NEMA L5-50P",
                 "NEMA L6-15P",
                 "NEMA L6-20P",
                 "NEMA L6-30P",
                 "NEMA L6-50P",
+                "NEMA L10-30P",
+                "NEMA L14-20P",
+                "NEMA L14-30P",
+                "NEMA L14-50P",
+                "NEMA L14-60P",
+                "NEMA L15-20P",
+                "NEMA L15-30P",
+                "NEMA L15-50P",
+                "NEMA L15-60P",
+                "NEMA L21-20P",
+                "NEMA L21-30P",
                 "CS6361C",
                 "CS6365C",
                 "CS8165C",
@@ -34493,6 +34579,7 @@
                 "iec-60309-3p-n-e-4h",
                 "iec-60309-3p-n-e-6h",
                 "iec-60309-3p-n-e-9h",
+                "nema-1-15p",
                 "nema-5-15p",
                 "nema-5-20p",
                 "nema-5-30p",
@@ -34501,13 +34588,37 @@
                 "nema-6-20p",
                 "nema-6-30p",
                 "nema-6-50p",
+                "nema-10-30p",
+                "nema-10-50p",
+                "nema-14-20p",
+                "nema-14-30p",
+                "nema-14-50p",
+                "nema-14-60p",
+                "nema-15-15p",
+                "nema-15-20p",
+                "nema-15-30p",
+                "nema-15-50p",
+                "nema-15-60p",
+                "nema-l1-15p",
                 "nema-l5-15p",
                 "nema-l5-20p",
                 "nema-l5-30p",
                 "nema-l5-50p",
+                "nema-l6-15p",
                 "nema-l6-20p",
                 "nema-l6-30p",
                 "nema-l6-50p",
+                "nema-l10-30p",
+                "nema-l14-20p",
+                "nema-l14-30p",
+                "nema-l14-50p",
+                "nema-l14-60p",
+                "nema-l15-20p",
+                "nema-l15-30p",
+                "nema-l15-50p",
+                "nema-l15-60p",
+                "nema-l21-20p",
+                "nema-l21-30p",
                 "cs6361c",
                 "cs6365c",
                 "cs8165c",
@@ -34686,9 +34797,9 @@
             }
           },
           "default": {
-            "value": "active",
+            "id": 1,
             "label": "Active",
-            "id": 1
+            "value": "active"
           }
         },
         "type": {
@@ -34715,9 +34826,9 @@
             }
           },
           "default": {
-            "value": "primary",
+            "id": 1,
             "label": "Primary",
-            "id": 1
+            "value": "primary"
           }
         },
         "supply": {
@@ -34744,9 +34855,9 @@
             }
           },
           "default": {
-            "value": "ac",
+            "id": 1,
             "label": "AC",
-            "id": 1
+            "value": "ac"
           }
         },
         "phase": {
@@ -34773,9 +34884,9 @@
             }
           },
           "default": {
-            "value": "single-phase",
+            "id": 1,
             "label": "Single phase",
-            "id": 1
+            "value": "single-phase"
           }
         },
         "voltage": {
@@ -35012,6 +35123,7 @@
                 "3P+N+E 4H",
                 "3P+N+E 6H",
                 "3P+N+E 9H",
+                "NEMA 1-15R",
                 "NEMA 5-15R",
                 "NEMA 5-20R",
                 "NEMA 5-30R",
@@ -35020,13 +35132,37 @@
                 "NEMA 6-20R",
                 "NEMA 6-30R",
                 "NEMA 6-50R",
+                "NEMA 10-30R",
+                "NEMA 10-50R",
+                "NEMA 14-20R",
+                "NEMA 14-30R",
+                "NEMA 14-50R",
+                "NEMA 14-60R",
+                "NEMA 15-15R",
+                "NEMA 15-20R",
+                "NEMA 15-30R",
+                "NEMA 15-50R",
+                "NEMA 15-60R",
+                "NEMA L1-15R",
                 "NEMA L5-15R",
                 "NEMA L5-20R",
                 "NEMA L5-30R",
+                "NEMA L5-50R",
                 "NEMA L6-15R",
                 "NEMA L6-20R",
                 "NEMA L6-30R",
                 "NEMA L6-50R",
+                "NEMA L10-30R",
+                "NEMA L14-20R",
+                "NEMA L14-30R",
+                "NEMA L14-50R",
+                "NEMA L14-60R",
+                "NEMA L15-20R",
+                "NEMA L15-30R",
+                "NEMA L15-50R",
+                "NEMA L15-60R",
+                "NEMA L21-20R",
+                "NEMA L21-30R",
                 "CS6360C",
                 "CS6364C",
                 "CS8164C",
@@ -35067,6 +35203,7 @@
                 "iec-60309-3p-n-e-4h",
                 "iec-60309-3p-n-e-6h",
                 "iec-60309-3p-n-e-9h",
+                "nema-1-15r",
                 "nema-5-15r",
                 "nema-5-20r",
                 "nema-5-30r",
@@ -35075,13 +35212,37 @@
                 "nema-6-20r",
                 "nema-6-30r",
                 "nema-6-50r",
+                "nema-10-30r",
+                "nema-10-50r",
+                "nema-14-20r",
+                "nema-14-30r",
+                "nema-14-50r",
+                "nema-14-60r",
+                "nema-15-15r",
+                "nema-15-20r",
+                "nema-15-30r",
+                "nema-15-50r",
+                "nema-15-60r",
+                "nema-l1-15r",
                 "nema-l5-15r",
                 "nema-l5-20r",
                 "nema-l5-30r",
                 "nema-l5-50r",
+                "nema-l6-15r",
                 "nema-l6-20r",
                 "nema-l6-30r",
                 "nema-l6-50r",
+                "nema-l10-30r",
+                "nema-l14-20r",
+                "nema-l14-30r",
+                "nema-l14-50r",
+                "nema-l14-60r",
+                "nema-l15-20r",
+                "nema-l15-30r",
+                "nema-l15-50r",
+                "nema-l15-60r",
+                "nema-l21-20r",
+                "nema-l21-30r",
                 "CS6360C",
                 "CS6364C",
                 "CS8164C",
@@ -35178,6 +35339,7 @@
             "iec-60309-3p-n-e-4h",
             "iec-60309-3p-n-e-6h",
             "iec-60309-3p-n-e-9h",
+            "nema-1-15r",
             "nema-5-15r",
             "nema-5-20r",
             "nema-5-30r",
@@ -35186,13 +35348,37 @@
             "nema-6-20r",
             "nema-6-30r",
             "nema-6-50r",
+            "nema-10-30r",
+            "nema-10-50r",
+            "nema-14-20r",
+            "nema-14-30r",
+            "nema-14-50r",
+            "nema-14-60r",
+            "nema-15-15r",
+            "nema-15-20r",
+            "nema-15-30r",
+            "nema-15-50r",
+            "nema-15-60r",
+            "nema-l1-15r",
             "nema-l5-15r",
             "nema-l5-20r",
             "nema-l5-30r",
             "nema-l5-50r",
+            "nema-l6-15r",
             "nema-l6-20r",
             "nema-l6-30r",
             "nema-l6-50r",
+            "nema-l10-30r",
+            "nema-l14-20r",
+            "nema-l14-30r",
+            "nema-l14-50r",
+            "nema-l14-60r",
+            "nema-l15-20r",
+            "nema-l15-30r",
+            "nema-l15-50r",
+            "nema-l15-60r",
+            "nema-l21-20r",
+            "nema-l21-30r",
             "CS6360C",
             "CS6364C",
             "CS8164C",
@@ -35339,6 +35525,7 @@
                 "3P+N+E 4H",
                 "3P+N+E 6H",
                 "3P+N+E 9H",
+                "NEMA 1-15R",
                 "NEMA 5-15R",
                 "NEMA 5-20R",
                 "NEMA 5-30R",
@@ -35347,13 +35534,37 @@
                 "NEMA 6-20R",
                 "NEMA 6-30R",
                 "NEMA 6-50R",
+                "NEMA 10-30R",
+                "NEMA 10-50R",
+                "NEMA 14-20R",
+                "NEMA 14-30R",
+                "NEMA 14-50R",
+                "NEMA 14-60R",
+                "NEMA 15-15R",
+                "NEMA 15-20R",
+                "NEMA 15-30R",
+                "NEMA 15-50R",
+                "NEMA 15-60R",
+                "NEMA L1-15R",
                 "NEMA L5-15R",
                 "NEMA L5-20R",
                 "NEMA L5-30R",
+                "NEMA L5-50R",
                 "NEMA L6-15R",
                 "NEMA L6-20R",
                 "NEMA L6-30R",
                 "NEMA L6-50R",
+                "NEMA L10-30R",
+                "NEMA L14-20R",
+                "NEMA L14-30R",
+                "NEMA L14-50R",
+                "NEMA L14-60R",
+                "NEMA L15-20R",
+                "NEMA L15-30R",
+                "NEMA L15-50R",
+                "NEMA L15-60R",
+                "NEMA L21-20R",
+                "NEMA L21-30R",
                 "CS6360C",
                 "CS6364C",
                 "CS8164C",
@@ -35394,6 +35605,7 @@
                 "iec-60309-3p-n-e-4h",
                 "iec-60309-3p-n-e-6h",
                 "iec-60309-3p-n-e-9h",
+                "nema-1-15r",
                 "nema-5-15r",
                 "nema-5-20r",
                 "nema-5-30r",
@@ -35402,13 +35614,37 @@
                 "nema-6-20r",
                 "nema-6-30r",
                 "nema-6-50r",
+                "nema-10-30r",
+                "nema-10-50r",
+                "nema-14-20r",
+                "nema-14-30r",
+                "nema-14-50r",
+                "nema-14-60r",
+                "nema-15-15r",
+                "nema-15-20r",
+                "nema-15-30r",
+                "nema-15-50r",
+                "nema-15-60r",
+                "nema-l1-15r",
                 "nema-l5-15r",
                 "nema-l5-20r",
                 "nema-l5-30r",
                 "nema-l5-50r",
+                "nema-l6-15r",
                 "nema-l6-20r",
                 "nema-l6-30r",
                 "nema-l6-50r",
+                "nema-l10-30r",
+                "nema-l14-20r",
+                "nema-l14-30r",
+                "nema-l14-50r",
+                "nema-l14-60r",
+                "nema-l15-20r",
+                "nema-l15-30r",
+                "nema-l15-50r",
+                "nema-l15-60r",
+                "nema-l21-20r",
+                "nema-l21-30r",
                 "CS6360C",
                 "CS6364C",
                 "CS8164C",
@@ -35561,6 +35797,7 @@
             "iec-60309-3p-n-e-4h",
             "iec-60309-3p-n-e-6h",
             "iec-60309-3p-n-e-9h",
+            "nema-1-15r",
             "nema-5-15r",
             "nema-5-20r",
             "nema-5-30r",
@@ -35569,13 +35806,37 @@
             "nema-6-20r",
             "nema-6-30r",
             "nema-6-50r",
+            "nema-10-30r",
+            "nema-10-50r",
+            "nema-14-20r",
+            "nema-14-30r",
+            "nema-14-50r",
+            "nema-14-60r",
+            "nema-15-15r",
+            "nema-15-20r",
+            "nema-15-30r",
+            "nema-15-50r",
+            "nema-15-60r",
+            "nema-l1-15r",
             "nema-l5-15r",
             "nema-l5-20r",
             "nema-l5-30r",
             "nema-l5-50r",
+            "nema-l6-15r",
             "nema-l6-20r",
             "nema-l6-30r",
             "nema-l6-50r",
+            "nema-l10-30r",
+            "nema-l14-20r",
+            "nema-l14-30r",
+            "nema-l14-50r",
+            "nema-l14-60r",
+            "nema-l15-20r",
+            "nema-l15-30r",
+            "nema-l15-50r",
+            "nema-l15-60r",
+            "nema-l21-20r",
+            "nema-l21-30r",
             "CS6360C",
             "CS6364C",
             "CS8164C",
@@ -35804,6 +36065,7 @@
                 "3P+N+E 4H",
                 "3P+N+E 6H",
                 "3P+N+E 9H",
+                "NEMA 1-15P",
                 "NEMA 5-15P",
                 "NEMA 5-20P",
                 "NEMA 5-30P",
@@ -35812,13 +36074,37 @@
                 "NEMA 6-20P",
                 "NEMA 6-30P",
                 "NEMA 6-50P",
+                "NEMA 10-30P",
+                "NEMA 10-50P",
+                "NEMA 14-20P",
+                "NEMA 14-30P",
+                "NEMA 14-50P",
+                "NEMA 14-60P",
+                "NEMA 15-15P",
+                "NEMA 15-20P",
+                "NEMA 15-30P",
+                "NEMA 15-50P",
+                "NEMA 15-60P",
+                "NEMA L1-15P",
                 "NEMA L5-15P",
                 "NEMA L5-20P",
                 "NEMA L5-30P",
+                "NEMA L5-50P",
                 "NEMA L6-15P",
                 "NEMA L6-20P",
                 "NEMA L6-30P",
                 "NEMA L6-50P",
+                "NEMA L10-30P",
+                "NEMA L14-20P",
+                "NEMA L14-30P",
+                "NEMA L14-50P",
+                "NEMA L14-60P",
+                "NEMA L15-20P",
+                "NEMA L15-30P",
+                "NEMA L15-50P",
+                "NEMA L15-60P",
+                "NEMA L21-20P",
+                "NEMA L21-30P",
                 "CS6361C",
                 "CS6365C",
                 "CS8165C",
@@ -35859,6 +36145,7 @@
                 "iec-60309-3p-n-e-4h",
                 "iec-60309-3p-n-e-6h",
                 "iec-60309-3p-n-e-9h",
+                "nema-1-15p",
                 "nema-5-15p",
                 "nema-5-20p",
                 "nema-5-30p",
@@ -35867,13 +36154,37 @@
                 "nema-6-20p",
                 "nema-6-30p",
                 "nema-6-50p",
+                "nema-10-30p",
+                "nema-10-50p",
+                "nema-14-20p",
+                "nema-14-30p",
+                "nema-14-50p",
+                "nema-14-60p",
+                "nema-15-15p",
+                "nema-15-20p",
+                "nema-15-30p",
+                "nema-15-50p",
+                "nema-15-60p",
+                "nema-l1-15p",
                 "nema-l5-15p",
                 "nema-l5-20p",
                 "nema-l5-30p",
                 "nema-l5-50p",
+                "nema-l6-15p",
                 "nema-l6-20p",
                 "nema-l6-30p",
                 "nema-l6-50p",
+                "nema-l10-30p",
+                "nema-l14-20p",
+                "nema-l14-30p",
+                "nema-l14-50p",
+                "nema-l14-60p",
+                "nema-l15-20p",
+                "nema-l15-30p",
+                "nema-l15-50p",
+                "nema-l15-60p",
+                "nema-l21-20p",
+                "nema-l21-30p",
                 "cs6361c",
                 "cs6365c",
                 "cs8165c",
@@ -35957,6 +36268,7 @@
             "iec-60309-3p-n-e-4h",
             "iec-60309-3p-n-e-6h",
             "iec-60309-3p-n-e-9h",
+            "nema-1-15p",
             "nema-5-15p",
             "nema-5-20p",
             "nema-5-30p",
@@ -35965,13 +36277,37 @@
             "nema-6-20p",
             "nema-6-30p",
             "nema-6-50p",
+            "nema-10-30p",
+            "nema-10-50p",
+            "nema-14-20p",
+            "nema-14-30p",
+            "nema-14-50p",
+            "nema-14-60p",
+            "nema-15-15p",
+            "nema-15-20p",
+            "nema-15-30p",
+            "nema-15-50p",
+            "nema-15-60p",
+            "nema-l1-15p",
             "nema-l5-15p",
             "nema-l5-20p",
             "nema-l5-30p",
             "nema-l5-50p",
+            "nema-l6-15p",
             "nema-l6-20p",
             "nema-l6-30p",
             "nema-l6-50p",
+            "nema-l10-30p",
+            "nema-l14-20p",
+            "nema-l14-30p",
+            "nema-l14-50p",
+            "nema-l14-60p",
+            "nema-l15-20p",
+            "nema-l15-30p",
+            "nema-l15-50p",
+            "nema-l15-60p",
+            "nema-l21-20p",
+            "nema-l21-30p",
             "cs6361c",
             "cs6365c",
             "cs8165c",
@@ -36054,6 +36390,7 @@
             "iec-60309-3p-n-e-4h",
             "iec-60309-3p-n-e-6h",
             "iec-60309-3p-n-e-9h",
+            "nema-1-15p",
             "nema-5-15p",
             "nema-5-20p",
             "nema-5-30p",
@@ -36062,13 +36399,37 @@
             "nema-6-20p",
             "nema-6-30p",
             "nema-6-50p",
+            "nema-10-30p",
+            "nema-10-50p",
+            "nema-14-20p",
+            "nema-14-30p",
+            "nema-14-50p",
+            "nema-14-60p",
+            "nema-15-15p",
+            "nema-15-20p",
+            "nema-15-30p",
+            "nema-15-50p",
+            "nema-15-60p",
+            "nema-l1-15p",
             "nema-l5-15p",
             "nema-l5-20p",
             "nema-l5-30p",
             "nema-l5-50p",
+            "nema-l6-15p",
             "nema-l6-20p",
             "nema-l6-30p",
             "nema-l6-50p",
+            "nema-l10-30p",
+            "nema-l14-20p",
+            "nema-l14-30p",
+            "nema-l14-50p",
+            "nema-l14-60p",
+            "nema-l15-20p",
+            "nema-l15-30p",
+            "nema-l15-50p",
+            "nema-l15-60p",
+            "nema-l21-20p",
+            "nema-l21-30p",
             "cs6361c",
             "cs6365c",
             "cs8165c",
@@ -36358,8 +36719,7 @@
     "RackRole": {
       "required": [
         "name",
-        "slug",
-        "color"
+        "slug"
       ],
       "type": "object",
       "properties": {
@@ -36649,9 +37009,7 @@
         "custom_fields": {
           "title": "Custom fields",
           "type": "object",
-          "default": {
-            "test2": null
-          }
+          "default": {}
         },
         "created": {
           "title": "Created",
@@ -36823,9 +37181,7 @@
         "custom_fields": {
           "title": "Custom fields",
           "type": "object",
-          "default": {
-            "test2": null
-          }
+          "default": {}
         },
         "created": {
           "title": "Created",
@@ -37344,16 +37700,20 @@
             "label": {
               "type": "string",
               "enum": [
-                "Active",
                 "Planned",
+                "Staging",
+                "Active",
+                "Decommissioning",
                 "Retired"
               ]
             },
             "value": {
               "type": "string",
               "enum": [
-                "active",
                 "planned",
+                "staging",
+                "active",
+                "decommissioning",
                 "retired"
               ]
             }
@@ -37518,8 +37878,10 @@
           "title": "Status",
           "type": "string",
           "enum": [
-            "active",
             "planned",
+            "staging",
+            "active",
+            "decommissioning",
             "retired"
           ]
         },
@@ -38061,9 +38423,9 @@
             }
           },
           "default": {
-            "value": "jinja2",
+            "id": 20,
             "label": "Jinja2",
-            "id": 20
+            "value": "jinja2"
           }
         },
         "template_code": {
@@ -39212,6 +39574,22 @@
         }
       }
     },
+    "WritableAvailableIP": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "title": "Family",
+          "type": "integer",
+          "readOnly": true
+        },
+        "address": {
+          "title": "Address",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        }
+      }
+    },
     "AvailablePrefix": {
       "type": "object",
       "properties": {
@@ -39228,6 +39606,18 @@
         },
         "vrf": {
           "$ref": "#/definitions/NestedVRF"
+        }
+      }
+    },
+    "PrefixLength": {
+      "required": [
+        "prefix_length"
+      ],
+      "type": "object",
+      "properties": {
+        "prefix_length": {
+          "title": "Prefix length",
+          "type": "integer"
         }
       }
     },
@@ -40798,8 +41188,8 @@
             }
           },
           "default": {
-            "value": "virtual",
-            "label": "Virtual"
+            "label": "Virtual",
+            "value": "virtual"
           }
         },
         "enabled": {

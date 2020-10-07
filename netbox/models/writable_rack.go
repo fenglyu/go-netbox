@@ -55,7 +55,7 @@ type WritableRack struct {
 	// Descending units
 	//
 	// Units are numbered top-to-bottom
-	DescUnits bool `json:"desc_units,omitempty"`
+	DescUnits *bool `json:"desc_units,omitempty"`
 
 	// Device count
 	// Read Only: true

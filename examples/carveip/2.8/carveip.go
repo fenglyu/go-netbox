@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -34,19 +35,29 @@ const authHeaderName = "Authorization"
 const authHeaderFormat = "Token %v"
 
 func main() {
-	host := "127.0.0.1"
-	apiToken := "c4a3c627b64fa514e8e0840a94c06b04eb8674d9"
+	host := "127.0.0.1:8080"
+	apiToken := "lovhVVETaKQPcmIQh0DSmQjr3rl4F7MARle3EVYq"
 
-	//t := runtimeclient.New(client.DefaultHost, client.DefaultBasePath, client.DefaultSchemes)
-	t := runtimeclient.New(host, client.DefaultBasePath, client.DefaultSchemes)
+	httpClient, err := runtimeclient.TLSClient(runtimeclient.TLSClientOptions{InsecureSkipVerify: true})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t := runtimeclient.NewWithClient(host, client.DefaultBasePath, []string{"https", "http"}, httpClient)
 	t.DefaultAuthentication = runtimeclient.APIKeyAuth(authHeaderName, "header", fmt.Sprintf(authHeaderFormat, apiToken))
+
 	//t.SetDebug(true)
 
 	//c := netbox.NewNetboxWithAPIKey(host, apiToken)
 	c := client.New(t, strfmt.Default)
 
+	IDIn := "2,"
+	prefixParam := ipam.IpamPrefixesListParams{
+		IDIn: &IDIn,
+	}
+	prefixParam.WithContext(context.Background())
 	//	rs, err := c.Ipam.IpamIPAddressesList(nil, nil)
-	rs, err := c.Ipam.IpamPrefixesList(nil, nil)
+	rs, err := c.Ipam.IpamPrefixesList(&prefixParam, nil)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		os.Exit(1)
@@ -66,10 +77,18 @@ func main() {
 	cidr := "10.247.5.0/24"
 	//cidr := "10.247.0.0/16"
 
-	data := models.WritablePrefix{
+	//statusLabel := "active"
+	//var statusValue int64 = 1
+
+	//	prefixStatus := models.PrefixStatus{
+	//		Label: &statusLabel,
+	//		Value: &statusValue,
+	//	}
+	data := models.Prefix{
 		Prefix: &cidr,
-		Status: "active",
-		Tags:   []string{"kubernetes", "gke", "k8s"},
+		//Status: &prefixStatus,
+		//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
+		Tags: []string{"demos", "k8s", "gke"},
 	}
 
 	param := ipam.IpamPrefixesCreateParams{
@@ -78,6 +97,9 @@ func main() {
 	}
 	param.SetTimeout(5 * time.Second)
 
+	pparam, _ := json.Marshal(param)
+	fmt.Println("pparam> ", string(pparam))
+
 	prefixCreated, cerr := c.Ipam.IpamPrefixesCreate(&param, nil)
 
 	if cerr != nil {
@@ -85,9 +107,10 @@ func main() {
 
 		fmt.Println(cerr)
 	}
+	fmt.Println(prefixCreated)
 
-	pc, _ := json.Marshal(prefixCreated)
-	fmt.Println(string(pc))
+	//pc, _ := json.Marshal(prefixCreated)
+	//fmt.Println(string(pc))
 
 	//	deleteParam := ipam.IpamPrefixesDeleteParams{
 	//		ID: prefixCreated.Payload.ID,
@@ -114,7 +137,7 @@ func main() {
 	//	}
 
 	ipaprp := ipam.IpamPrefixesAvailablePrefixesReadParams{
-		ID: 2,
+		ID: 18,
 	}
 	ipaprp.WithContext(context.Background())
 
@@ -123,35 +146,45 @@ func main() {
 		fmt.Println(
 			"IpamPrefixesAvailablePrefixesRead", err)
 	}
+	fmt.Println(ipaprpr)
 
-	jsonIpaprpr, _ := json.Marshal(ipaprpr)
-	fmt.Println(string(jsonIpaprpr))
+	//jsonIpaprpr, _ := json.Marshal(ipaprpr)
+	//fmt.Println(string(jsonIpaprpr))
 
-	rootCidr := "10.0.0.0/8"
-	var prefixlength int64 = 24
+	//rootCidr := "10.0.0.0/8"
+	var prefixlength int64 = 28
 
-	dpcData := models.WritablePrefix{
-		ID: 2,
-		//	PrefixLength: &prefixlength,
-		Prefix:       &rootCidr,
+	//role := models.NestedRole{ID: 0}
+	//site := models.NestedSite{ID: 0}
+	dpcData := models.Prefix{
+		//ID: 2,
+		//PrefixLength: &prefixlength,
+		//Prefix:       &rootCidr,
 		PrefixLength: prefixlength,
-		Status:       "active",
+		Status:       &prefixStatus,
 		//Status:       "container",
 		IsPool: false,
+		//Role:   &role,
+		//Site:   &site,
+		//Tags:   "[\"demos\", \"k8s\", \"gke\"]",
+		Tags: []string{"demos", "k8s", "gke"},
 	}
 
 	dpc := ipam.IpamPrefixesAvailablePrefixesCreateParams{
-		ID:   2,
+		ID:   18,
 		Data: &dpcData,
 	}
 	dpc.WithContext(context.Background())
-
+	dpcpparam, _ := json.Marshal(dpc)
+	fmt.Println("dpcpparam> ", string(dpcpparam))
 	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil)
 	if err != nil {
 		fmt.Println("IpamPrefixesAvailablePrefixesCreate	", err)
 	}
-	jsonIpapc, _ := json.Marshal(ipapc)
-	fmt.Println("IpamPrefixesAvailablePrefixesCreate	", string(jsonIpapc))
+
+	fmt.Println("New created", ipapc)
+	//jsonIpapc, _ := json.Marshal(ipapc)
+	//fmt.Println("IpamPrefixesAvailablePrefixesCreate	", string(jsonIpapc))
 }
 
 /*

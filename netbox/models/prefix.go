@@ -57,7 +57,7 @@ type Prefix struct {
 	// Is a pool
 	//
 	// All IP addresses within this prefix are considered usable
-	IsPool bool `json:"is_pool,omitempty"`
+	IsPool *bool `json:"is_pool,omitempty"`
 
 	// Last updated
 	// Read Only: true
@@ -70,6 +70,11 @@ type Prefix struct {
 	// Required: true
 	Prefix *string `json:"prefix"`
 
+	// PrefixLengthSerializer
+	//
+	// Allocate prefixes to the requested objects based on availability within the parent, Find the first available prefix equal to or larger than the requested size
+	PrefixLength int64 `json:"prefix_length,omitempty"`
+
 	// role
 	Role *NestedRole `json:"role,omitempty"`
 
@@ -80,7 +85,7 @@ type Prefix struct {
 	Status *PrefixStatus `json:"status,omitempty"`
 
 	// tags
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitempty"`
 
 	// tenant
 	Tenant *NestedTenant `json:"tenant,omitempty"`

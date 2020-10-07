@@ -55,7 +55,7 @@ type WritableConfigContext struct {
 	ID int64 `json:"id,omitempty"`
 
 	// Is active
-	IsActive bool `json:"is_active,omitempty"`
+	IsActive *bool `json:"is_active,omitempty"`
 
 	// Name
 	// Required: true
