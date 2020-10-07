@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 
 	//"github.com/fenglyu/go-netbox/netbox"
 
@@ -138,7 +139,7 @@ func main() {
 
 	//tenant end
 
-	var prefixlength int64 = 28
+	var prefixlength int64 = 9
 	tr := new(bool)
 	*tr = false
 	dpcData := models.WritablePrefix{
@@ -172,7 +173,8 @@ func main() {
 
 	dpcpparam, _ := json.Marshal(dpc)
 	fmt.Println("dpcpparam> ", string(dpcpparam))
-	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil)
+
+	ipapc, err := c.Ipam.IpamPrefixesAvailablePrefixesCreate(&dpc, nil, os.Stdout)
 	if err != nil {
 		fmt.Println("IpamPrefixesAvailablePrefixesCreate	", err)
 	}
